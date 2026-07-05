@@ -129,7 +129,7 @@ class BitcoinApi implements AbstractBitcoinApi {
 
   async $getTxsForBlock(hash: string): Promise<IPublicApi.VerboseTransaction[]> {
     // This is using the convertTransaction with requires verbosity 2 + patterns
-    const verboseBlock: IBitcoinApi.VerboseBlock = await this.bitcoindClient.getBlock(hash, 2, true);
+    const verboseBlock: IBitcoinApi.VerboseBlock = await this.bitcoindClient.getBlock(hash, 2);
     const transactions: IPublicApi.VerboseTransaction[] = [];
     for (const tx of verboseBlock.tx) {
       const converted = await this.$convertTransaction(tx, true, false, verboseBlock.confirmations === -1);
@@ -450,7 +450,7 @@ class BitcoinApi implements AbstractBitcoinApi {
   protected $returnCoinbaseTransaction(): Promise<IPublicApi.VerboseTransaction> {
     return this.bitcoindClient.getBlockHash(0).then((hash: string) =>
       // This is using the convertTransaction with requires verbosity 2 + patterns
-      this.bitcoindClient.getBlock(hash, 2, true).then((block: IBitcoinApi.VerboseBlock) => {
+      this.bitcoindClient.getBlock(hash, 2).then((block: IBitcoinApi.VerboseBlock) => {
         return this.$convertTransaction(
           Object.assign(block.tx[0], {
             confirmations: blocks.getCurrentBlockHeight() + 1,
