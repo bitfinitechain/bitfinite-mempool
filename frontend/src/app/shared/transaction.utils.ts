@@ -2316,7 +2316,7 @@ function base58ToSpk(address: string, network: string): string | null {
 
 // bech32 encoding / decoding
 // Adapted from https://github.com/bitcoinjs/bech32/blob/5ceb0e3d4625561a459c85643ca6947739b2d83c/src/index.ts
-const BECH32_ALPHABET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+const BECH32_ALPHABET = 'fpzry9x8gq2tvdw0s3jn54khce6mua7l';
 type Bech32Encoding = 'bech32' | 'bech32m';
 
 function bech32Encode(

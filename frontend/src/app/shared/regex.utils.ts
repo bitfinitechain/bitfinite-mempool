@@ -52,7 +52,7 @@ const ADDRESS_CHARS: {
         + `{6,100}`
       + `)`,
     bch: `(?:`
-        + `bitcoincash:` + CASHADDR_CHARS + `{20,100}` // Mainnet CashAddr with prefix
+        + `bfx:` + CASHADDR_CHARS + `{20,100}` // Mainnet CashAddr with prefix
       + `|`
         + CASHADDR_CHARS + `{20,100}` // Mainnet CashAddr without prefix (optional)
       + `|`
@@ -73,7 +73,7 @@ const ADDRESS_CHARS: {
         + `{6,100}`
       + `)`,
     bch: `(?:`
-        + `bchtest:` + CASHADDR_CHARS + `{20,100}` // Scalenet CashAddr with prefix
+        + `bfxtest:` + CASHADDR_CHARS + `{20,100}` // Scalenet CashAddr with prefix
       + `|`
         + CASHADDR_CHARS + `{20,100}` // Scalenet CashAddr without prefix (optional)
       + `|`
@@ -94,7 +94,7 @@ const ADDRESS_CHARS: {
         + `{6,100}`
       + `)`,
     bch: `(?:`
-        + `bchtest:` + CASHADDR_CHARS + `{20,100}` // Testnet4 CashAddr with prefix
+        + `bfxtest:` + CASHADDR_CHARS + `{20,100}` // Testnet4 CashAddr with prefix
       + `|`
         + CASHADDR_CHARS + `{20,100}` // Testnet4 CashAddr without prefix (optional)
       + `|`
@@ -115,7 +115,7 @@ const ADDRESS_CHARS: {
         + `{6,100}`
       + `)`,
     bch: `(?:`
-        + `bchtest:` + CASHADDR_CHARS + `{20,100}` // Chipnet CashAddr with prefix
+        + `bfxtest:` + CASHADDR_CHARS + `{20,100}` // Chipnet CashAddr with prefix
       + `|`
         + CASHADDR_CHARS + `{20,100}` // Chipnet CashAddr without prefix (optional)
       + `|`

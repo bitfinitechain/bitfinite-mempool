@@ -22,13 +22,13 @@
     "EXTERNAL_ASSETS": [],
     "EXTERNAL_MAX_RETRY": 1,
     "EXTERNAL_RETRY_INTERVAL": 0,
-    "USER_AGENT": "explorer",
+    "USER_AGENT": "bitfinite",
     "STDOUT_LOG_MIN_PRIORITY": "debug",
     "AUTOMATIC_POOLS_UPDATE": false,
-    "POOLS_JSON_URL": "https://gitlab.melroy.org/bitcoincash/mining-pools/-/raw/main/pools-v2.json",
-    "POOLS_JSON_TREE_URL": "https://gitlab.melroy.org/api/v4/projects/199/repository/tree",
+    "POOLS_JSON_URL": "",
+    "POOLS_JSON_TREE_URL": "",
     "POOLS_UPDATE_DELAY": 604800,
-    "POOLS_SOURCE": "gitlab",
+    "POOLS_SOURCE": "",
     "AUDIT": false,
     "RUST_GBT": true,
     "LIMIT_GBT": false,
@@ -39,13 +39,13 @@
   },
   "CORE_RPC": {
     "HOST": "127.0.0.1",
-    "PORT": 8332,
-    "USERNAME": "explorer",
-    "PASSWORD": "explorer",
+    "PORT": 19769,
+    "USERNAME": "bfxrpc",
+    "PASSWORD": "CHANGEME_RPC_PASSWORD",
     "TIMEOUT": 60000,
     "COOKIE": false,
-    "COOKIE_PATH": "/path/to/bitcoin/.cookie",
-    "DEBUG_LOG_PATH": "/path/to/bitcoin/debug.log"
+    "COOKIE_PATH": "/home/USER/.bitfinite/.cookie",
+    "DEBUG_LOG_PATH": "/home/USER/.bitfinite/debug.log"
   },
   "ELECTRUM": {
     "HOST": "127.0.0.1",
@@ -54,26 +54,26 @@
   },
   "SECOND_CORE_RPC": {
     "HOST": "127.0.0.1",
-    "PORT": 8332,
-    "USERNAME": "explorer",
-    "PASSWORD": "explorer",
+    "PORT": 19769,
+    "USERNAME": "bfxrpc",
+    "PASSWORD": "CHANGEME_RPC_PASSWORD",
     "TIMEOUT": 60000,
     "COOKIE": false,
-    "COOKIE_PATH": "/path/to/bitcoin/.cookie"
+    "COOKIE_PATH": "/home/USER/.bitfinite/.cookie"
   },
   "DATABASE": {
     "ENABLED": true,
     "HOST": "127.0.0.1",
     "PORT": 3306,
     "SOCKET": "/var/run/mysqld/mysqld.sock",
-    "DATABASE": "explorer",
-    "USERNAME": "explorer",
-    "PASSWORD": "explorer",
+    "DATABASE": "bitfinite_explorer",
+    "USERNAME": "bfxexplorer",
+    "PASSWORD": "CHANGEME_DB_PASSWORD",
     "TIMEOUT": 180000,
     "PID_DIR": ""
   },
   "SYSLOG": {
-    "ENABLED": true,
+    "ENABLED": false,
     "HOST": "127.0.0.1",
     "PORT": 514,
     "MIN_PRIORITY": "info",
@@ -92,8 +92,8 @@
     "PASSWORD": ""
   },
   "EXTERNAL_DATA_SERVER": {
-    "EXPLORER_API": "https://bchexplorer.cash/api/v1",
-    "EXPLORER_ONION": "http://someuniondomain.onion/api/v1"
+    "EXPLORER_API": "",
+    "EXPLORER_ONION": ""
   },
   "VALKEY": {
     "ENABLED": false,
@@ -103,26 +103,21 @@
   "REPLICATION": {
     "ENABLED": false,
     "AUDIT": false,
-    "AUDIT_START_HEIGHT": 774000,
+    "AUDIT_START_HEIGHT": 0,
     "STATISTICS": false,
-    "STATISTICS_START_TIME": 1481932800,
-    "SERVERS": [
-      "list",
-      "of",
-      "trusted",
-      "servers"
-    ]
+    "STATISTICS_START_TIME": 1782691200,
+    "SERVERS": []
   },
   "MELROY_EXPLORER_SERVICES": {
-    "API": "http://bchexplorer.cash/api/v1/services"
+    "API": ""
   },
   "STRATUM": {
     "ENABLED": false,
     "API": "http://localhost:1234"
   },
   "FIAT_PRICE": {
-    "ENABLED": true,
+    "ENABLED": false,
     "PAID": false,
-    "API_KEY": "your-api-key-from-freecurrencyapi.com"
+    "API_KEY": ""
   }
 }

@@ -37,7 +37,7 @@ const ADDRESS_PREFIXES: Record<string, NetworkConfig> = {
       script: ['3'],
     },
     bech32: 'bc1',
-    bch: 'bitcoincash:',
+    bch: 'bfx:',
   },
   testnet4: {
     base58: {
@@ -45,7 +45,7 @@ const ADDRESS_PREFIXES: Record<string, NetworkConfig> = {
       script: '2',
     },
     bech32: 'tb1',
-    bch: 'bchtest:',
+    bch: 'bfxtest:',
   },
   scalenet: {
     base58: {
@@ -53,7 +53,7 @@ const ADDRESS_PREFIXES: Record<string, NetworkConfig> = {
       script: '2',
     },
     bech32: 'tb1',
-    bch: 'bchtest:',
+    bch: 'bfxtest:',
   },
   chipnet: {
     base58: {
@@ -61,7 +61,7 @@ const ADDRESS_PREFIXES: Record<string, NetworkConfig> = {
       script: '2',
     },
     bech32: 'tb1',
-    bch: 'bchtest:',
+    bch: 'bfxtest:',
   },
 };
 
@@ -374,7 +374,7 @@ export function compareAddressInfo(
   if (isLegacyBase58) {
     prefixScore = 1;
   } else {
-    // CashAddr: account for the 'bitcoincash:' (or 'bchtest:') prefix + first type character
+    // CashAddr: account for the 'bfx:' (or 'bfxtest:') prefix + first type character
     const bchPrefix = ADDRESS_PREFIXES[a.network || 'mainnet']?.bch;
     prefixScore = (a.address.startsWith(bchPrefix) ? bchPrefix.length : 0) + 1;
   }
@@ -427,7 +427,7 @@ export function checkedCompareAddressStrings(
 }
 
 export function normalizeBchAddress(address: string): string {
-  // Remove bitcoin: prefix for legacy base58 addresses (keep bitcoincash: prefix)
+  // Remove bitcoin: prefix for legacy base58 addresses (keep bfx: prefix)
   if (address.startsWith('bitcoin:')) {
     return address.replace('bitcoin:', '');
   }
@@ -437,7 +437,7 @@ export function normalizeBchAddress(address: string): string {
 // CashAddr constants
 // Note: CashAddr uses the same base32 alphabet as bech32
 // Source: https://github.com/ealmansi/cashaddrjs/blob/master/src/base32.js
-const CASHADDR_ALPHABET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+const CASHADDR_ALPHABET = 'fpzry9x8gq2tvdw0s3jn54khce6mua7l';
 
 // CashAddr polymod uses 40-bit arithmetic — must use BigInt to avoid JS overflow
 // Source: https://github.com/ealmansi/cashaddrjs/blob/master/src/cashaddr.js
@@ -634,7 +634,7 @@ export function convertToTokenAddress(address: string): string | null {
 export function isTokenAddress(address: string): boolean {
   try {
     const decoded = cashaddrDecode(
-      address.includes(':') ? address : `bitcoincash:${address}`
+      address.includes(':') ? address : `bfx:${address}`
     );
     const typeBits = (decoded.version >>> 3) & 0x0f;
     return typeBits === 2 || typeBits === 3;
@@ -646,7 +646,7 @@ export function isTokenAddress(address: string): boolean {
 export function tokenToCashAddr(address: string): string | null {
   try {
     const decoded = cashaddrDecode(
-      address.includes(':') ? address : `bitcoincash:${address}`
+      address.includes(':') ? address : `bfx:${address}`
     );
     const typeBits = (decoded.version >>> 3) & 0x0f;
     const lengthBits = decoded.version & 0x07;
@@ -810,7 +810,7 @@ function p2a(network: string): string {
 }
 
 // bech32 encoding / decoding
-const BECH32_ALPHABET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
+const BECH32_ALPHABET = 'fpzry9x8gq2tvdw0s3jn54khce6mua7l';
 type Bech32Encoding = 'bech32' | 'bech32m';
 
 function bech32Encode(
