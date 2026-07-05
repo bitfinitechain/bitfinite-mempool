@@ -56,9 +56,12 @@ class BitcoinApi implements AbstractBitcoinApi {
       return this.$addPrevouts(txInMempool);
     }
 
-    // This is using the convertTransaction with requires verbosity 2 + patterns, ignore blockhash argument (use an empty string)
+    // verbosity 2 gives the fee + prevout data mempool needs. BFX's getrawtransaction
+    // accepts `("txid", verbose, "blockhash")` with a NON-empty blockhash only, so we
+    // pass just txid + verbosity 2 (no empty-blockhash / no extra arg, which the node
+    // rejects as invalid params). Requires txindex on the node for historical txs.
     return this.bitcoindClient
-      .getRawTransaction(txId, 2, '', true)
+      .getRawTransaction(txId, 2)
       .then((transaction: IBitcoinApi.VerboseTransaction) => {
         if (skipConversion) {
           transaction.vout.forEach((vout) => {
