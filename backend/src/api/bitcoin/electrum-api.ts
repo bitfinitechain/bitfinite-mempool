@@ -16,7 +16,9 @@ class BitcoindElectrsApi extends BitcoinApi implements AbstractBitcoinApi {
   constructor(bitcoinClient: any) {
     super(bitcoinClient);
 
-    const electrumConfig: ElectrumConfig = { client: 'BCH-Explorer-v3', version: '1.6.0' };
+    // electr-bfx (BFX electrum server) speaks protocol 1.5 exactly and rejects
+    // any other version in the server.version handshake — request 1.5 to match.
+    const electrumConfig: ElectrumConfig = { client: 'bitfinite-mempool', version: '1.5' };
     const electrumPersistencePolicy: PersistencePolicy = {
       retryPeriod: 1000,
       maxRetry: Number.MAX_SAFE_INTEGER,

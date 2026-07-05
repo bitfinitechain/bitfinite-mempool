@@ -22,8 +22,8 @@ import chainTips from '../chain-tips';
 
 const TXID_REGEX = /^[a-f0-9]{64}$/i;
 const BLOCK_HASH_REGEX = /^[a-f0-9]{64}$/i;
-const ADDRESS_REGEX_MAINNET = /^(?:bitcoincash:)?[a-z0-9]{2,120}$/i;
-const ADDRESS_REGEX_TESTNET = /^(?:bchtest:)?[a-z0-9]{2,120}$/i;
+const ADDRESS_REGEX_MAINNET = /^(?:bfx:)?[a-z0-9]{2,120}$/i;
+const ADDRESS_REGEX_TESTNET = /^(?:bfxtest:)?[a-z0-9]{2,120}$/i;
 
 function getAddressRegex(): RegExp {
   return config.EXPLORER.NETWORK === 'mainnet' ? ADDRESS_REGEX_MAINNET : ADDRESS_REGEX_TESTNET;
