@@ -97,12 +97,12 @@ export class AddressConverterComponent implements OnInit, OnDestroy {
           this.tokenAddr = convertToTokenAddress(this.cashAddr);
           this.activeTab = 'cashaddr';
         } else if (isToken) {
-          this.tokenAddr = raw.includes(':') ? raw : `bitcoincash:${raw}`;
+          this.tokenAddr = raw.includes(':') ? raw : `bfx:${raw}`;
           this.cashAddr = tokenToCashAddr(raw);
           this.legacyAddr = cashAddrToLegacy(this.cashAddr, network);
           this.activeTab = 'cashaddr';
         } else {
-          this.cashAddr = raw.includes(':') ? raw : `bitcoincash:${raw}`;
+          this.cashAddr = raw.includes(':') ? raw : `bfx:${raw}`;
           this.legacyAddr = cashAddrToLegacy(raw, network);
           this.tokenAddr = convertToTokenAddress(this.cashAddr);
           this.activeTab = 'legacy';

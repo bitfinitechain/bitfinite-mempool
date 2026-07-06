@@ -12,7 +12,7 @@
     <div class="version">
       <span
         >v{{ packetJsonVersion }} [<a
-          href="https://gitlab.melroy.org/bitcoincash/bitcoin-cash-explorer/commit/{{
+          href="https://github.com/bitfinitechain/bitfinite-mempool/commit/{{
             frontendGitCommitHash
           }}"
           >{{ frontendGitCommitHash }}</a
@@ -32,16 +32,16 @@
         aria-label="Visit official BitFinite explorer website"
         >BitFinite Explorer</a
       >
-      is a blockchain and mempool explorer for the BitFinite community,
-      created by Melroy van den Berg. It is a completely self-hosted without any
-      trusted third-parties.
+      is a self-hosted, open-source blockchain and mempool explorer for
+      BitFinite (BFX), based on mempool.space (AGPL). It is completely
+      self-hosted without any trusted third-parties.
     </p>
 
     <p i18n>
       If you like this project and use the explorer on a regular basis, please
       consider
       <a
-        href="https://melroy.org/donate.html"
+        href="https://bitfinitechain.org"
         target="_blank"
         aria-label="Donate to support BitFinite Explorer"
         >donating</a
@@ -49,27 +49,19 @@
     </p>
 
     <p i18n>
-      Maintaining, improving and creating this BitFinite explorer costs
-      <i>a lot of time and effort</i>. As a one-man operation, I spend a lot of
-      personal time working on this project.
-    </p>
-    <p i18n>
-      By
+      BitFinite Explorer is free and open-source software, released under the
+      AGPL-3.0 license. You can view the source, run your own instance, or
+      contribute on
       <a
-        href="https://melroy.org/donate.html"
+        href="https://github.com/bitfinitechain/bitfinite-mempool"
         target="_blank"
-        aria-label="Sponsor BitFinite Explorer development"
-        >sponsoring me</a
-      >
-      you are supporting my work and ensuring that the BitFinite Explorer project
-      remains up-to-date, stable and available to the whole BitFinite
-      community. As well as extending this BitFinite Explorer for specific BFX
-      features. Are you interested in becoming an <b>enterprise sponsor</b> and
-      getting your company listed on this site? Feel free to
+        aria-label="BitFinite Explorer source code on GitHub"
+        >GitHub</a
+      >. Questions or ideas? Feel free to
       <a
-        href="https://t.me/melroyvandenberg"
+        href="https://t.me/bitfinitechain"
         target="_blank"
-        aria-label="Contact Melroy on Telegram"
+        aria-label="Contact BitFinite on Telegram"
         >reach out via Telegram</a
       >.
     </p>
@@ -96,17 +88,16 @@
     <div class="wrapper">
       <div class="box-wrapper">
         <a
-          href="https://melroy.org/donate.html"
+          href="https://bitfinitechain.org"
           target="_blank"
-          title="Melroy van den Berg"
+          title="BitFinite (BFX)"
         >
-          <img class="melroy-logo" src="/resources/melroy.png" />
-          <span class="melroy-name">Melroy van den Berg</span>
+          <span class="melroy-name">BitFinite (BFX)</span>
         </a>
         <span>
-          <code>bitcoincash:qzqmakefvntudp0fv7sunt5fjxdswlxv2yhezq7pdl</code>
+          <code>bfx:fzfj9z07nxrug9jnx02583h2sgs28p7w3svmdgv0rx</code>
           <app-clipboard
-            text="bitcoincash:qzqmakefvntudp0fv7sunt5fjxdswlxv2yhezq7pdl"
+            text="bfx:fzfj9z07nxrug9jnx02583h2sgs28p7w3svmdgv0rx"
           ></app-clipboard>
         </span>
         <img
@@ -349,14 +340,6 @@
         <span>RoninDojo</span>
       </a>
       <a
-        href="https://gitlab.com/nirvati-ug/nirvati"
-        target="_blank"
-        title="Nirvati"
-      >
-        <img class="image" src="/resources/profile/nirvati.svg" />
-        <span>Nirvati</span>
-      </a>
-      <a
         href="https://github.com/fort-nix/nix-bitcoin"
         target="_blank"
         title="nix-bitcoin"
@@ -584,7 +567,7 @@
   </ng-container>-->
 
   <div class="social-icons">
-    <a target="_blank" href="https://t.me/bchexplorer">
+    <a target="_blank" href="https://t.me/bitfinitechain">
       <svg
         aria-hidden="true"
         focusable="false"
@@ -601,7 +584,7 @@
         />
       </svg>
     </a>
-    <a target="_blank" href="https://x.com/bchexplorer">
+    <a target="_blank" href="https://x.com/bitfinitechain">
       <svg
         aria-hidden="true"
         focusable="false"
@@ -618,43 +601,9 @@
         />
       </svg>
     </a>
-    <a target="_blank" href="https://matrix.to/#/#bchexplorer:melroy.org">
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        data-prefix="fab"
-        data-icon="matrix"
-        class="svg-inline--fa fa-matrix fa-4x"
-        role="img"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1536 1792"
-      >
-        <path
-          fill="currentColor"
-          d="M40.467 163.152v1465.696H145.92V1664H0V128h145.92v35.152zm450.757 464.64v74.14h2.069c19.79-28.356 43.717-50.215 71.483-65.575 27.765-15.656 59.963-23.336 96-23.336 34.56 0 66.165 6.795 94.818 20.086 28.652 13.293 50.216 37.22 65.28 70.893 16.246-23.926 38.4-45.194 66.166-63.507 27.766-18.314 60.848-27.472 98.954-27.472 28.948 0 55.828 3.545 80.64 10.635 24.812 7.088 45.785 18.314 63.508 33.968 17.722 15.656 31.31 35.742 41.354 60.85 9.747 25.107 14.768 55.236 14.768 90.683v366.573h-150.35V865.28c0-18.314-.59-35.741-2.068-51.987-1.476-16.247-5.316-30.426-11.52-42.24-6.499-12.112-15.656-21.563-28.062-28.653-12.405-7.088-29.242-10.634-50.214-10.634-21.268 0-38.4 4.135-51.397 12.112-12.997 8.27-23.336 18.608-30.72 31.901-7.386 12.997-12.407 27.765-14.77 44.602-2.363 16.542-3.84 33.379-3.84 50.216v305.133H692.971v-307.2c0-16.247-.294-32.197-1.18-48.149-.591-15.95-3.84-30.424-9.157-44.011-5.317-13.293-14.178-24.223-26.585-32.197-12.406-7.976-30.425-12.112-54.646-12.112-7.088 0-16.542 1.478-28.062 4.726-11.52 3.25-23.04 9.157-33.968 18.02-10.93 8.86-20.383 21.563-28.063 38.103-7.68 16.543-11.52 38.4-11.52 65.28v317.834H349.44V627.792zm1004.309 1001.056V163.152H1390.08V128H1536v1536h-145.92v-35.152z"
-        />
-      </svg>
-    </a>
-    <a target="_blank" href="https://mastodon.melroy.org/@bchexplorer">
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        data-prefix="fab"
-        data-icon="mastodon"
-        class="svg-inline--fa fa-mastodon fa-4x"
-        role="img"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 480 480"
-      >
-        <path
-          fill="currentColor"
-          d="M433 179.1c0-97.2-63.7-125.7-63.7-125.7-62.5-28.7-228.6-28.4-290.5 0 0 0-63.7 28.5-63.7 125.7 0 115.7-6.6 259.4 105.6 289.1 40.5 10.7 75.3 13 103.3 11.4 50.8-2.8 79.3-18.1 79.3-18.1l-1.7-36.9s-36.3 11.4-77.1 10.1c-40.4-1.4-83-4.4-89.6-54-.6-4.6-.9-9.3-.9-13.9 85.6 20.9 158.7 9.1 178.7 6.7 56.1-6.7 105-41.3 111.2-72.9 9.8-49.8 9-121.5 9-121.5zM357.9 304.3l-46.6 0 0-114.2c0-49.7-64-51.6-64 6.9l0 62.5-46.3 0 0-62.5c0-58.5-64-56.6-64-6.9l0 114.2-46.7 0c0-122.1-5.2-147.9 18.4-175 25.9-28.9 79.8-30.8 103.8 6.1l11.6 19.5 11.6-19.5c24.1-37.1 78.1-34.8 103.8-6.1 23.7 27.3 18.4 53 18.4 175l0 0z"
-        />
-      </svg>
-    </a>
     <a
       target="_blank"
-      href="https://gitlab.melroy.org/bitcoincash/bitcoin-cash-explorer"
+      href="https://github.com/bitfinitechain/bitfinite-mempool"
     >
       <svg
         aria-hidden="true"
@@ -677,11 +626,15 @@
   <div class="copyright">
     <div class="title">
       Copyright &copy; 2022-2026<br />
-      Melroy van den Berg
+      <a href="https://bitfinitechain.org">BitFinite (BFX)</a>
     </div>
     <p>
-      <a href="https://melroy.org">BitFinite Explorer by Melroy van den Berg</a>
-      is free software; you can redistribute it and/or modify it under the terms
+      <a href="https://github.com/bitfinitechain/bitfinite-mempool"
+        >BitFinite Explorer</a
+      >
+      &mdash; based on mempool.space, via Melroy van den Berg's Bitcoin Cash
+      fork (AGPL-3.0) &mdash; is free software; you can redistribute it and/or
+      modify it under the terms
       of the
       <a href="https://www.gnu.org/licenses/agpl-3.0-standalone.html"
         >GNU Affero General Public License</a

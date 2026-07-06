@@ -87,12 +87,12 @@ export class EnterpriseService {
   }
 
   insertMatomo(siteId?: number): void {
-    let statsUrl = '//stats.melroy.org/';
+    let statsUrl = '//explorer.bitfinitechain.org/';
 
     if (!siteId) {
       switch (this.document.location.hostname) {
         case 'mempool.bitfinitechain.org':
-          statsUrl = '//stats.melroy.org/';
+          statsUrl = '//explorer.bitfinitechain.org/';
           siteId = 5;
           break;
         default:

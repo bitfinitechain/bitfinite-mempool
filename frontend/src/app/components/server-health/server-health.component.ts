@@ -26,11 +26,11 @@ export class ServerHealthComponent implements OnInit {
   colors: Record<string, Record<string, string>> = {};
 
   repoMap = {
-    frontend: 'bitcoin-cash-explorer',
-    hybrid: 'mempool.bitfinitechain.org',
-    backend: 'bitcoin-cash-explorer',
-    electrs: 'electrs',
-    ssr: 'mempool.bitfinitechain.org',
+    frontend: 'bitfinite-mempool',
+    hybrid: 'bitfinite-mempool',
+    backend: 'bitfinite-mempool',
+    electrs: 'electr-bfx',
+    ssr: 'bitfinite-mempool',
   };
 
   constructor(

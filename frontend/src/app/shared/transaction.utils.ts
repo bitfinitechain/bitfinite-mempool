@@ -2044,7 +2044,7 @@ function buildOpReturnScript(messageText: string): {
   };
 }
 
-// Copied from explorer backend https://gitlab.melroy.org/bitcoincash/bitcoin-cash-explorer/-/blob/main/backend/src/api/transaction-utils.ts?ref_type=heads#L196
+// Copied from explorer backend https://github.com/bitfinitechain/bitfinite-mempool/-/blob/main/backend/src/api/transaction-utils.ts?ref_type=heads#L196
 export function countSigops(transaction: Transaction): number {
   let sigops = 0;
 
@@ -2695,7 +2695,7 @@ export function compactSize(n: number): Uint8Array {
   }
 }
 
-// Inversed the opcodes object from https://gitlab.melroy.org/bitcoincash/bitcoin-cash-explorer/-/blob/main/backend/src/utils/bitcoin-script.ts?ref_type=heads
+// Inversed the opcodes object from https://github.com/bitfinitechain/bitfinite-mempool/-/blob/main/backend/src/utils/bitcoin-script.ts?ref_type=heads
 const opcodes = {
   0: 'OP_0',
   76: 'OP_PUSHDATA1',
