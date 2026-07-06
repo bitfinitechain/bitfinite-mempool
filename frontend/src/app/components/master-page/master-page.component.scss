@@ -395,3 +395,10 @@ main {
   .accent { color: var(--primary); }
 }
 
+
+/* "MEMPOOL" product suffix after BITFINITE lockup */
+.header-word .sub {
+  color: var(--muted-fg);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
