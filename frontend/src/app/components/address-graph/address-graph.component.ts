@@ -270,8 +270,8 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
           { offset: 1, color: '#FB8C00' },
         ]),
         new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: '#4CAF50' },
-          { offset: 1, color: '#1B5E20' },
+          { offset: 0, color: '#3b6ef5' },
+          { offset: 1, color: '#12307a' },
         ]),
       ],
       animation: false,

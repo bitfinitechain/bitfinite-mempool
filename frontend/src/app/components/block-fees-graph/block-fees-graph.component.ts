@@ -173,7 +173,7 @@ export class BlockFeesGraphComponent implements OnInit {
         ]),
         new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: '#C0CA33' },
-          { offset: 1, color: '#1B5E20' },
+          { offset: 1, color: '#12307a' },
         ]),
       ],
       animation: false,

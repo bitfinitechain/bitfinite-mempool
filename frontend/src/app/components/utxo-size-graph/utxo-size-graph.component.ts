@@ -156,7 +156,7 @@ export class UtxoSizeGraphComponent implements OnInit {
       animation: false,
       color: [
         new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: '#00E676' },
+          { offset: 0, color: '#4d7bf5' },
           { offset: 1, color: '#00796B' },
         ]),
       ],
@@ -259,7 +259,7 @@ export class UtxoSizeGraphComponent implements OnInit {
                 type: 'line',
                 lineStyle: {
                   width: 2,
-                  color: '#00E676',
+                  color: '#4d7bf5',
                 },
                 areaStyle: {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [

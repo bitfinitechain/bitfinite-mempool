@@ -33,10 +33,10 @@ export class MempoolProgressBarComponent {
   }
 
   getProgressColor(): string {
-    if (!this.mempoolInfoData) return '#7CB342';
+    if (!this.mempoolInfoData) return '#4d7bf5';
 
     const bytesPerSecond = this.mempoolInfoData.bytesPerSecond;
-    let progressColor = '#7CB342';
+    let progressColor = '#4d7bf5';
 
     if (bytesPerSecond > 1667) {
       progressColor = '#FDD835';

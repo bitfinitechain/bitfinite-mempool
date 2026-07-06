@@ -263,7 +263,7 @@ export class HashrateChartComponent implements OnInit {
           { offset: 0.25, color: '#FB8C0099' },
           { offset: 0.5, color: '#FFB30099' },
           { offset: 0.75, color: '#FDD83599' },
-          { offset: 1, color: '#7CB34299' },
+          { offset: 1, color: '#4d7bf599' },
         ]),
         '#D81B60',
         new echarts.graphic.LinearGradient(0, 0, 0, 0.65, [
@@ -271,7 +271,7 @@ export class HashrateChartComponent implements OnInit {
           { offset: 0.25, color: '#FB8C00' },
           { offset: 0.5, color: '#FFB300' },
           { offset: 0.75, color: '#FDD835' },
-          { offset: 1, color: '#7CB342' },
+          { offset: 1, color: '#4d7bf5' },
         ]),
       ],
       grid: {

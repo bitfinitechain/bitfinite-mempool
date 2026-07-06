@@ -312,14 +312,14 @@ export class BlockFeeRatesGraphComponent implements OnInit {
               { offset: 0.25, color: '#FB8C00' },
               { offset: 0.5, color: '#FFB300' },
               { offset: 0.75, color: '#FDD835' },
-              { offset: 1, color: '#7CB342' },
+              { offset: 1, color: '#4d7bf5' },
             ]),
           ]
         : [
             '#D81B60',
             '#8E24AA',
             '#1E88E5',
-            '#7CB342',
+            '#4d7bf5',
             '#FDD835',
             '#6D4C41',
             '#546E7A',

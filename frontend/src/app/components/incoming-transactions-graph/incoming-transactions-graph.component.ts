@@ -339,7 +339,7 @@ export class IncomingTransactionsGraphComponent implements OnInit, OnChanges {
           {
             gt: 0,
             lte: 1667,
-            color: '#7CB342',
+            color: '#4d7bf5',
           },
           {
             gt: 1667,
