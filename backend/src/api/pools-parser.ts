@@ -194,14 +194,9 @@ class PoolsParser {
    * @param pool local id of existing pool to reindex
    */
   private async $reindexBlocksForPool(poolId: number): Promise<void> {
-    let firstKnownBlockPool = 130635; // https://bchexplorer.cash/block/00000000000009c4cdccbc49e72552a732fbbcad97391207d4606186e9e6d899
-    if (config.EXPLORER.NETWORK === 'testnet4') {
-      firstKnownBlockPool = 21106; // https://mempool.space/testnet/block/0000000070b701a5b6a1b965f6a38e0472e70b2bb31b973e4638dec400877581
-    } else if (config.EXPLORER.NETWORK === 'scalenet') {
-      firstKnownBlockPool = 16869; // https://docs.bitcoincashnode.org/doc/test-networks/
-    } else if (['chipnet'].includes(config.EXPLORER.NETWORK)) {
-      firstKnownBlockPool = 0;
-    }
+    // BitFinite is a fresh chain (re-anchored genesis 2026) — mining pools are known
+    // from block 0, unlike Bitcoin Cash where the first pool-tagged block was 130635.
+    let firstKnownBlockPool = 0;
 
     const [blocks]: any[] = await DB.query(
       `

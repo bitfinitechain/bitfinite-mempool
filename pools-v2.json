@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "BitFinite Pool",
+    "addresses": [
+      "bfx:frs8exzd4ajq60uz687xmuza7sztddzp5v4hhme0sm",
+      "bfx:ffdwzfex3g058z4zl4ntphkmxue3ecpesu0jqu0ek0",
+      "bfx:frkq2xkaqv3694rzc8ahreef78kpljd38gp6n2d5ch"
+    ],
+    "tags": [
+      "mined by BitFinite pool"
+    ],
+    "link": "https://ckpool.bitfinitechain.org"
+  }
+]
