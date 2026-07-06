@@ -35,12 +35,19 @@
         <ng-container
           *ngIf="{ val: connectionState$ | async } as connectionState"
         >
-          <app-svg-images
-            name="bchExplorer"
-            viewBox="0 0 942 112"
-            class="bch-explorer-logo"
+          <span
+            class="header-lockup"
             [ngStyle]="{ opacity: connectionState.val === 2 ? 1 : 0.5 }"
-          ></app-svg-images>
+          >
+            <img
+              class="header-mark"
+              src="/resources/favicons/android-chrome-192x192.png"
+              alt="BitFinite"
+              width="34"
+              height="34"
+            />
+            <span class="header-word">BIT<span class="accent">FINITE</span></span>
+          </span>
           <div class="connection-badge">
             <div
               class="badge bg-warning"
@@ -74,12 +81,19 @@
           *ngIf="{ val: connectionState$ | async } as connectionState"
         >
           <!-- TODO: Smaller logo for mobile -->
-          <app-svg-images
-            name="bchExplorer"
-            viewBox="0 0 942 112"
-            class="bch-explorer-logo"
+          <span
+            class="header-lockup"
             [ngStyle]="{ opacity: connectionState.val === 2 ? 1 : 0.5 }"
-          ></app-svg-images>
+          >
+            <img
+              class="header-mark"
+              src="/resources/favicons/android-chrome-192x192.png"
+              alt="BitFinite"
+              width="34"
+              height="34"
+            />
+            <span class="header-word">BIT<span class="accent">FINITE</span></span>
+          </span>
           <div class="connection-badge">
             <div
               class="badge bg-warning"
