@@ -22,7 +22,7 @@
 }
 
 .block-overview-tooltip ::ng-deep .fixed-unit-color .symbol {
-  color: #ffffff66;
+  color: var(--transparent-fg);
 }
 
 th,
@@ -60,7 +60,7 @@ td {
   }
 
   .filter-tag {
-    background: #181b2daf;
+    background: var(--block-goggles-overlay);
     border: solid 1px var(--primary);
     color: white;
     transition: background-color 300ms;

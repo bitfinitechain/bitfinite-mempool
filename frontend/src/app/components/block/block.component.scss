@@ -166,7 +166,7 @@ h1 {
 
 .disable {
   font-size: 28px;
-  color: #393e5c73;
+  color: var(--transparent-fg);
   @media (min-width: 768px) {
     font-size: 36px;
   }

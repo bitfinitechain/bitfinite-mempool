@@ -73,7 +73,7 @@
 
   .filter-tag {
     font-size: 0.9em;
-    background: #181b2daf;
+    background: var(--block-goggles-overlay);
     border: solid 1px var(--primary);
     color: white;
     border-radius: 0.2rem;
@@ -114,7 +114,7 @@
     padding: 0.2em 0.5em;
     pointer-events: all;
     line-height: 1.5;
-    background: #181b2daf;
+    background: var(--block-goggles-overlay);
     color: #fff;
 
     &:first-child {

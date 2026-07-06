@@ -85,7 +85,7 @@
             [blockConversion]="blockConversion"
             [satoshis]="value"
             [noFiat]="true"
-            [unitStyle]="{ color: '#ffffff66' }"
+            [unitStyle]="{ color: 'var(--transparent-fg)' }"
           ></app-amount>
         </td>
       </tr>
@@ -93,7 +93,7 @@
         <td class="label" i18n="transaction.fee|Transaction fee">Fee</td>
         <td class="value">
           {{ fee | number }}
-          <span class="symbol" [style.color]="'#ffffff66'" i18n="shared.sats"
+          <span class="symbol" [style.color]="'var(--transparent-fg)'" i18n="shared.sats"
             >sats</span
           >
           &nbsp;
@@ -113,7 +113,7 @@
         <td class="value">
           <app-fee-rate
             [fee]="feeRate"
-            [unitStyle]="'color: #ffffff66'"
+            [unitStyle]="'color: var(--transparent-fg)'"
           ></app-fee-rate>
         </td>
       </tr>
