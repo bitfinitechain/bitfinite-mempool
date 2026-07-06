@@ -6,7 +6,7 @@ $active-bg: #11131f;
 $hover-bg: #12131e;
 $fg: #fff;
 $nav-bg: $bg;
-$title-fg: #3dbe82;
+$title-fg: #5b8dff;
 
 /* Bootstrap */
 $body-bg: $bg;
@@ -16,11 +16,11 @@ $gray-700: $fg;
 
 $nav-tabs-link-active-bg: $active-bg;
 
-$primary: #07805d;
+$primary: #0644f1;
 $secondary: #2d3948;
-$tertiary: #13926e;
+$tertiary: #0a4fd6;
 $success: #1a9436;
-$info: #0ec971;
+$info: #4d7bf5;
 
 $h5-font-size: 1.15rem !default;
 
@@ -105,8 +105,8 @@ $dropdown-link-active-bg: $active-bg;
   --orange: #ff9f00;
   --pink: #d63384;
 
-  --search-button: #13926e;
-  --search-button-border: #0f946e;
-  --search-button-focus: #2b7963;
-  --search-button-shadow: #10a57b80;
+  --search-button: #0a4fd6;
+  --search-button-border: #0644f1;
+  --search-button-focus: #2a4bb8;
+  --search-button-shadow: #0644f180;
 }
