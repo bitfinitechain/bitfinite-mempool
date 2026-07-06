@@ -137,3 +137,8 @@
     width: 33%;
   }
 }
+
+/* BitFinite has no fiat price feed — hide the $0.00 fiat line under fee tiers */
+.fiat {
+  display: none;
+}
