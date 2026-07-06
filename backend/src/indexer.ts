@@ -37,7 +37,19 @@ class Indexer {
   private async checkAvailableBCHNIndexes(): Promise<void> {
     const updatedBCHNIndexes: BCHNIndex[] = [];
 
-    const indexes: any = await bitcoinClient.getIndexInfo();
+    let indexes: any;
+    try {
+      indexes = await bitcoinClient.getIndexInfo();
+    } catch (e) {
+      // BitFinite's node (a BCHN fork) may not expose getindexinfo / coinstatsindex.
+      // A missing RPC method must NOT abort the whole indexer — otherwise the historical
+      // block backfill, difficulty and hashrate indexing never run.
+      logger.debug(
+        `getindexinfo not available (${e instanceof Error ? e.message : e}); skipping BCHN index detection.`
+      );
+      this.bchnIndexes = [];
+      return;
+    }
     for (const indexName in indexes) {
       const newState = {
         name: indexName,
