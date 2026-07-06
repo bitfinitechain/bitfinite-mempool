@@ -1,3 +1,32 @@
-.form-select {
-  width: 120px;
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  background: transparent;
+  color: var(--muted-fg);
+  cursor: pointer;
+  transition:
+    color var(--dur, 0.18s) var(--ease-out, ease),
+    background-color var(--dur, 0.18s) var(--ease-out, ease),
+    border-color var(--dur, 0.18s) var(--ease-out, ease),
+    transform var(--dur-fast, 0.12s) var(--ease-out, ease);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background-color: var(--hover-bg);
+  }
+  &:active {
+    transform: scale(0.94);
+  }
 }

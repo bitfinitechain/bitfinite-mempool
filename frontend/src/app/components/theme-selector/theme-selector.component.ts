@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ThemeService } from '@app/services/theme.service';
 import { Subscription } from 'rxjs';
 
@@ -10,35 +15,30 @@ import { Subscription } from 'rxjs';
   standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThemeSelectorComponent implements OnInit {
-  themeForm: UntypedFormGroup;
-  themes = ['default', 'light'];
+export class ThemeSelectorComponent implements OnInit, OnDestroy {
   themeSubscription: Subscription;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.themeForm = this.formBuilder.group({
-      theme: ['default'],
-    });
-    this.themeForm.get('theme')?.setValue(this.themeService.theme);
-    // Subscribe to theme changes because two instances of this component exist
+    // Two instances of this component may exist; keep both in sync.
     this.themeSubscription = this.themeService.themeChanged$.subscribe(() => {
-      if (this.themeForm.get('theme')?.value !== this.themeService.theme) {
-        this.themeForm.get('theme')?.setValue(this.themeService.theme);
-      }
+      this.cd.markForCheck();
     });
   }
 
-  changeTheme() {
-    const newTheme = this.themeForm.get('theme')?.value;
-    this.themeService.apply(newTheme);
+  get isLight(): boolean {
+    return this.themeService.theme === 'light';
+  }
+
+  toggle(): void {
+    this.themeService.apply(this.isLight ? 'default' : 'light');
   }
 
   ngOnDestroy() {
-    this.themeSubscription.unsubscribe();
+    this.themeSubscription?.unsubscribe();
   }
 }

@@ -7,8 +7,30 @@
   z-index: 100;
 }
 
+li.nav-item {
+  border-radius: var(--radius, 8px);
+  transition: background-color var(--dur, 0.18s) var(--ease-out, ease);
+}
+li.nav-item .nav-link,
+li.nav-item app-svg-images {
+  color: var(--nav-icon);
+  transition: color var(--dur, 0.18s) var(--ease-out, ease);
+}
+/* hover: subtle highlight, no filled box */
+li.nav-item:hover {
+  background-color: var(--hover-bg);
+}
+li.nav-item:hover .nav-link,
+li.nav-item:hover app-svg-images {
+  color: var(--fg);
+}
+/* active: brand-blue icon instead of a filled blue block */
 li.nav-item.active {
-  background-color: var(--tertiary);
+  background-color: transparent;
+}
+li.nav-item.active .nav-link,
+li.nav-item.active app-svg-images {
+  color: var(--primary);
 }
 
 fa-icon {
