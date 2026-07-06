@@ -1037,7 +1037,10 @@ class Blocks {
               },
             ]);
             this.updateTimerProgress(timer, `saved prices for ${this.currentBlockHeight}`);
-          } else {
+          } else if (config.FIAT_PRICE.ENABLED) {
+            // Only wait for the price updater when a fiat price feed is actually configured.
+            // On BitFinite (no fiat market) FIAT_PRICE is disabled, so skip block prices
+            // entirely instead of rescheduling forever and stalling block indexing.
             logger.debug(
               `Cannot save block price for ${blockExtended.height} because the price updater hasnt completed yet. Trying again in 10 seconds.`,
               logger.tags.mining
