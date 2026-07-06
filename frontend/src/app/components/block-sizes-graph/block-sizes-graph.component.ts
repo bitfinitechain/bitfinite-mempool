@@ -160,7 +160,7 @@ export class BlockSizesGraphComponent implements OnInit {
     this.chartOptions = {
       title: title,
       animation: false,
-      color: ['#FDD835', '#D81B60', '#039BE5'],
+      color: ['#5b8dff', '#1e56ff', '#039BE5'],
       grid: {
         top: 30,
         bottom: 70,

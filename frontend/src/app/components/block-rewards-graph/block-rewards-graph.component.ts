@@ -168,8 +168,8 @@ export class BlockRewardsGraphComponent implements OnInit {
       animation: false,
       color: [
         new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: '#FDD835' },
-          { offset: 1, color: '#FB8C00' },
+          { offset: 0, color: '#5b8dff' },
+          { offset: 1, color: '#1e56ff' },
         ]),
         new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: '#C0CA33' },

@@ -348,26 +348,26 @@ export class IncomingTransactionsGraphComponent implements OnInit, OnChanges {
           {
             gt: 1667,
             lte: 2000,
-            color: '#FDD835',
+            color: '#5b8dff',
           },
           {
             gt: 2000,
             lte: 2500,
-            color: '#FFB300',
+            color: '#3b6ef5',
           },
           {
             gt: 2500,
             lte: 3000,
-            color: '#FB8C00',
+            color: '#1e56ff',
           },
           {
             gt: 3000,
             lte: 3500,
-            color: '#F4511E',
+            color: '#0644f1',
           },
           {
             gt: 3500,
-            color: '#D81B60',
+            color: '#1e56ff',
           },
         ],
         outOfRange: {

@@ -282,7 +282,7 @@ export class PoolRankingComponent implements OnInit {
 
     this.chartOptions = {
       animation: false,
-      color: chartColors.filter((color) => color !== '#FDD835'),
+      color: chartColors.filter((color) => color !== '#5b8dff'),
       tooltip: {
         trigger: 'item',
         textStyle: {

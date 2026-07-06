@@ -39,19 +39,19 @@ export class MempoolProgressBarComponent {
     let progressColor = '#4d7bf5';
 
     if (bytesPerSecond > 1667) {
-      progressColor = '#FDD835';
+      progressColor = '#5b8dff';
     }
     if (bytesPerSecond > 2000) {
-      progressColor = '#FFB300';
+      progressColor = '#3b6ef5';
     }
     if (bytesPerSecond > 2500) {
-      progressColor = '#FB8C00';
+      progressColor = '#1e56ff';
     }
     if (bytesPerSecond > 3000) {
-      progressColor = '#F4511E';
+      progressColor = '#0644f1';
     }
     if (bytesPerSecond > 3500) {
-      progressColor = '#D81B60';
+      progressColor = '#1e56ff';
     }
 
     return progressColor;

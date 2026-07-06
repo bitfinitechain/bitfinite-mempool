@@ -378,7 +378,7 @@ export class HashrateChartComponent implements OnInit {
                   },
                   icon: 'roundRect',
                   itemStyle: {
-                    color: '#FFB300',
+                    color: '#3b6ef5',
                   },
                 },
                 {
@@ -397,7 +397,7 @@ export class HashrateChartComponent implements OnInit {
                   },
                   icon: 'roundRect',
                   itemStyle: {
-                    color: '#FFB300',
+                    color: '#3b6ef5',
                   },
                 },
               ],

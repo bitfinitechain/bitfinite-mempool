@@ -204,17 +204,17 @@ export class FeeDistributionGraphComponent
           showAllSymbol: false,
           smooth: true,
           lineStyle: {
-            color: '#D81B60',
+            color: '#1e56ff',
             width: 1,
           },
           itemStyle: {
-            color: '#b71c1c',
+            color: '#0538c9',
             borderWidth: 10,
             borderMiterLimit: 10,
             opacity: 1,
           },
           areaStyle: {
-            color: '#D81B60',
+            color: '#1e56ff',
             opacity: 1,
           },
         },

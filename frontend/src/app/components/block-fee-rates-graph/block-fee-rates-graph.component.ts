@@ -308,19 +308,19 @@ export class BlockFeeRatesGraphComponent implements OnInit {
         ? [
             '#6b6b6b',
             new echarts.graphic.LinearGradient(0, 0, 0, 0.65, [
-              { offset: 0, color: '#F4511E' },
-              { offset: 0.25, color: '#FB8C00' },
-              { offset: 0.5, color: '#FFB300' },
-              { offset: 0.75, color: '#FDD835' },
+              { offset: 0, color: '#0644f1' },
+              { offset: 0.25, color: '#1e56ff' },
+              { offset: 0.5, color: '#3b6ef5' },
+              { offset: 0.75, color: '#5b8dff' },
               { offset: 1, color: '#4d7bf5' },
             ]),
           ]
         : [
-            '#D81B60',
+            '#1e56ff',
             '#8E24AA',
             '#1E88E5',
             '#4d7bf5',
-            '#FDD835',
+            '#5b8dff',
             '#6D4C41',
             '#546E7A',
           ],

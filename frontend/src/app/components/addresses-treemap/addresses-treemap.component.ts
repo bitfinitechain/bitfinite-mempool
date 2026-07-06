@@ -60,7 +60,7 @@ export class AddressesTreemap implements OnChanges {
     const dataItems = data.map((address) => ({
       ...address,
       itemStyle: {
-        color: lerpColor('#1E88E5', '#D81B60', address.stats.tx_count / maxTxs),
+        color: lerpColor('#1E88E5', '#1e56ff', address.stats.tx_count / maxTxs),
       },
     }));
     this.chartOptions = {

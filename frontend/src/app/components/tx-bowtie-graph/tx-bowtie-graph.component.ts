@@ -97,7 +97,7 @@ export class TxBowtieGraphComponent implements OnInit, OnChanges {
       'color-mix(in srgb, var(--mainnet-alt) 1%, transparent)',
     ],
     testnet4: ['#6d9bff', '#10a0af', '#6d9bff00'],
-    scalenet: ['#f0a500', '#c47800', '#f0a50000'],
+    scalenet: ['#3b6ef5', '#0a4fd6', '#3b6ef500'],
     chipnet: ['#d24fc8', '#a84fd2', '#d24fc800'],
   };
 

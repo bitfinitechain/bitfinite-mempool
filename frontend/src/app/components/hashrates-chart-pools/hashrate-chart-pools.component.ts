@@ -246,7 +246,7 @@ export class HashrateChartPoolsComponent implements OnInit {
     this.chartOptions = {
       title: title,
       animation: false,
-      color: chartColors.filter((color) => color !== '#FDD835'),
+      color: chartColors.filter((color) => color !== '#5b8dff'),
       grid: {
         right: this.right,
         left: this.left,

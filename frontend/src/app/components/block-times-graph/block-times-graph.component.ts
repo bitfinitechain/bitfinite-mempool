@@ -187,7 +187,7 @@ export class BlockTimesGraphComponent implements OnInit {
     this.chartOptions = {
       title: title,
       animation: false,
-      color: ['#FDD835', '#FF6B6B', '#4FC3F7'],
+      color: ['#5b8dff', '#6d9bff', '#4FC3F7'],
       legend:
         data.timeDiffs.length === 0
           ? undefined
@@ -346,10 +346,10 @@ export class BlockTimesGraphComponent implements OnInit {
                 type: 'line',
                 lineStyle: {
                   width: 2,
-                  color: '#FF6B6B',
+                  color: '#6d9bff',
                 },
                 itemStyle: {
-                  color: '#FF6B6B',
+                  color: '#6d9bff',
                 },
               },
               {
