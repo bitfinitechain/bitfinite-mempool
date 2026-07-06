@@ -28,7 +28,7 @@ export class ThemeService {
     // theme preference must be a valid known public theme
     if (
       !this.stateService.env.customize?.theme &&
-      !['default', 'contrast', 'softsimon', 'bch', 'bukele', 'light'].includes(
+      !['default', 'light'].includes(
         theme
       )
     ) {

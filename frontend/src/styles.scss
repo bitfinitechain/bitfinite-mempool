@@ -1,12 +1,12 @@
 @use "sass:color";
 
-/* Theme */
-$bg: #1d1f31;
-$active-bg: #11131f;
-$hover-bg: #12131e;
-$fg: #fff;
-$nav-bg: $bg;
-$title-fg: #5b8dff;
+/* Theme — BitFinite dark (zinc-950 ground + brand blue) */
+$bg: #09090b;
+$active-bg: #09090b;
+$hover-bg: #18181b;
+$fg: #fafafa;
+$nav-bg: #09090b;
+$title-fg: #e4e4e7;
 
 $highlight: #5b8dff;
 $highlight-light: #3b6ef5;
@@ -21,10 +21,10 @@ $gray-700: $fg;
 $nav-tabs-link-active-bg: $active-bg;
 
 $primary: #0644f1;
-$secondary: #2d3948;
-$tertiary: #0a4fd6;
-$success: #1466d8;
-$info: #4d7bf5;
+$secondary: #27272a;
+$tertiary: #1e56ff;
+$success: #10b981;
+$info: #5b8dff;
 
 $h5-font-size: 1.15rem !default;
 
@@ -125,28 +125,28 @@ input[type="checkbox"].form-control {
   --link-color: #{$link-color};
   --link-hover-color: #{$link-hover-color};
   --icon: #f1f1f1;
-  --skeleton-bg: #2e314e;
-  --skeleton-bg-light: #36355a;
+  --skeleton-bg: #1f1f23;
+  --skeleton-bg-light: #27272a;
   --form-control-bg: #f0f0f0;
   --form-control-color: #141414;
 
-  --box-bg: #24273e;
-  --stat-box-bg: #181b2d;
+  --box-bg: #18181b;
+  --stat-box-bg: #101014;
   --border-subtle: rgba(255, 255, 255, 0.11);
-  --block-top: #232838;
-  --block-side: #191c27;
-  --block-goggles-overlay: #181b2d7f;
+  --block-top: #1f1f23;
+  --block-side: #141417;
+  --block-goggles-overlay: #1010147f;
   --mempool-block-top: #403834;
   --mempool-block-side: #2d2825;
   --mempool-block-loading: #554b45;
-  --alert-bg: #3a1c61;
-  --navbar-bg: #212121;
+  --alert-bg: #17163a;
+  --navbar-bg: #09090b;
   --transparent-fg: #ffffffbb;
   --footer-fg: rgba(255, 255, 255, 0.4);
-  --fade-out-box-bg-start: rgba(36, 39, 62, 0);
-  --fade-out-box-bg-end: rgba(36, 39, 62, 1);
+  --fade-out-box-bg-start: rgba(24, 24, 27, 0);
+  --fade-out-box-bg-end: rgba(24, 24, 27, 1);
   --opacity: 0.57;
-  --address-chunk-color: #119d90;
+  --address-chunk-color: #6d9bff;
 
   --testnet: #1d486f;
   --testnet4: #b99a0f;
@@ -159,19 +159,19 @@ input[type="checkbox"].form-control {
   --scalenet-alt: #692308;
   --chipnet-alt: #5a1a8a;
 
-  --green: #4d9bff;
-  --red: #dc3545;
-  --yellow: #e9db17;
+  --green: #10b981;
+  --red: #ef4444;
+  --yellow: #eab308;
   --grey: #7e7e7e;
   --tooltip-grey: #f7f7f7;
-  --orange: #ff9f00;
-  --pink: #d63384;
+  --orange: #f59e0b;
+  --pink: #ec4899;
 
   --search-button: #0a4fd6;
   --search-button-border: #0644f1;
   --search-button-focus: #2a4bb8;
-  --search-button-shadow: #10a57b80;
-  --search-button-hover: #21816680;
+  --search-button-shadow: #0644f155;
+  --search-button-hover: #1e56ff40;
 
   --bs-body-color: var(--fg);
   --bs-body-bg: var(--active-bg);
@@ -179,7 +179,7 @@ input[type="checkbox"].form-control {
   --bs-body-color: var(--fg);
   --bs-body-bg: var(--active-bg);
   --bs-card-color: var(--fg);
-  --bs-border-radius: 0.25rem;
+  --bs-border-radius: 0.5rem;
   --bs-btn-border-color: transparent;
   --bs-btn-disabled-border-color: transparent;
   --bs-emphasis-color: var(--active-bg);
@@ -1773,3 +1773,153 @@ a.badge:focus {
 form label:not(.form-check-label):not(.btn) {
   margin-bottom: 0.5rem;
 }
+
+/* ============================================================
+   BitFinite design system — typography · motion · components
+   (appended: later cascade intentionally wins for polish)
+   ============================================================ */
+
+@font-face {
+  font-family: "Geist";
+  src: url("/resources/fonts/geist-sans.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/resources/fonts/geist-mono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", "JetBrains Mono", "Roboto Mono", monospace;
+
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+
+  /* dark neutrals + interaction tokens */
+  --border: #27272a;
+  --border-strong: #3f3f46;
+  --muted-fg: #a1a1aa;
+  --form-control-bg: #18181b;
+  --form-control-color: var(--fg);
+  --primary-hover: #1e56ff;
+}
+
+/* --- Typography --- */
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.006em;
+}
+h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.monospace, code, pre, samp, kbd, .mono, .hash {
+  font-family: var(--font-mono);
+}
+/* line up digits everywhere numbers matter */
+td, th, .fee-text, .amount, .fiat, .difficulty, .sats, .monospace,
+code, .table-cell-height, .progress-bar {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.terminal, .header-bg, .menu-click { letter-spacing: normal; }
+
+/* --- Motion & focus (Emil Kowalski) --- */
+@media (prefers-reduced-motion: no-preference) {
+  .btn, button, [role="button"], a.btn, .tab-button {
+    transition: background-color var(--dur) var(--ease-out),
+                border-color var(--dur) var(--ease-out),
+                color var(--dur) var(--ease-out),
+                box-shadow var(--dur) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out);
+  }
+  .btn:active, button:active, [role="button"]:active { transform: scale(0.97); }
+}
+:where(a, button, .btn, [role="button"], input, select, textarea, .form-control, .form-select):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Cards / boxes --- */
+.box, .card {
+  background-color: var(--box-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28), 0 1px 1px rgba(0, 0, 0, 0.16);
+}
+
+/* --- Inputs / selects --- */
+.form-control, .form-select {
+  background-color: var(--form-control-bg);
+  color: var(--form-control-color);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.form-control::placeholder { color: var(--muted-fg); opacity: 1; }
+.form-control:focus, .form-select:focus {
+  background-color: var(--form-control-bg);
+  color: var(--form-control-color);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(6, 68, 241, 0.28);
+}
+.input-group-text {
+  background-color: var(--box-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--muted-fg);
+}
+
+/* --- Buttons --- */
+.btn {
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+.btn-lg { border-radius: var(--radius-lg); }
+.btn-sm { border-radius: var(--radius-sm); }
+.btn-primary, .btn-purple {
+  --bs-btn-hover-bg: var(--primary-hover);
+  --bs-btn-hover-border-color: var(--primary-hover);
+}
+
+/* --- Pills / badges --- */
+.badge {
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.36em 0.72em;
+}
+
+/* --- Tables --- */
+.table > :not(caption) > * > * { border-color: var(--border); }
+
+/* --- Links --- */
+a { transition: color var(--dur) var(--ease-out); }
+
+/* --- Header / footer chrome --- */
+.sticky-header { border-bottom: 1px solid var(--border); }
+footer { border-top: 1px solid var(--border); }
+.navbar-nav .nav-link { transition: color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out); }
+/* active nav pill: brand blue, rounded */
+li.nav-item.active { border-radius: var(--radius); }
