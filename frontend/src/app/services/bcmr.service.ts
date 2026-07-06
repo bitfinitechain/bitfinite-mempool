@@ -55,7 +55,7 @@ export class BcmrService {
 
     // If not in cache, fetch from API and cache the result
     const httpOptions = {
-      headers: { Accept: 'application/json', 'User-Agent': 'BCHExplorer/3.3' },
+      headers: { Accept: 'application/json', 'User-Agent': 'BitFiniteExplorer/3.3' },
       responseType: 'json' as const,
     };
     // Slightly different end-points between different BCMR services

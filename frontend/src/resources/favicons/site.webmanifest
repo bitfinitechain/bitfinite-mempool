@@ -1,6 +1,6 @@
 {
-    "name": "BCH Explorer",
-    "short_name": "BCH Explorer",
+    "name": "BitFinite Explorer",
+    "short_name": "BitFinite",
     "icons": [
         {
             "src": "/resources/favicons/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#000000",
-    "background_color": "#000000",
+    "theme_color": "#0644f1",
+    "background_color": "#1d1f31",
     "display": "standalone"
 }
