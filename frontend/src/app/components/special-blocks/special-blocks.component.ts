@@ -30,7 +30,7 @@ export class SpecialBlocksComponent implements OnInit {
   ngOnInit(): void {
     this.seoService.setTitle($localize`Special Blocks`);
     this.seoService.setDescription(
-      $localize`Significant Bitcoin Cash blocks, including halvings, hard forks, protocol upgrades, and other milestones — past and future.`
+      $localize`Significant BitFinite blocks, including halvings, hard forks, protocol upgrades, and other milestones — past and future.`
     );
 
     const activeNetwork = this.getActiveNetworkKey();

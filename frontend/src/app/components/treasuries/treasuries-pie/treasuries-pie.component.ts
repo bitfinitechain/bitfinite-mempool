@@ -190,7 +190,7 @@ export class TreasuriesPieComponent implements OnChanges {
               entry.balance / 100_000_000,
               this.locale,
               '1.3-3'
-            )} BCH<br>`;
+            )} BFX<br>`;
           },
         },
         data: entry.treasury,
@@ -228,7 +228,7 @@ export class TreasuriesPieComponent implements OnChanges {
               otherEntry.balance / 100_000_000,
               this.locale,
               '1.3-3'
-            )} BCH<br>`;
+            )} BFX<br>`;
           },
         },
       } as PieSeriesOption);

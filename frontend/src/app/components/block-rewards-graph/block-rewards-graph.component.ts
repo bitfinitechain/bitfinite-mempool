@@ -78,7 +78,7 @@ export class BlockRewardsGraphComponent implements OnInit {
       $localize`:@@8ba8fe810458280a83df7fdf4c614dfc1a826445:Block Rewards`
     );
     this.seoService.setDescription(
-      $localize`See Bitcoin Cash block rewards in BCH and USD visualized over time. Block rewards are the total funds miners earn from the block subsidy and fees.`
+      $localize`See BitFinite block rewards in BFX and USD visualized over time. Block rewards are the total funds miners earn from the block subsidy and fees.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('3m');
     this.radioGroupForm = this.formBuilder.group({
@@ -213,7 +213,7 @@ export class BlockRewardsGraphComponent implements OnInit {
                 tick.data[1],
                 this.locale,
                 '1.3-3'
-              )} BCH<br>`;
+              )} BFX<br>`;
             } else if (tick.seriesIndex === 1) {
               tooltip += `${tick.marker} ${
                 tick.seriesName
@@ -246,7 +246,7 @@ export class BlockRewardsGraphComponent implements OnInit {
               top: 0,
               data: [
                 {
-                  name: 'Rewards BCH',
+                  name: 'Rewards BFX',
                   inactiveColor: 'rgb(110, 112, 121)',
                   textStyle: {
                     color: 'var(--fg)',
@@ -265,7 +265,7 @@ export class BlockRewardsGraphComponent implements OnInit {
               selected: JSON.parse(
                 this.storageService?.getValue('block_rewards_legend') || 'null'
               ) ?? {
-                'Rewards BCH': true,
+                'Rewards BFX': true,
                 ['Rewards ' + this.currency]: true,
               },
             },
@@ -278,7 +278,7 @@ export class BlockRewardsGraphComponent implements OnInit {
                 axisLabel: {
                   color: 'rgb(110, 112, 121)',
                   formatter: (val) => {
-                    return `${val} BCH`;
+                    return `${val} BFX`;
                   },
                 },
                 min: (value) => {
@@ -327,7 +327,7 @@ export class BlockRewardsGraphComponent implements OnInit {
                 legendHoverLink: false,
                 zlevel: 0,
                 yAxisIndex: 0,
-                name: 'Rewards BCH',
+                name: 'Rewards BFX',
                 data: data.blockRewards,
                 type: 'line',
                 smooth: 0.25,

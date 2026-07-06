@@ -73,7 +73,7 @@ export class BlockVolumeGraphComponent implements OnInit {
 
     this.seoService.setTitle($localize`Block Volume`);
     this.seoService.setDescription(
-      $localize`See the total UTXO throughput and BCH transaction volume per Bitcoin Cash block over time.`
+      $localize`See the total UTXO throughput and BFX transaction volume per BitFinite block over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     this.radioGroupForm = this.formBuilder.group({
@@ -204,7 +204,7 @@ export class BlockVolumeGraphComponent implements OnInit {
 
           for (const tick of ticks) {
             if (tick.seriesIndex === 0 || tick.seriesIndex === 1) {
-              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.2-2')} BCH`;
+              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.2-2')} BFX`;
             } else {
               tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.0-0')}`;
             }
@@ -228,13 +228,13 @@ export class BlockVolumeGraphComponent implements OnInit {
         top: 0,
         data: [
           {
-            name: $localize`Output Volume (BCH)`,
+            name: $localize`Output Volume (BFX)`,
             inactiveColor: 'var(--grey)',
             textStyle: { color: 'var(--fg)' },
             icon: 'roundRect',
           },
           {
-            name: $localize`Input Volume (BCH)`,
+            name: $localize`Input Volume (BFX)`,
             inactiveColor: 'var(--grey)',
             textStyle: { color: 'var(--fg)' },
             icon: 'roundRect',
@@ -255,8 +255,8 @@ export class BlockVolumeGraphComponent implements OnInit {
         selected: JSON.parse(
           this.storageService?.getValue('block_volume_legend') || 'null'
         ) ?? {
-          [$localize`Output Volume (BCH)`]: true,
-          [$localize`Input Volume (BCH)`]: false,
+          [$localize`Output Volume (BFX)`]: true,
+          [$localize`Input Volume (BFX)`]: false,
           [$localize`UTXO Inputs`]: true,
           [$localize`UTXO Outputs`]: true,
         },
@@ -282,9 +282,9 @@ export class BlockVolumeGraphComponent implements OnInit {
                 axisLabel: {
                   color: 'var(--grey)',
                   formatter: (val) => {
-                    if (val >= 1e6) return (val / 1e6).toFixed(1) + 'M BCH';
-                    if (val >= 1e3) return (val / 1e3).toFixed(1) + 'K BCH';
-                    return val.toFixed(0) + ' BCH';
+                    if (val >= 1e6) return (val / 1e6).toFixed(1) + 'M BFX';
+                    if (val >= 1e3) return (val / 1e3).toFixed(1) + 'K BFX';
+                    return val.toFixed(0) + ' BFX';
                   },
                 },
                 splitLine: {
@@ -311,7 +311,7 @@ export class BlockVolumeGraphComponent implements OnInit {
           ? []
           : [
               {
-                name: $localize`Output Volume (BCH)`,
+                name: $localize`Output Volume (BFX)`,
                 showSymbol: false,
                 symbol: 'none',
                 data: data.outputAmts,
@@ -322,7 +322,7 @@ export class BlockVolumeGraphComponent implements OnInit {
                 areaStyle: { color: '#648FFF', opacity: 0.25 },
               },
               {
-                name: $localize`Input Volume (BCH)`,
+                name: $localize`Input Volume (BFX)`,
                 showSymbol: false,
                 symbol: 'none',
                 data: data.inputAmts,

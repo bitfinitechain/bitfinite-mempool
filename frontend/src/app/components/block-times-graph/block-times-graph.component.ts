@@ -20,7 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 import { download, formatterXAxis } from '@app/shared/graphs.utils';
 import { StateService } from '@app/services/state.service';
 
-const TARGET_BLOCK_TIME_SECONDS = 600; // BCH target block interval; update if consensus changes
+const TARGET_BLOCK_TIME_SECONDS = 600; // BFX target block interval; update if consensus changes
 
 @Component({
   selector: 'app-block-times-graph',
@@ -76,7 +76,7 @@ export class BlockTimesGraphComponent implements OnInit {
 
     this.seoService.setTitle($localize`Block Time Variation`);
     this.seoService.setDescription(
-      $localize`See Bitcoin Cash block time variation over time.`
+      $localize`See BitFinite block time variation over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     this.radioGroupForm = this.formBuilder.group({

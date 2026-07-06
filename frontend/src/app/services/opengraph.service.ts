@@ -27,7 +27,7 @@ export class OpenGraphService {
     const initialOgImageTag = metaService.getTag("property='og:image'");
     this.defaultImageUrl =
       initialOgImageTag?.content ||
-      'https://bchexplorer.cash/resources/previews/explorer_preview.png';
+      'https://mempool.bitfinitechain.org/resources/previews/explorer_preview.png';
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

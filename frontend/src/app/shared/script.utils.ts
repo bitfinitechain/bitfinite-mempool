@@ -399,7 +399,7 @@ export function parseTapscriptMultisig(
     if (!/^[0-9a-fA-F]{64}$/.test(pubkey)) {
       return undefined;
     }
-    // OP_CHECKSIGADD is taproot, BCH doesn't have OP_CHECKSIGADD
+    // OP_CHECKSIGADD is taproot, BFX doesn't have OP_CHECKSIGADD
     if (sigOp !== (i === 0 ? 'OP_CHECKSIG' : 'OP_CHECKSIGADD')) {
       return undefined;
     }

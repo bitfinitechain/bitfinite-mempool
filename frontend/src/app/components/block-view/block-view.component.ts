@@ -134,7 +134,7 @@ export class BlockViewComponent implements OnInit, OnDestroy {
           $localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`
         );
         this.seoService.setDescription(
-          $localize`See size, fee range, included transactions, audit (expected vs actual), and more for Bitcoin Cash${seoDescriptionNetwork(
+          $localize`See size, fee range, included transactions, audit (expected vs actual), and more for BitFinite${seoDescriptionNetwork(
             this.stateService.network
           )} block ${block.height}:BLOCK_HEIGHT: (${block.id}:BLOCK_ID:).`
         );

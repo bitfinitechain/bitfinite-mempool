@@ -45,7 +45,7 @@
         (click)="updateDisplayAddress('bch')"
       />
       <label class="btn btn-sm btn-outline-primary" for="addr-type-bch"
-        >BCH Address</label
+        >BFX Address</label
       >
       <input
         type="radio"
@@ -152,7 +152,7 @@
 
     <!--
     Would be cool if we can support balance graph as well as UTXO,
-    however this was only supported by Esplora backend, can we make it happen with Fulcrum and/or BCHN?
+    however this was only supported by Esplora backend, can we make it happen with Fulcrum and/or BitFinite Node?
    
     <ng-container *ngIf="address && transactions && transactions.length > 2">
       <br>
@@ -333,13 +333,13 @@
             >.</i
           >
           <br /><br />
-          Consider viewing this address on the official BCH Explorer website
+          Consider viewing this address on the official BitFinite Explorer website
           instead:
           <br />
           <a
-            href="https://bchexplorer.cash/address/{{ addressString }}"
+            href="https://mempool.bitfinitechain.org/address/{{ addressString }}"
             target="_blank"
-            >https://bchexplorer.cash/address/{{ addressString }}</a
+            >https://mempool.bitfinitechain.org/address/{{ addressString }}</a
           >
           <!-- <br>
           <a href="http://sometoraddress.onion/address/{{ addressString }}" target="_blank">http://sometoraddress.onion/address/{{ addressString }}</a> -->

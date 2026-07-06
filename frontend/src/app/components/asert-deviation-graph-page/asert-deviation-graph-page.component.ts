@@ -79,7 +79,7 @@ export class AsertDeviationGraphPageComponent implements OnInit {
   ngOnInit(): void {
     this.seoService.setTitle($localize`Difficulty Adjustment Deviation`);
     this.seoService.setDescription(
-      $localize`View Bitcoin Cash ASERT difficulty adjustment deviation over time.`
+      $localize`View BitFinite ASERT difficulty adjustment deviation over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('1m');
     this.radioGroupForm = this.formBuilder.group({

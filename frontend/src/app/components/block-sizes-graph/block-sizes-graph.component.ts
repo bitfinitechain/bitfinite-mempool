@@ -75,7 +75,7 @@ export class BlockSizesGraphComponent implements OnInit {
 
     this.seoService.setTitle($localize`Block Sizes`);
     this.seoService.setDescription(
-      $localize`See Bitcoin Cash block sizes (MB) visualized over time.`
+      $localize`See BitFinite block sizes (MB) visualized over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     this.radioGroupForm = this.formBuilder.group({

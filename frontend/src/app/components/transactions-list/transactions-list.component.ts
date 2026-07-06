@@ -218,7 +218,7 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
       }
     );
 
-    // Disable this check in BCH
+    // Disable this check in BFX
     // this.updateAddressSimilarities();
   }
 
@@ -276,7 +276,7 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (changes.transactions || changes.addresses) {
       // this.similarityMatches.clear();
-      // Disable this check in BCH
+      // Disable this check in BFX
       // this.updateAddressSimilarities();
       if (!this.transactions || !this.transactions.length) {
         return;

@@ -16,7 +16,7 @@
         @if (!enterpriseInfo || !enterpriseInfo.dualLogo) {
           <div [ngSwitch]="network" class="network-label">
             <span *ngSwitchCase="'chipnet'" class="network chipnet"
-              ><span class="name">Bitcoin Cash Chipnet</span
+              ><span class="name">BitFinite Chipnet</span
               ><app-svg-images
                 name="testnet4"
                 width="35"
@@ -27,7 +27,7 @@
               ></app-svg-images
             ></span>
             <span *ngSwitchCase="'scalenet'" class="network testnet"
-              ><span class="name">Bitcoin Cash Scalenet</span
+              ><span class="name">BitFinite Scalenet</span
               ><app-svg-images
                 name="testnet4"
                 width="35"
@@ -49,7 +49,7 @@
               ></app-svg-images
             ></span>
             <span *ngSwitchDefault class="network mainnet"
-              ><span class="name">Bitcoin Cash</span
+              ><span class="name">BitFinite</span
               ><app-svg-images
                 name="bitcoin"
                 width="35"

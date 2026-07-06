@@ -3,7 +3,7 @@ import { Env } from '@app/services/state.service';
 // all base58 characters
 export const BASE58_CHARS = `[a-km-zA-HJ-NP-Z1-9]`;
 
-// CashAddr character set (Bitcoin Cash address format)
+// CashAddr character set (BitFinite address format)
 export const CASHADDR_CHARS = `[023456789acdefghjklmnpqrstuvwxyz]`;
 
 // all bech32 characters (after the separator)

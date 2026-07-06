@@ -76,7 +76,7 @@ export class MempoolBlockComponent implements OnInit, OnDestroy {
             this.ordinal$.next(ordinal);
             this.seoService.setTitle(ordinal);
             this.seoService.setDescription(
-              $localize`See stats for Bitcoin Cash${seoDescriptionNetwork(
+              $localize`See stats for BitFinite${seoDescriptionNetwork(
                 this.stateService.network
               )} transactions in the mempool: fee range, aggregate size, and more. Mempool blocks are updated in real-time as the network receives new transactions.`
             );

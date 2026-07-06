@@ -45,7 +45,7 @@
     &lrm;{{ addPlus && satoshis >= 0 ? "+" : ""
     }}{{ satoshis / 100000000 | number: digitsInfo }}
     <span class="symbol" [style]="unitStyle">
-      <ng-container *ngTemplateOutlet="prefix"></ng-container>BCH
+      <ng-container *ngTemplateOutlet="prefix"></ng-container>BFX
     </span>
   } @else {
     @if (digitsInfo === "1.8-8") {

@@ -83,7 +83,7 @@ export interface MempoolBlockDeltaCompressed {
   changed: MempoolDeltaChange[];
 }
 
-// Should be removed in BCH.. Since we do not have accelerations
+// Should be removed in BFX.. Since we do not have accelerations
 export interface AccelerationDelta {
   removed: string[];
   reset?: boolean;

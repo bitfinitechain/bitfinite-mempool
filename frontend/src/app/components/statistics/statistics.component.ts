@@ -201,7 +201,7 @@ export class StatisticsComponent implements OnInit {
    */
   capExtremeBytesValues() {
     if (this.stateService.network.length !== 0) {
-      return; // Only cap on Bitcoin Cash mainnet
+      return; // Only cap on BitFinite mainnet
     }
 
     let capRatio = 10;

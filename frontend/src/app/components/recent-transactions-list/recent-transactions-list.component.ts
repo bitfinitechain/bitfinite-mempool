@@ -127,7 +127,7 @@ export class RecentTransactionsList implements OnInit, OnDestroy {
         $localize`:@@recent-transactions-title:Recent Transactions`
       );
       this.seoService.setDescription(
-        $localize`:@@meta.description.recent-transactions:See the most recent transactions on the Bitcoin Cash${seoDescriptionNetwork(this.stateService.network)} network, updated in real-time.`
+        $localize`:@@meta.description.recent-transactions:See the most recent transactions on the BitFinite${seoDescriptionNetwork(this.stateService.network)} network, updated in real-time.`
       );
     }
   }

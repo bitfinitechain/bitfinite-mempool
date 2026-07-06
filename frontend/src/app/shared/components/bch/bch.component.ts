@@ -42,7 +42,7 @@ export class BchComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.satoshis >= 1_000_000) {
       this.value = this.satoshis / 100_000_000;
-      this.unit = 'BCH';
+      this.unit = 'BFX';
     } else {
       this.value = Math.round(this.satoshis);
       this.unit = 'sats';

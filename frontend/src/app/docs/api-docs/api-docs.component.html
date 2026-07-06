@@ -46,7 +46,7 @@
           <ng-template #faqDisclaimer i18n="faq.big-disclaimer"
             ><p>
               <b
-                >bchexplorer.cash merely provides data about the Bitcoin Cash
+                >mempool.bitfinitechain.org merely provides data about the BitFinite
                 network.</b
               >
               It cannot help you with retrieving funds, wallet issues, etc.
@@ -124,7 +124,7 @@
           Below is a reference for the
           {{
             network.val === ""
-              ? "Bitcoin Cash"
+              ? "BitFinite"
               : network.val.charAt(0).toUpperCase() + network.val.slice(1)
           }}
           <ng-container i18n="api-docs.title">REST API service</ng-container>.
@@ -266,7 +266,7 @@
           Below is a reference for the
           {{
             network.val === ""
-              ? "Bitcoin Cash"
+              ? "BitFinite"
               : network.val.charAt(0).toUpperCase() + network.val.slice(1)
           }}
           Websocket service running at {{ websocketUrl(network.val) }}.
@@ -405,14 +405,14 @@
 <ng-template type="what-are-bytes">
   <p>
     Bytes (B) are used to measure the size of transactions and blocks on the
-    Bitcoin Cash network.
+    BitFinite network.
   </p>
   <p>
-    A Bitcoin Cash transaction's size in the blockchain is <i>not</i> determined
-    how much Bitcoin Cash it transfers—instead, a transaction's size is
+    A BitFinite transaction's size in the blockchain is <i>not</i> determined
+    how much BitFinite it transfers—instead, a transaction's size is
     determined by technical factors such as how many inputs and outputs it has,
     how many signatures it has, and the format it uses (normal, etc). Since
-    space in the Bitcoin Cash blockchain is limited, bigger transactions pay
+    space in the BitFinite blockchain is limited, bigger transactions pay
     more in mining fees than smaller transactions.
   </p>
   <p>
@@ -425,11 +425,11 @@
 
 <ng-template type="what-is-sb">
   <p>
-    The priority of a pending Bitcoin Cash transaction is determined by its
+    The priority of a pending BitFinite transaction is determined by its
     feerate. Feerates are measured in sat/B.
   </p>
   <p>
-    Using a higher sat/B feerate for a Bitcoin Cash transaction will generally
+    Using a higher sat/B feerate for a BitFinite transaction will generally
     result in quicker confirmation than using a lower feerate. But feerates
     change all the time, so it's important to check suggested feerates right
     before making a transaction to
@@ -437,7 +437,7 @@
       [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="why-is-transaction-stuck-in-mempool"
       >avoid it from getting stuck</a
-    >. That being said, in Bitcoin Cash the fees are low, so you can usually get
+    >. That being said, in BitFinite the fees are low, so you can usually get
     away with a lower feerate.
   </p>
   <p>
@@ -465,12 +465,12 @@
     >.
   </p>
   <p>
-    There's no need to panic—a Bitcoin Cash transaction will always either
+    There's no need to panic—a BitFinite transaction will always either
     confirm completely (or not at all) at some point. As long as you have your
     transaction's ID, you can always see where your funds are.
   </p>
   <p>
-    This site only provides data about the Bitcoin Cash network. To get help
+    This site only provides data about the BitFinite network. To get help
     with a transaction, get in touch with the entity that helped make the
     transaction (wallet software, exchange company, etc).
   </p>
@@ -481,13 +481,13 @@
     To get your transaction confirmed quicker, you can set a higher feerate.
   </p>
   <p>
-    Due to its increased block capacity, Bitcoin Cash maintains high throughput
+    Due to its increased block capacity, BitFinite maintains high throughput
     during periods of peak demand. Meaning your transaction will most likely
     end-up in the next block.
   </p>
 
   <p>
-    Furthermore, Bitcoin Cash has
+    Furthermore, BitFinite has
     <a
       [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="what-is-zero-confirmation"
@@ -501,13 +501,13 @@
 
 <ng-template type="how-prevent-stuck-transaction">
   <p>
-    Bitcoin Cash has big blocks with enough space to handle a lot of
+    BitFinite has big blocks with enough space to handle a lot of
     transactions even during high traffic. So, your transaction will most likely
     confirm within the next block and will never get stuck in the mempool.
   </p>
 
   <p>
-    You can look at the BCH Explorer's fee estimates on the
+    You can look at the BitFinite Explorer's fee estimates on the
     <a [routerLink]="['/' | relativeUrl]">front page</a>. If you want to have an
     idea how high you need to set your sat/B.
   </p>
@@ -533,7 +533,7 @@
     See real-time fee estimates on
     <a [routerLink]="['/' | relativeUrl]">the main dashboard</a>.
   </p>
-  <p>Here is an overview of BCH Exploer's feerate suggestions:</p>
+  <p>Here is an overview of BitFinite Explorer's feerate suggestions:</p>
   <ul>
     <li>
       <b>High Priority.</b> This figure is the median feerate of transactions in
@@ -577,7 +577,7 @@
   <p>
     In all cases, the suggested feerate is adjusted lower if any of the mempool
     blocks involved in the calculation are not full (example: if there is only 1
-    mempool block that's less than half-full, BCH Explorer will suggest a
+    mempool block that's less than half-full, BitFinite Explorer will suggest a
     feerate of 1 sat/B—not the median feerate of transactions in the block).
   </p>
   <p>
@@ -588,13 +588,13 @@
     block, etc.
   </p>
   <p>
-    Ultimately, the Bitcoin Cash network is not perfectly predictable, so fee
+    Ultimately, the BitFinite network is not perfectly predictable, so fee
     estimation cannot be perfectly precise.
   </p>
   <p>
-    Use BCH Explorer's feerate suggestions as a guide, and understand that they
+    Use BitFinite Explorer's feerate suggestions as a guide, and understand that they
     do not guarantee transaction confirmation in any period of time. However, in
-    Bitcoin Cash the fees are low and the block sizes are big enough that most
+    BitFinite the fees are low and the block sizes are big enough that most
     transations are confirmed within the next block.
   </p>
 </ng-template>
@@ -607,13 +607,13 @@
 
 <ng-template type="what-is-full-mempool">
   <p>
-    When a Bitcoin Cash transaction is made, it is stored in a Bitcoin Cash
+    When a BitFinite transaction is made, it is stored in a BitFinite
     node's mempool before it is confirmed into a block. When the rate of
     incoming transactions exceeds the rate transactions are confirmed, the
     mempool grows in size.
   </p>
   <p>
-    By default, Bitcoin Cash Node allocates 320MB of memory for its mempool, so
+    By default, BitFinite Node allocates 320MB of memory for its mempool, so
     when a node's mempool grows big enough to use all 320MB of allocated memory,
     we say it's "full".
   </p>
@@ -622,7 +622,7 @@
     rejecting new transactions below a certain feerate threshold—so when this is
     the case, be extra sure to set a feerate that (at a minimum) exceeds that
     threshold. The current threshold feerate (and memory usage) are displayed
-    right on BCH Explorer's front page.
+    right on BitFinite Explorer's front page.
   </p>
 </ng-template>
 
@@ -644,11 +644,11 @@
 <ng-template type="what-are-cashtokens">
   <p>
     <strong>CashTokens</strong> are efficient, native
-    <strong>layer-1</strong> tokens built directly into the Bitcoin Cash
+    <strong>layer-1</strong> tokens built directly into the BitFinite
     network. These are digital assets that can be created, owned, and utilized
     by individuals, organizations, or decentralized applications on the
-    decentralized Bitcoin Cash network. CashTokens are optional to use in the
-    Bitcoin Cash network.
+    decentralized BitFinite network. CashTokens are optional to use in the
+    BitFinite network.
   </p>
   <p>
     <strong>Types of CashTokens:</strong>
@@ -688,7 +688,7 @@
 <ng-template type="what-is-p2s">
   <p>
     <strong>P2S (Pay to Script)</strong> is a new output type introduced in
-    Bitcoin Cash's <strong>May 2026 network upgrade</strong>. It allows the full
+    BitFinite's <strong>May 2026 network upgrade</strong>. It allows the full
     locking script to be embedded directly in the output; without a hash
     wrapper, up to 201 bytes in length.
   </p>
@@ -731,15 +731,15 @@
 
 <ng-template type="what-is-zero-confirmation">
   <p>
-    Zero-confirmation (0-conf) transactions are Bitcoin Cash transactions that
+    Zero-confirmation (0-conf) transactions are BitFinite transactions that
     are processed and confirmed almost instantly, without waiting for the block
     confirmation process. This allows for near-instant payment processing like
     in-store purchases or online transactions where speed is important.
   </p>
   <p>
-    Bitcoin Cash has <strong>no</strong> RBF, CPFP or accelerators, meaning zero
-    confirmations are safe enough for small amounts. While small BCH amounts are
-    safe for 0-conf, we advise on multiple confirmations for (very) large BCH
+    BitFinite has <strong>no</strong> RBF, CPFP or accelerators, meaning zero
+    confirmations are safe enough for small amounts. While small BFX amounts are
+    safe for 0-conf, we advise on multiple confirmations for (very) large BFX
     amounts.
   </p>
 </ng-template>
@@ -748,11 +748,11 @@
   <p>
     <strong>ABLA</strong> stands for
     <strong>Adaptive Blocksize Limit Algorithm</strong>, which is the mechanism
-    that Bitcoin Cash uses to automatically adjust the maximum block size limit
+    that BitFinite uses to automatically adjust the maximum block size limit
     based on network demand.
   </p>
   <p>
-    Bitcoin Cash implemented ABLA to allow the block size to grow organically as
+    BitFinite implemented ABLA to allow the block size to grow organically as
     the network scales. The algorithm monitors block sizes over time and
     gradually increases the limit when blocks are consistently full, ensuring
     the network can handle increased transaction volume without requiring hard
@@ -768,7 +768,7 @@
     <li>Ensuring the network can scale to meet growing demand</li>
   </ul>
   <p>
-    This approach allows Bitcoin Cash to maintain low fees and reliable
+    This approach allows BitFinite to maintain low fees and reliable
     transaction confirmation times even as adoption grows, making it suitable
     for global payment applications.
   </p>
@@ -776,22 +776,22 @@
 
 <ng-template type="how-big-is-mempool-used-by-bch-explorer">
   <p>
-    bchexplorer.cash uses multiple Bitcoin Cash nodes to obtain data: some with
+    mempool.bitfinitechain.org uses multiple BitFinite nodes to obtain data: some with
     the default 320MB mempool memory limit (call these Small Nodes) and others
     with a much larger mempool memory limit (call these Big Nodes).
   </p>
   <p>
-    Many nodes on the Bitcoin Cash network are configured to run with the
+    Many nodes on the BitFinite network are configured to run with the
     default 320MB mempool memory setting. When all 320MB of memory are used up,
     such nodes will reject transactions below a certain threshold feerate.
-    Running Small Nodes allows bchexplorer.cash to tell you what this threshold
+    Running Small Nodes allows mempool.bitfinitechain.org to tell you what this threshold
     feerate is—this is the "Purging" feerate that shows on the front page when
     mempools are full, which you can use to be reasonably sure that your
     transaction will be widely propagated.
   </p>
   <p>
     Big Node mempools are so big that they don't need to reject (or purge)
-    transactions. Such nodes allow for bchexplorer.cash to provide you with
+    transactions. Such nodes allow for mempool.bitfinitechain.org to provide you with
     information on any pending transaction it has received—no matter how
     congested the mempool is, and no matter how low-feerate or low-priority the
     transaction is.
@@ -801,22 +801,22 @@
 <ng-template type="what-is-memory-usage">
   <p>
     Memory usage on the front page refers to the real-time amount of system
-    memory used by a Bitcoin Cash node's mempool. This memory usage number is
+    memory used by a BitFinite node's mempool. This memory usage number is
     always higher than the total size of all pending transactions in the mempool
-    due to indexes, pointers, and other overhead used by Bitcoin Cash Node for
+    due to indexes, pointers, and other overhead used by BitFinite Node for
     storage and processing.
   </p>
   <p>
-    bchexplorer.cash shows the memory usage of a Bitcoin Cash node that has a
+    mempool.bitfinitechain.org shows the memory usage of a BitFinite node that has a
     very high mempool memory limit. As a result, when mempools fill up, you may
-    notice memory usage on bchexplorer.cash go beyond 320MB. This is not a
-    mistake—this memory usage figure is high because it's for a Bitcoin Cash
+    notice memory usage on mempool.bitfinitechain.org go beyond 320MB. This is not a
+    mistake—this memory usage figure is high because it's for a BitFinite
     node that isn't rejecting (or evicting) transactions. Consider it to be
     another data point to give you an idea of how congested the mempool is
     relative to the default memory limit of 320MB.
   </p>
   <p>
-    A Bitcoin Cash node running the default 320MB mempool memory limit, like
+    A BitFinite node running the default 320MB mempool memory limit, like
     most Raspberry Pi nodes, will never go past 320MB of memory usage.
   </p>
 </ng-template>
@@ -826,11 +826,11 @@
     Block validation rules do not strictly require that a block's timestamp be
     more recent than the timestamp of the block preceding it. Without a central
     authority, it's impossible to know what the exact correct time is. Instead,
-    the Bitcoin Cash protocol requires that a block's timestamp meet certain
+    the BitFinite protocol requires that a block's timestamp meet certain
     requirements. One of those requirements is that a block's timestamp cannot
     be older than the median timestamp of the 12 blocks that came before it. See
     more details
-    <a href="https://en.Bitcoin Cash.it/wiki/Block_timestamp" target="_blank"
+    <a href="https://en.BitFinite.it/wiki/Block_timestamp" target="_blank"
       >here</a
     >.
   </p>
@@ -842,7 +842,7 @@
 
 <ng-template type="why-dont-fee-ranges-match">
   <p>
-    BCH Explorer aims to show you the <i>effective feerate</i> range for
+    BitFinite Explorer aims to show you the <i>effective feerate</i> range for
     blocks—how much would you actually need to pay to get a transaction included
     in a block.
   </p>
@@ -860,12 +860,12 @@
 
 <ng-template type="how-do-block-audits-work">
   <p>
-    A block audit visually compares BCH Explorer's expected block to the actual
+    A block audit visually compares BitFinite Explorer's expected block to the actual
     block for a particular block height.
   </p>
   <p>
-    How is the expected block determined? BCH Explorer monitors its view of the
-    mempool and runs a re-implementation of Bitcoin Cash Node's transaction
+    How is the expected block determined? BitFinite Explorer monitors its view of the
+    mempool and runs a re-implementation of BitFinite Node's transaction
     selection algorithm to determine the transactions it expects to see in
     upcoming blocks (<a
       href="https://gitlab.melroy.org/bitcoincash/bitcoin-cash-explorer/blob/main/backend/src/api/mempool-blocks.ts"
@@ -877,7 +877,7 @@
     near real-time.
   </p>
   <p>
-    At the moment a new block is mined, BCH Explorer saves a snapshot of its
+    At the moment a new block is mined, BitFinite Explorer saves a snapshot of its
     projected block template for the next block. We call this snapshot the
     <b>expected block</b> for the block height in question, and it serves as the
     basis for the block audit.
@@ -889,7 +889,7 @@
       >The purpose of block audits is to deduce when miners intentionally
       include or exclude transactions from blocks they mine.</b
     >
-    Since this information cannot be precisely known, BCH Explorer uses a
+    Since this information cannot be precisely known, BitFinite Explorer uses a
     handful of heuristics to accomplish this.
   </p>
   <p>
@@ -927,12 +927,12 @@
       ><code>Recently broadcasted</code>
       <p>
         A transaction is highlighted dark pink if it is present in the expected
-        block, not present in the actual block, and was first seen by BCH
-        Explorer's Bitcoin Cash node within 3 minutes of the block being mined.
+        block, not present in the actual block, and was first seen by BFX
+        Explorer's BitFinite node within 3 minutes of the block being mined.
       </p>
       <p>
         Due to network latency and other factors, it can take time for a miner's
-        Bitcoin Cash nodes to receive a transaction, so we do not assume a miner
+        BitFinite nodes to receive a transaction, so we do not assume a miner
         has intentionally excluded such a transaction from a block.
       </p>
       <p>
@@ -1019,7 +1019,7 @@
   </p>
   <p class="note">
     Because of this feature's resource usage and availability requirements, it
-    is only supported on official bchexplorer.cash instance.
+    is only supported on official mempool.bitfinitechain.org instance.
   </p>
 </ng-template>
 
@@ -1033,7 +1033,7 @@
   </p>
   <p>
     How is it calculated? Let <span class="math">s<sub>expected</sub></span> be
-    the set of all transactions in BCH Explorer's expected block and let
+    the set of all transactions in BitFinite Explorer's expected block and let
     <span class="math">s<sub>actual</sub></span> be the set of all transactions
     in the actual block. Then let <span class="math">n</span> be the number of
     all transactions in both <span class="math">s<sub>expected</sub></span> and
@@ -1042,7 +1042,7 @@
   </p>
   <p>
     Furthermore, let <span class="math">r</span> be the number of transactions
-    BCH Explorer deduces were
+    BitFinite Explorer deduces were
     <a
       [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="how-do-block-audits-work"
@@ -1092,7 +1092,7 @@
   </p>
   <p class="note">
     Because of this feature's resource usage and availability requirements, it
-    is only supported on official bchexplorer.cash instance.
+    is only supported on official mempool.bitfinitechain.org instance.
   </p>
 </ng-template>
 
@@ -1163,13 +1163,13 @@
 
     <dt>Data</dt>
     <dd>
-      Different methods of embedding arbitrary data in a Bitcoin Cash
+      Different methods of embedding arbitrary data in a BitFinite
       transaction.
       <dl>
         <dt>OP_RETURN</dt>
         <dd>
           A standard way to embed data in a transaction using the OP_RETURN
-          opcode. Bitcoin Cash increased the maximum size of the data from 80
+          opcode. BitFinite increased the maximum size of the data from 80
           bytes to 220 bytes.
         </dd>
         <dt>Fake pubkey</dt>
@@ -1203,7 +1203,7 @@
 
     <dt>Sighash Flags</dt>
     <dd>
-      Different ways of signing inputs to Bitcoin Cash transactions. Note that
+      Different ways of signing inputs to BitFinite transactions. Note that
       selecting multiple sighash filters will highlight transactions in which
       each sighash flag is used, but not necessarily in the same input.
       <dl>
@@ -1220,17 +1220,17 @@
 <ng-template type="what-are-sigops">
   <p>
     A "sigop" is a way of accounting for the cost of "signature operations" in
-    Bitcoin Cash script, like <code>OP_CHECKSIG</code>,
+    BitFinite script, like <code>OP_CHECKSIG</code>,
     <code>OP_CHECKSIGVERIFY</code>, <code>OP_CHECKMULTISIG</code> and
     <code>OP_CHECKMULTISIGVERIFY</code>
   </p>
   <p>
     These signature operations incur different costs depending on whether they
-    are single or multi-sig operations, and on where they appear in a Bitcoin
-    Cash transaction.
+    are single or multi-sig operations, and on where they appear in a BitFinite
+     transaction.
   </p>
   <p>
-    Since May 2020 Bitcoin Cash uses SigChecks that replaces the SigOps limit.
+    Since May 2020 BitFinite uses SigChecks that replaces the SigOps limit.
     With a 32MB blocksize that would be 226,950 SigChecks per block. And the per
     transation limit is 3000 SigChecks.
   </p>
@@ -1269,7 +1269,7 @@
 <ng-template type="who-runs-this-website">
   <p>
     The official
-    <a href="https://bchexplorer.cash" target="_blank">bchexplorer.cash</a>
+    <a href="https://mempool.bitfinitechain.org" target="_blank">mempool.bitfinitechain.org</a>
     website is operated by
     <a href="https://melroy.org/donate.html" target="_blank"
       >Melroy van den Berg</a
@@ -1277,16 +1277,16 @@
   </p>
   <p>
     There might be some unofficial instances of this website operated by
-    individual members of the Bitcoin Cash community, which are running their
+    individual members of the BitFinite community, which are running their
     own instances of the software. Please be aware that these independent
-    instances are not affiliated with the official bchexplorer.cash website and
+    instances are not affiliated with the official mempool.bitfinitechain.org website and
     I cannot provide assistance with issues on those instances.
   </p>
 </ng-template>
 
 <ng-template type="host-my-own-instance-server">
   <p>
-    You can manually install BCH Explorer on your own server, but this requires
+    You can manually install BitFinite Explorer on your own server, but this requires
     advanced sysadmin skills since you will be manually configuring everything.
     You could also use our
     <a
@@ -1296,7 +1296,7 @@
     >.
   </p>
   <p>
-    BCH Explorer can also run on a Raspberry Pi or other single-board computers.
+    BitFinite Explorer can also run on a Raspberry Pi or other single-board computers.
   </p>
 </ng-template>
 
@@ -1316,14 +1316,14 @@
     of your Electrum server backend.
   </p>
   <p>
-    BCH Explorer uses an Electrum server to do address lookups. Fulcrum is the
-    recommended backend for BCH Explorer and it handles heavy queries much more
+    BitFinite Explorer uses an Electrum server to do address lookups. Fulcrum is the
+    recommended backend for BitFinite Explorer and it handles heavy queries much more
     efficiently.
   </p>
   <ol>
     <li>
       <a href="https://github.com/cculianu/Fulcrum" target="_blank">Fulcrum</a>.
-      Fulcrum is the recommended backend for BCH Exploer and it handles heavy
+      Fulcrum is the recommended backend for BitFinite Explorer and it handles heavy
       queries much more efficiently.
     </li>
   </ol>

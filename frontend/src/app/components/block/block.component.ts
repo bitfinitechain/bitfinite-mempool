@@ -887,7 +887,7 @@ export class BlockComponent implements OnInit, OnDestroy {
       this.numUnexpected = 0;
 
       if (blockAudit?.template) {
-        // BCH has no priotized transactions
+        // BFX has no priotized transactions
         for (const tx of blockAudit.template) {
           inTemplate[tx.txid] = true;
         }

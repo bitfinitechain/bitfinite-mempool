@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class EnterpriseService {
-  exclusiveHostName = '.bchexplorer.cash';
+  exclusiveHostName = '.mempool.bitfinitechain.org';
   subdomain: string | null = null;
   statsUrl: string;
   siteId: number;
@@ -64,7 +64,7 @@ export class EnterpriseService {
       //   (error) => {
       //     if (error.status === 404) {
       //       window.location.href =
-      //         'https://bchexplorer.cash' + window.location.pathname;
+      //         'https://mempool.bitfinitechain.org' + window.location.pathname;
       //     }
       //   }
       // );
@@ -91,7 +91,7 @@ export class EnterpriseService {
 
     if (!siteId) {
       switch (this.document.location.hostname) {
-        case 'bchexplorer.cash':
+        case 'mempool.bitfinitechain.org':
           statsUrl = '//stats.melroy.org/';
           siteId = 5;
           break;

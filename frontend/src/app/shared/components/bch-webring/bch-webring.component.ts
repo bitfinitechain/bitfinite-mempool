@@ -28,7 +28,7 @@ let sites$: Observable<WebringSite[]> | null = null;
   template: `
     @if (current) {
       <div class="webring">
-        <h2>BCH Webring</h2>
+        <h2>BFX Webring</h2>
         <p>
           You are visiting <a [href]="current.url">{{ current.name }}</a> by
           {{ current.owner }}

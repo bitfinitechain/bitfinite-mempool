@@ -107,7 +107,7 @@ export class BlocksList implements OnInit {
       );
       this.ogService.setManualOgImage('recent-blocks.jpg');
       this.seoService.setDescription(
-        $localize`See the most recent Bitcoin Cash${seoDescriptionNetwork(
+        $localize`See the most recent BitFinite${seoDescriptionNetwork(
           this.stateService.network
         )} blocks along with basic stats such as block height, block reward, block size, and more.`
       );

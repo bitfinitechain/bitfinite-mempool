@@ -75,7 +75,7 @@ export class BlockTxCountsGraphComponent implements OnInit {
 
     this.seoService.setTitle($localize`Transactions Per Block`);
     this.seoService.setDescription(
-      $localize`See the average number of transactions per Bitcoin Cash block over time.`
+      $localize`See the average number of transactions per BitFinite block over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     this.radioGroupForm = this.formBuilder.group({

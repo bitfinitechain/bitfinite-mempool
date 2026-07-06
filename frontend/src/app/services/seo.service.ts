@@ -11,8 +11,8 @@ export class SeoService {
   network = '';
   baseTitle = 'explorer';
   baseDescription =
-    'Explore the full Bitcoin Cash ecosystem by Melroy van den Berg.';
-  baseDomain = 'bchexplorer.cash';
+    'Explore the full BitFinite (BFX) ecosystem.';
+  baseDomain = 'mempool.bitfinitechain.org';
 
   canonicalLink: HTMLLinkElement = document.getElementById(
     'canonical'
@@ -126,16 +126,16 @@ export class SeoService {
 
   getTitle(): string {
     if (this.network === 'testnet4') {
-      return this.baseTitle + ' - Bitcoin Cash Testnet4';
+      return this.baseTitle + ' - BitFinite Testnet4';
     }
     if (this.network === 'chipnet') {
-      return this.baseTitle + ' - Bitcoin Cash Chipnet';
+      return this.baseTitle + ' - BitFinite Chipnet';
     }
 
     return (
       this.baseTitle +
       ' - ' +
-      (this.network ? this.ucfirst(this.network) : 'Bitcoin Cash')
+      (this.network ? this.ucfirst(this.network) : 'BitFinite')
     );
   }
 

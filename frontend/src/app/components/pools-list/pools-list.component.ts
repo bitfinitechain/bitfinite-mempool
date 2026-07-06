@@ -64,7 +64,7 @@ export class PoolsListComponent implements OnInit {
 
     this.seoService.setTitle($localize`Mining Pools`);
     this.seoService.setDescription(
-      $localize`Overview of the mining pools on Bitcoin Cash.`
+      $localize`Overview of the mining pools on BitFinite.`
     );
 
     this.pools$ = this.apiService.listPools$('all').pipe(

@@ -234,8 +234,8 @@ yarn add @mempool/mempool.js`;
       this.network === 'scalenet' ||
       this.network === 'chipnet'
       ? code.codeTemplate.python.replace(
-          'wss://bchexplorer.cash/api/v1/ws',
-          'wss://bchexplorer.cash/' + this.network + '/api/v1/ws'
+          'wss://mempool.bitfinitechain.org/api/v1/ws',
+          'wss://mempool.bitfinitechain.org/' + this.network + '/api/v1/ws'
         )
       : code.codeTemplate.python;
   }

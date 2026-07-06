@@ -408,20 +408,20 @@ export class TreasuriesGraphComponent implements OnInit, OnChanges, OnDestroy {
                   0,
                   undefined,
                   true
-                )} BCH`;
+                )} BFX`;
               } else if (valSpan > 1_000_000_000) {
                 return `${this.amountShortenerPipe.transform(
                   Math.round(val / 100_000_000),
                   2,
                   undefined,
                   true
-                )} BCH`;
+                )} BFX`;
               } else if (valSpan > 100_000_000) {
-                return `${(val / 100_000_000).toFixed(1)} BCH`;
+                return `${(val / 100_000_000).toFixed(1)} BFX`;
               } else if (valSpan > 10_000_000) {
-                return `${(val / 100_000_000).toFixed(2)} BCH`;
+                return `${(val / 100_000_000).toFixed(2)} BFX`;
               } else if (valSpan > 1_000_000) {
-                return `${(val / 100_000_000).toFixed(3)} BCH`;
+                return `${(val / 100_000_000).toFixed(3)} BFX`;
               } else {
                 return `${this.amountShortenerPipe.transform(
                   val,
@@ -470,7 +470,7 @@ export class TreasuriesGraphComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   formatBCH(val: number): string {
-    return `${(val / 100_000_000).toFixed(4)} BCH`;
+    return `${(val / 100_000_000).toFixed(4)} BFX`;
   }
 
   onChartInit(ec) {

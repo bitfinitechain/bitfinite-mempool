@@ -73,7 +73,7 @@ export class UtxoSizeGraphComponent implements OnInit {
 
     this.seoService.setTitle($localize`UTXO Count`);
     this.seoService.setDescription(
-      $localize`See the total number of unspent transaction outputs (UTXOs) on the Bitcoin Cash network over time.`
+      $localize`See the total number of unspent transaction outputs (UTXOs) on the BitFinite network over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
     this.radioGroupForm = this.formBuilder.group({

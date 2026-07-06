@@ -83,7 +83,7 @@ export function detectAddressType(
     return 'unknown';
   }
 
-  // Check for BCH CashAddr addresses (with or without prefix)
+  // Check for BFX CashAddr addresses (with or without prefix)
   let cashaddrInput: string | null = null;
   if (address.startsWith(networkConfig.bch)) {
     const suffix = address.slice(networkConfig.bch.length);
@@ -512,7 +512,7 @@ function fromWords(words: number[]) {
   return new Uint8Array(convertBits(words, 5, 8, false));
 }
 
-// CashAddr encoding/decoding for Bitcoin Cash
+// CashAddr encoding/decoding for BitFinite
 // Based on: https://github.com/bitcoincashorg/bitcoincash.org/blob/master/spec/cashaddr.md
 function cashaddrDecode(address: string): {
   prefix: string;
@@ -1021,7 +1021,7 @@ export function addressToScriptPubKey(
   }
 
   if (type === 'p2pkh' || type === 'p2sh') {
-    // Check if it's a CashAddr address (BCH base32 format)
+    // Check if it's a CashAddr address (BFX base32 format)
     const bchPrefix = ADDRESS_PREFIXES[network || 'mainnet']?.bch;
     if (
       cashaddrRegex.test(address) ||

@@ -80,7 +80,7 @@ export class BlockFeesGraphComponent implements OnInit {
       $localize`:@@6c453b11fd7bd159ae30bc381f367bc736d86909:Block Fees`
     );
     this.seoService.setDescription(
-      $localize`See the average mining fees earned per Bitcoin Cash block visualized in BCH and USD over time.`
+      $localize`See the average mining fees earned per BitFinite block visualized in BFX and USD over time.`
     );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('1m');
     this.radioGroupForm = this.formBuilder.group({
@@ -214,7 +214,7 @@ export class BlockFeesGraphComponent implements OnInit {
                 tick.data[1],
                 this.locale,
                 '1.3-3'
-              )} BCH<br>`;
+              )} BFX<br>`;
             } else if (tick.seriesIndex === 1) {
               tooltip += `${tick.marker} ${
                 tick.seriesName
@@ -247,7 +247,7 @@ export class BlockFeesGraphComponent implements OnInit {
               top: 0,
               data: [
                 {
-                  name: 'Fees BCH',
+                  name: 'Fees BFX',
                   inactiveColor: 'rgb(110, 112, 121)',
                   textStyle: {
                     color: 'var(--fg)',
@@ -273,7 +273,7 @@ export class BlockFeesGraphComponent implements OnInit {
                 axisLabel: {
                   color: 'rgb(110, 112, 121)',
                   formatter: (val) => {
-                    return `${val} BCH`;
+                    return `${val} BFX`;
                   },
                 },
                 splitLine: {
@@ -310,7 +310,7 @@ export class BlockFeesGraphComponent implements OnInit {
                 legendHoverLink: false,
                 zlevel: 0,
                 yAxisIndex: 0,
-                name: 'Fees BCH',
+                name: 'Fees BFX',
                 data: data.blockFees,
                 type: 'line',
                 smooth: 0.25,

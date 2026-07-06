@@ -8,11 +8,11 @@ import { Transaction, Vin, Utxo } from '@app/interfaces/backend-api.interface';
 import { hash, Hash, ripemd160 } from '@app/shared/sha256';
 import { AddressType, cashaddrEncode } from '@app/shared/address-utils';
 
-// BCHN default policy settings
+// BitFinite Node default policy settings
 const MIN_BLOCK_SIZE = 32_000_000;
 const MAX_BLOCK_SIGOPS_COST = 80_000;
 const MAX_STANDARD_TX_SIGOPS_COST = MAX_BLOCK_SIGOPS_COST / 5;
-const MIN_STANDARD_TX_SIZE = 65; /// TODO: Check for BCH
+const MIN_STANDARD_TX_SIZE = 65; /// TODO: Check for BFX
 const MAX_P2SH_SIGOPS = 15;
 const MAX_STANDARD_SCRIPTSIG_SIZE = 1650;
 const DUST_RELAY_TX_FEE = 3;
@@ -59,7 +59,7 @@ export function countScriptSigops(
 // <0x30> <total len> <0x02> <len R> <R> <0x02> <len S> <S> <hashtype>
 // see https://github.com/bitcoin/bitcoin/blob/9a05b45da60d214cb1e5a50c3d2293b1defc9bb0/src/script/interpreter.cpp#L97-L106
 //
-// TODO: For BCH this DER Sig check is incomplete. While it might work on some P2PKH transactions, it will not work on SIGHASH_UTXOS
+// TODO: For BFX this DER Sig check is incomplete. While it might work on some P2PKH transactions, it will not work on SIGHASH_UTXOS
 export function isCanonicalDERSig(w: string): boolean {
   // minimum DER signature length is 8 bytes + sighash flag (see https://mempool.space/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
 
@@ -187,7 +187,7 @@ export function decodeSighashFlag(sighash: number): SighashValue {
 /**
  * Try to extract the DER signarure from a script ASM
  *
- * Do NOT use this for P2PKH in BCH, maybe P2SH might work.. most likely not either.
+ * Do NOT use this for P2PKH in BFX, maybe P2SH might work.. most likely not either.
  * @param script_asm Input script ASM
  * @returns Array of signatures
  */
@@ -219,7 +219,7 @@ export function extractDERSignaturesASM(script_asm: string): SigInfo[] {
 export function processInputSignatures(vin: Vin): SigInfo[] {
   const addressType = vin.prevout?.scriptpubkey_type as AddressType;
   let signatures: SigInfo[] = [];
-  // Only switch on BCH supported types
+  // Only switch on BFX supported types
   switch (addressType) {
     case 'p2pk':
     case 'multisig':
@@ -240,7 +240,7 @@ export function processInputSignatures(vin: Vin): SigInfo[] {
       {
         if (vin.scriptsig_byte_code.length > 0) {
           signatures.push({
-            signature: vin.scriptsig_byte_code.join(''), // BCH is using Schnorr signature algorithm
+            signature: vin.scriptsig_byte_code.join(''), // BFX is using Schnorr signature algorithm
             sighash: SighashFlag.ALL | SighashFlag.UTXOS | SighashFlag.FORKID, // hard coded for now
           });
         }
@@ -273,10 +273,10 @@ export function fillUnsignedInput(vin: Vin): {
   const addressType = vin.prevout?.scriptpubkey_type as AddressType;
   let signatures: SigInfo[] = [];
   let multisig: { m: number; n: number } | null = null;
-  // Only switch on BCH supported types
+  // Only switch on BFX supported types
   switch (addressType) {
     case 'p2pk':
-      // BCH uses Schnorr signatures (not DER) — use scriptsig_byte_code populated during decode
+      // BFX uses Schnorr signatures (not DER) — use scriptsig_byte_code populated during decode
       if (!vin.scriptsig_byte_code?.length) {
         missingSigs = 1;
         bytes = 72;
@@ -296,7 +296,7 @@ export function fillUnsignedInput(vin: Vin): {
       }
       break;
     case 'p2pkh':
-      // BCH uses Schnorr signatures (not DER) — use scriptsig_byte_code populated during decode
+      // BFX uses Schnorr signatures (not DER) — use scriptsig_byte_code populated during decode
       if (!vin.scriptsig_byte_code?.length) {
         missingSigs = 1;
         bytes = 106; // 72 + 34 (sig + public key)
@@ -440,7 +440,7 @@ export function isNonStandard(
       vout.scriptpubkey_type !== 'op_return' &&
       isDustOutput(vout.value, vout.scriptpubkey)
     ) {
-      // TODO: Update for BCH. BCH also doesn't have Ephemeral dust
+      // TODO: Update for BFX. BFX also doesn't have Ephemeral dust
     }
   }
 
@@ -471,7 +471,7 @@ function isNonStandardVersion(
 ): boolean {
   let TX_MAX_STANDARD_VERSION = 2;
 
-  // Note: BCH Currently doesn't *yet* have v3 transactions
+  // Note: BFX Currently doesn't *yet* have v3 transactions
   // if (
   //   height != null &&
   //   network != null &&
@@ -622,7 +622,7 @@ export function getTransactionFlags(
   } else if (tx.version === 2) {
     flags |= TransactionFlags.v2;
   }
-  // BCH currently doesn't have txs v3 yet
+  // BFX currently doesn't have txs v3 yet
   //  else if (tx.version === 3) {
   //   flags |= TransactionFlags.v3;
   // }
@@ -847,7 +847,7 @@ export function addInnerScriptsToVin(vin: Vin): void {
 
 /**
  * Extracts each pushed data element from a raw scriptsig hex into an array of hex strings,
- * matching the format BCHN returns as scriptsig_byte_code.
+ * matching the format BitFinite Node returns as scriptsig_byte_code.
  * E.g. P2PKH: [ "<sig+sighash>", "<pubkey>" ]
  */
 function extractScriptsigByteCode(scriptsig: string): string[] {
@@ -1315,7 +1315,7 @@ function fromBuffer(
 export type PsbtKeyValue = { keyData: Uint8Array; value: Uint8Array };
 type PsbtKeyValueMap = Map<number, PsbtKeyValue[]>;
 
-// TODO: This is different for BCH for sure, we need to update this
+// TODO: This is different for BFX for sure, we need to update this
 const PSBT_IN = {
   NORMAL_UTXO: 0x00,
   // WITNESS_UTXO: 0x01,
@@ -1704,14 +1704,14 @@ export function decodeRawTransaction(
   try {
     return fromBuffer(buffer, network);
   } catch (e) {
-    // Retry stripping 8-byte embedded input values (BCH unsigned tx format)
+    // Retry stripping 8-byte embedded input values (BFX unsigned tx format)
     return fromBufferWithInputValues(buffer, network);
   }
 }
 
 /**
  * Parses a raw transaction where each input has an extra 8-byte value field
- * appended after the sequence (BCH unsigned tx / sighash preimage format).
+ * appended after the sequence (BFX unsigned tx / sighash preimage format).
  * Strips those bytes and delegates to fromBuffer, adding a warning.
  */
 function fromBufferWithInputValues(

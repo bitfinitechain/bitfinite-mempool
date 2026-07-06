@@ -10,7 +10,7 @@ interface AsertAnchor {
   tau: number; // half-life in seconds
 }
 
-// Per-network ASERT anchor parameters from BCHN chainparams.cpp
+// Per-network ASERT anchor parameters from BitFinite Node chainparams.cpp
 // scalenet has no hard-coded anchor (periodic reorgs); mainnet anchor used as proxy
 const ASERT_ANCHORS: Record<string, AsertAnchor> = {
   mainnet: {

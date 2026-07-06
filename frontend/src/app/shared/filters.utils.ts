@@ -24,7 +24,7 @@ export const TransactionFlags = {
   // features
   v1: 0b00000100n,
   v2: 0b00001000n,
-  // v3: 0b00010000n, // Currently BCH has not yet transaction v3
+  // v3: 0b00010000n, // Currently BFX has not yet transaction v3
   nonstandard: 0b00100000n,
   // address types
   p2pk: 0b00000001_00000000n,
@@ -32,13 +32,13 @@ export const TransactionFlags = {
   p2pkh: 0b00000100_00000000n,
   p2sh: 0b00001000_00000000n,
   p2s: 0b00010000_00000000n, // pay-to-script (new since May 2026 upgrade)
-  // behavior, BCH doesn't have behaviors
+  // behavior, BFX doesn't have behaviors
   // data
   op_return: 0b00000001_00000000_00000000_00000000n,
   fake_pubkey: 0b00000010_00000000_00000000_00000000n,
-  inscription: 0b00000100_00000000_00000000_00000000n, // related to witness, not used by BCH
+  inscription: 0b00000100_00000000_00000000_00000000n, // related to witness, not used by BFX
   fake_scripthash: 0b00001000_00000000_00000000_00000000n,
-  annex: 0b00010000_00000000_00000000_00000000n, // related to witness, not used by BCH
+  annex: 0b00010000_00000000_00000000_00000000n, // related to witness, not used by BFX
   // heuristics
   coinjoin: 0b00000001_00000000_00000000_00000000_00000000n,
   consolidation: 0b00000010_00000000_00000000_00000000_00000000n,
@@ -72,7 +72,7 @@ export function toFilters(flags: bigint): Filter[] {
 }
 
 export const TransactionFilters: { [key: string]: Filter } = {
-  /* features, BCH by default has no RBF, so no need to have an option to switch between rbf/no_rbf */
+  /* features, BFX by default has no RBF, so no need to have an option to switch between rbf/no_rbf */
   v1: {
     key: 'v1',
     label: 'Version 1',
@@ -144,7 +144,7 @@ export const TransactionFilters: { [key: string]: Filter } = {
     tooltip: false,
   },
   /* behavior (in BTC this would be cpfp, cpfp_hold, replacement, acceleration, with their appropriate flags) */
-  /* BCH doesn't have all of these */
+  /* BFX doesn't have all of these */
   /* data */
   op_return: {
     key: 'op_return',
@@ -233,7 +233,7 @@ export const FilterGroups: { label: string; filters: Filter[] }[] = [
   },
   // {
   //   label: $localize`Behavior`,
-  //   filters: [], // Like replacement or acceleration, but BCH doesn't have those.
+  //   filters: [], // Like replacement or acceleration, but BFX doesn't have those.
   // },
   {
     label: $localize`Data`,

@@ -160,7 +160,7 @@ const featureActivation = {
 export function isFeatureActive(
   network: string,
   height: number,
-  feature: 'bla' // BCH has no taproot, rbf or segwit, TODO: add BCH features instead
+  feature: 'bla' // BFX has no taproot, rbf or segwit, TODO: add BFX features instead
 ): boolean {
   const activationHeight = featureActivation[network || 'mainnet']?.[feature];
   if (activationHeight != null) {

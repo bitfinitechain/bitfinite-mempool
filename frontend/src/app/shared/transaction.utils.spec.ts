@@ -1,7 +1,7 @@
 import { decodeRawTransaction } from '@app/shared/transaction.utils';
 
 /**
- * Raw BCH mainnet transaction (version 2, 1 input, 2 outputs, no segwit).
+ * Raw BFX mainnet transaction (version 2, 1 input, 2 outputs, no segwit).
  *
  * Input:
  *   txid: cba8e08160edfd4dc9e1070d00af3e10ef9f8f060cc2553942a210f6a64784bd, vout: 0
@@ -34,14 +34,14 @@ const RAW_TX2_HEX =
   '00000000';
 
 /**
- * Raw BCH mainnet transaction (version 1, 1 input, 1 output).
+ * Raw BFX mainnet transaction (version 1, 1 input, 1 output).
  *
  * Input:
  *   txid: 21d2df3d53564848fb5f2e3fffdbdc71e9c4840d905113e85baa28f46c52d117, vout: 1
  *   address (derived from scriptSig pubkey): bitcoincash:qr8yte7p2a8tafqw8teey0atyzxg9zxprc9l5j6zn9
  *
  * Output:
- *   [0] 29640554 sats (0.29640554 BCH) → bitcoincash:qzcttm85f7l6uev7wyckrmugrl92fktxgy0ny0fkht
+ *   [0] 29640554 sats (0.29640554 BFX) → bitcoincash:qzcttm85f7l6uev7wyckrmugrl92fktxgy0ny0fkht
  *
  * Fee: 546 sats (input value 29641100 − output 29640554)
  * Size: 185 bytes
@@ -50,8 +50,8 @@ const RAW_TX2_HEX =
 const RAW_TX3_HEX = '01000000012187635ddffe786d9ea05d2a4de598f8d3a3c836585b24632046738b4c941c7a010000005701ff4c53ff0488b21e03a7725a88800000004da8aa7bef6db0377eb1cc402a7cb637f962b344fc229e9bd4f49ea4d2b53b3c02d78ea4584075aad21c15fb78e1993b99563f39f31c6f9c4869e704953a1ca48a00000000feffffff0d9af3010000000002e06bc200000000001976a914a8321fe7938e97ef799082fcc87156b540a4eec088ac002d3101000000001976a9147ee7b62fa98a985c5553ff66120a91b8189f658188ac3a760e00';
 
 /**
- * Raw BCH mainnet unsigned transaction (version 1, 1 input, 2 outputs).
- * Uses the BCH unsigned tx format (input value embedded in scriptsig via OP_RETURN push).
+ * Raw BFX mainnet unsigned transaction (version 1, 1 input, 2 outputs).
+ * Uses the BFX unsigned tx format (input value embedded in scriptsig via OP_RETURN push).
  * Decoded via fromBufferWithInputValues fallback path.
  *
  * Input:
@@ -61,13 +61,13 @@ const RAW_TX3_HEX = '01000000012187635ddffe786d9ea05d2a4de598f8d3a3c836585b24632
  *   input address: not derivable by decodeRawTransaction (unsigned — scriptsig has no pubkey push)
  *
  * Outputs:
- *   [0] 12741600 sats (0.127416 BCH)  → bitcoincash:qz5ry8l8jw8f0mmejzp0ejr32665pf8wcql73560as
- *   [1] 20000000 sats (0.20000000 BCH) → bitcoincash:qplw0d304x9fshz420lkvys2jxup38m9symky6k028
+ *   [0] 12741600 sats (0.127416 BFX)  → bitcoincash:qz5ry8l8jw8f0mmejzp0ejr32665pf8wcql73560as
+ *   [1] 20000000 sats (0.20000000 BFX) → bitcoincash:qplw0d304x9fshz420lkvys2jxup38m9symky6k028
  *
  * Locktime: 947770
  * Size: 214 bytes
  */
-describe('decodeRawTransaction — BCH P2PKH unsigned tx (1 in, 2 out)', () => {
+describe('decodeRawTransaction — BFX P2PKH unsigned tx (1 in, 2 out)', () => {
   let result: ReturnType<typeof decodeRawTransaction>;
 
   beforeEach(() => {
@@ -127,7 +127,7 @@ describe('decodeRawTransaction — BCH P2PKH unsigned tx (1 in, 2 out)', () => {
       expect(result.tx.vout.length).toBe(2);
     });
 
-    it('output[0] should have value 12741600 sats (0.127416 BCH)', () => {
+    it('output[0] should have value 12741600 sats (0.127416 BFX)', () => {
       expect(result.tx.vout[0].value).toBe(12741600);
     });
 
@@ -137,7 +137,7 @@ describe('decodeRawTransaction — BCH P2PKH unsigned tx (1 in, 2 out)', () => {
       );
     });
 
-    it('output[1] should have value 20000000 sats (0.20000000 BCH)', () => {
+    it('output[1] should have value 20000000 sats (0.20000000 BFX)', () => {
       expect(result.tx.vout[1].value).toBe(20000000);
     });
 
@@ -149,7 +149,7 @@ describe('decodeRawTransaction — BCH P2PKH unsigned tx (1 in, 2 out)', () => {
   });
 });
 
-describe('decodeRawTransaction — BCH P2PKH tx (1 in, 1 out)', () => {
+describe('decodeRawTransaction — BFX P2PKH tx (1 in, 1 out)', () => {
   let result: ReturnType<typeof decodeRawTransaction>;
 
   beforeEach(() => {
@@ -211,7 +211,7 @@ describe('decodeRawTransaction — BCH P2PKH tx (1 in, 1 out)', () => {
       expect(result.tx.vout.length).toBe(1);
     });
 
-    it('output[0] should have value 29640554 sats (0.29640554 BCH)', () => {
+    it('output[0] should have value 29640554 sats (0.29640554 BFX)', () => {
       expect(result.tx.vout[0].value).toBe(29640554);
     });
 
@@ -223,7 +223,7 @@ describe('decodeRawTransaction — BCH P2PKH tx (1 in, 1 out)', () => {
   });
 });
 
-describe('decodeRawTransaction — BCH P2PKH tx (1 in, 2 out)', () => {
+describe('decodeRawTransaction — BFX P2PKH tx (1 in, 2 out)', () => {
   let result: ReturnType<typeof decodeRawTransaction>;
 
   beforeEach(() => {
@@ -285,7 +285,7 @@ describe('decodeRawTransaction — BCH P2PKH tx (1 in, 2 out)', () => {
       expect(result.tx.vout.length).toBe(2);
     });
 
-    it('output[0] should have value 291463000 sats (2.91463 BCH)', () => {
+    it('output[0] should have value 291463000 sats (2.91463 BFX)', () => {
       expect(result.tx.vout[0].value).toBe(291463000);
     });
 
@@ -295,7 +295,7 @@ describe('decodeRawTransaction — BCH P2PKH tx (1 in, 2 out)', () => {
       );
     });
 
-    it('output[1] should have value 382535364 sats (3.82535364 BCH)', () => {
+    it('output[1] should have value 382535364 sats (3.82535364 BFX)', () => {
       expect(result.tx.vout[1].value).toBe(382535364);
     });
 
@@ -308,7 +308,7 @@ describe('decodeRawTransaction — BCH P2PKH tx (1 in, 2 out)', () => {
 });
 
 /**
- * Raw BCH mainnet CashToken transaction (version 2, 2 inputs, 2 outputs).
+ * Raw BFX mainnet CashToken transaction (version 2, 2 inputs, 2 outputs).
  *
  * Input[0]: d90ce9d43a93e6b270c0ef281a305866ae400e64589d8b9e9762b2bb08013310:0
  *   CashToken prevout (category set on the UTXO being spent; not encoded in the raw tx itself)
@@ -342,7 +342,7 @@ const RAW_CASHTOKEN_TX_HEX =
   '2972210f1bf197bf2a9ae93a25016a6c27176fdf09a57c4ba0843070c7c87f4d415080000' +
   '00001976a91483616c2656dc4e9f95530887d18669938c4f86de88ac00000000';
 
-describe('decodeRawTransaction — BCH CashToken tx (2 in, 2 out)', () => {
+describe('decodeRawTransaction — BFX CashToken tx (2 in, 2 out)', () => {
   let result: ReturnType<typeof decodeRawTransaction>;
 
   beforeEach(() => {
@@ -430,7 +430,7 @@ describe('decodeRawTransaction — BCH CashToken tx (2 in, 2 out)', () => {
       expect(result.tx.vout[0].scriptpubkey_type).toBe('p2sh32');
     });
 
-    it('vout[1] should have value 135648500 sats (1.356485 BCH)', () => {
+    it('vout[1] should have value 135648500 sats (1.356485 BFX)', () => {
       expect(result.tx.vout[1].value).toBe(135648500);
     });
 

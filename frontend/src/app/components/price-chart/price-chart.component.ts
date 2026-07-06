@@ -85,9 +85,9 @@ export class PriceChartComponent implements OnInit {
     } else if (this.widget) {
       this.miningWindowPreference = '1y';
     } else {
-      this.seoService.setTitle($localize`Bitcoin Cash Price`);
+      this.seoService.setTitle($localize`BitFinite Price`);
       this.seoService.setDescription(
-        $localize`See the Bitcoin Cash price in USD visualized over time.`
+        $localize`See the BitFinite price in USD visualized over time.`
       );
       this.miningWindowPreference = this.miningService.getDefaultTimespan('1m');
     }
@@ -343,7 +343,7 @@ export class PriceChartComponent implements OnInit {
                 // legendHoverLink: false,
                 zlevel: 0,
                 yAxisIndex: 0,
-                name: 'BCH Price (' + this.currency + ')',
+                name: 'BFX Price (' + this.currency + ')',
                 data: data.priceData,
                 type: 'line',
                 smooth: 0.25,

@@ -18,7 +18,7 @@ export class StorageService {
     const fragment = window.location.hash.replace('#', '');
 
     if (graphWindowPreference === null) {
-      // First visit to bchexplorer.cash
+      // First visit to mempool.bitfinitechain.org
       if (
         (window.location.pathname.includes('graphs') &&
           key === 'graphWindowPreference') ||

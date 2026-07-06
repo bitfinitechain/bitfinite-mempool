@@ -231,7 +231,7 @@ export function renderSats(
     return `${amountShortenerPipe.transform(
       value / 100000000,
       2
-    )} ${prefix}BCH`;
+    )} ${prefix}BFX`;
   } else {
     if (prefix.length) {
       prefix += '-';

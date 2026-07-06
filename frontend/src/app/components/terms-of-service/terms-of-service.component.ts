@@ -28,7 +28,7 @@ export class TermsOfServiceComponent implements OnDestroy {
   ngOnInit(): void {
     this.seoService.setTitle('Terms of Service');
     this.seoService.setDescription(
-      'Out of respect for the Bitcoin Cash community, the bchexplorer.cash website is Bitcoin Cash Only and does not display any advertising.'
+      'Out of respect for the BitFinite community, the mempool.bitfinitechain.org website is BitFinite Only and does not display any advertising.'
     );
     this.ogService.setManualOgImage('tos.jpg');
 

@@ -237,7 +237,7 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
     if (this.period !== 'all') {
       const start = now - periodSeconds[this.period] * 1000;
       this.data = this.data.filter((d) => d[0] >= start);
-      const startFiat = this.data[0]?.[0] ?? start; // Make sure USD data starts at the same time as BCH data
+      const startFiat = this.data[0]?.[0] ?? start; // Make sure USD data starts at the same time as BFX data
       this.fiatData = this.fiatData.filter((d) => d[0] >= startFiat);
     }
     this.data.push({
@@ -306,7 +306,7 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
               ],
               selected: this.selected,
               formatter: function (name) {
-                return name === 'Fiat' ? 'USD' : 'BCH';
+                return name === 'Fiat' ? 'USD' : 'BFX';
               },
             }
           : undefined,
@@ -383,7 +383,7 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
               <span style="text-align: left; margin-right: 10px;">${bchSymbol} ${formatBCH(
                 bchVal,
                 4
-              )} BCH</span>
+              )} BFX</span>
               <span style="text-align: right;">${fiatSymbol} ${formatFiat(
                 fiatVal
               )}</span>
@@ -392,7 +392,7 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
               <span style="text-align: left; margin-right: 10px;">${formatBCH(
                 bchData[0].data[1],
                 4
-              )} BCH</span>
+              )} BFX</span>
               <span style="text-align: right;">${formatFiat(
                 fiatData[0].data[1]
               )}</span>
@@ -401,8 +401,8 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
             tooltip += `<span style="color: ${bchColor}">${bchSymbol} ${formatBCH(
               bchVal,
               8
-            )} BCH</span><br>
-              <span>${formatBCH(data[0].data[1], 8)} BCH</span>`;
+            )} BFX</span><br>
+              <span>${formatBCH(data[0].data[1], 8)} BFX</span>`;
           } else {
             if (
               this.selected[
@@ -413,7 +413,7 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
                 <span style="text-align: left; margin-right: 10px;">${formatBCH(
                   data[0].data[3],
                   4
-                )} BCH</span>
+                )} BFX</span>
                 <span style="text-align: right;">${formatFiat(
                   data[0].data[1]
                 )}</span>
@@ -456,18 +456,18 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
                   0,
                   undefined,
                   true
-                )} BCH`;
+                )} BFX`;
               } else if (valSpan > 1_000_000_000) {
                 return `${this.amountShortenerPipe.transform(
                   Math.round(val / 100_000_000),
                   2,
                   undefined,
                   true
-                )} BCH`;
+                )} BFX`;
               } else if (valSpan > 100_000_000) {
-                return `${(val / 100_000_000).toFixed(1)} BCH`;
+                return `${(val / 100_000_000).toFixed(1)} BFX`;
               } else if (valSpan > 10_000_000) {
-                return `${(val / 100_000_000).toFixed(2)} BCH`;
+                return `${(val / 100_000_000).toFixed(2)} BFX`;
               } else if (valSpan > 1_000_000) {
                 if (maxValue > 100_000_000_000) {
                   return `${this.amountShortenerPipe.transform(
@@ -475,9 +475,9 @@ export class AddressGraphComponent implements OnChanges, OnDestroy {
                     3,
                     undefined,
                     true
-                  )} BCH`;
+                  )} BFX`;
                 }
-                return `${(val / 100_000_000).toFixed(3)} BCH`;
+                return `${(val / 100_000_000).toFixed(3)} BFX`;
               } else {
                 return `${this.amountShortenerPipe.transform(
                   val,

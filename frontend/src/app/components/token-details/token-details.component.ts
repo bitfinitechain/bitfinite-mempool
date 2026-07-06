@@ -69,7 +69,7 @@ export class TokenDetailsComponent implements OnInit, OnDestroy {
 
           this.seoService.setTitle(`Cash Token: ${this.category}`);
           this.seoService.setDescription(
-            `View details for Bitcoin Cash token ${this.category} including name, symbol, decimals, description and more.`
+            `View details for BitFinite token ${this.category} including name, symbol, decimals, description and more.`
           );
 
           return this.bcmrService.getBcmrMetadata(this.category).pipe(
