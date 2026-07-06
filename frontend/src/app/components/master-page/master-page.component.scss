@@ -345,3 +345,15 @@ main {
   top: 65px;
   padding-bottom: 20px;
 }
+
+/* header utility controls (timezone / amount / theme toggle) */
+.header-tools {
+  gap: 8px;
+  margin-left: 14px;
+}
+.header-tools app-timezone-selector,
+.header-tools app-amount-selector,
+.header-tools app-theme-selector {
+  display: inline-flex;
+  align-items: center;
+}

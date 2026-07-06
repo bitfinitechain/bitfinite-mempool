@@ -1,457 +1,129 @@
-<footer [class]="{ services: isServicesPage }">
-  <div class="container-fluid">
-    <div class="row main" [class]="{ services: isServicesPage }">
-      <div class="col-md-12 branding mt-2">
-        <div id="donate" class="text-center my-4" style="z-index: 99999">
-          <img
-            src="/resources/qr_code.png"
-            width="128"
-            height="128"
-            alt="BitFinite address"
-          />
-          <p>
-            Donations -
-            <code>bfx:fzfj9z07nxrug9jnx02583h2sgs28p7w3svmdgv0rx</code>
-            <app-clipboard
-              text="bfx:fzfj9z07nxrug9jnx02583h2sgs28p7w3svmdgv0rx"
-            ></app-clipboard>
-          </p>
-        </div>
-        <p class="explore-tagline-mobile">
-          &copy;
-          <a
-            target="_blank"
-            href="https://bitfinitechain.org"
-            aria-label="Visit the BitFinite website"
-            >BitFinite (BFX)</a
-          >
-          &middot;
-          <a
-            target="_blank"
-            href="https://github.com/bitfinitechain/bitfinite-mempool"
-            aria-label="BitFinite Explorer source code"
-            >based on mempool.space (AGPL)</a
-          >
-        </p>
-        <div
-          class="site-options language-selector d-flex justify-content-center align-items-center"
-          [class]="{ services: isServicesPage }"
+<footer class="bfx-footer" [class]="{ services: isServicesPage }">
+  <div class="bfx-footer-inner">
+    <div class="bfx-footer-grid">
+      <!-- Brand -->
+      <div class="bfx-brand">
+        <a
+          class="bfx-lockup"
+          href="https://bitfinitechain.org"
+          target="_blank"
+          rel="noopener"
+          aria-label="BitFinite"
         >
-          <div class="selector">
-            <app-timezone-selector></app-timezone-selector>
-          </div>
-          <div
-            class="selector d-none"
-            [ngClass]="isServicesPage ? 'd-lg-flex' : 'd-md-flex'"
-          >
-            <app-amount-selector></app-amount-selector>
-          </div>
-          @if (!env.customize?.theme) {
-            <div
-              class="selector d-none"
-              [ngClass]="isServicesPage ? 'd-lg-flex' : 'd-md-flex'"
+          <img
+            class="bfx-mark"
+            src="/resources/favicons/android-chrome-192x192.png"
+            alt="BitFinite"
+            width="40"
+            height="40"
+          />
+          <span class="bfx-word">BIT<span class="accent">FINITE</span></span>
+        </a>
+        <p class="bfx-tagline">
+          The future of decentralized finance. Fast, secure, and scalable
+          blockchain infrastructure.
+        </p>
+        <div class="bfx-contacts">
+          <a href="https://bitfinitechain.org" target="_blank" rel="noopener">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              <app-theme-selector></app-theme-selector>
-            </div>
-          }
-          <a
-            *ngIf="stateService.isofficialBCHExplorerSiteBuild"
-            class="btn btn-purple sponsor d-none justify-content-center"
-            [ngClass]="isServicesPage ? 'd-lg-flex' : 'd-md-flex'"
-            [routerLink]="['/login']"
-            aria-label="Sign in to your account"
-          >
-            <span *ngIf="user" i18n="shared.my-account" class="nowrap"
-              >My Account</span
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path d="M2 12h20" />
+            </svg>
+            bitfinitechain.org
+          </a>
+          <a href="mailto:bitfinitechain@proton.me">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-            <span *ngIf="!user" i18n="shared.sign-in" class="nowrap"
-              >Sign In</span
-            >
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            bitfinitechain&#64;proton.me
           </a>
         </div>
-        @if (!env.customize?.theme) {
-          <div
-            class="selector d-flex justify-content-center ms-auto me-auto mt-0"
-            [ngClass]="isServicesPage ? 'd-lg-none' : 'd-md-none'"
-          >
-            <app-amount-selector class="add-margin"></app-amount-selector>
-            <app-theme-selector class="add-margin"></app-theme-selector>
-          </div>
-        }
-
-        <a
-          *ngIf="stateService.isofficialBCHExplorerSiteBuild"
-          class="btn btn-purple sponsor d-flex justify-content-center ms-auto me-auto mt-0 mb-2"
-          [ngClass]="isServicesPage ? 'd-lg-none' : 'd-md-none'"
-          [routerLink]="['/login']"
-          aria-label="Sign in to your account"
-        >
-          <span *ngIf="user" i18n="shared.my-account" class="nowrap"
-            >My Account</span
-          >
-          <span *ngIf="!user" i18n="shared.sign-in" class="nowrap"
-            >Sign In</span
-          >
-        </a>
-        <p class="explore-tagline-desktop">
-          &copy;
-          <a
-            target="_blank"
-            href="https://bitfinitechain.org"
-            aria-label="Visit the BitFinite website"
-            >BitFinite (BFX)</a
-          >
-          &middot;
-          <a
-            target="_blank"
-            href="https://github.com/bitfinitechain/bitfinite-mempool"
-            aria-label="BitFinite Explorer source code"
-            >based on mempool.space (AGPL)</a
-          >
-        </p>
-      </div>
-    </div>
-    <div class="row col-md-12 link-tree" [class]="{ services: isServicesPage }">
-      <div class="links">
-        <p class="category" i18n="footer.explore">Explore</p>
-        <p>
-          <a
-            *ngIf="env.MINING_DASHBOARD"
-            [routerLink]="['/mining' | relativeUrl]"
-            i18n="mining.mining-dashboard"
-            >Mining Dashboard</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/blocks' | relativeUrl]"
-            i18n="dashboard.recent-blocks"
-            >Recent Blocks</a
-          >
-        </p>
-        @if (currentNetwork === "mainnet") {
-          <p>
-            <a
-              [routerLink]="['/blocks/special' | relativeUrl]"
-              i18n="footer.special-blocks"
-              >Special Blocks</a
-            >
-          </p>
-        }
-        <p>
-          <a
-            [routerLink]="['/blocks/stale' | relativeUrl]"
-            i18n="footer.stale-blocks"
-            >Stale Blocks</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/tx/push' | relativeUrl]"
-            i18n="shared.broadcast-transaction|Broadcast Transaction"
-            >Broadcast Transaction</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/tx/test' | relativeUrl]"
-            i18n="shared.test-transaction|Test Transaction"
-            >Test Transaction</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/tx/preview' | relativeUrl]"
-            i18n="shared.preview-transaction|Preview Transaction"
-            >Preview Transaction</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/docs/api' | relativeUrl]"
-            i18n="footer.api-documentation"
-            >API Documentation</a
-          >
-        </p>
-      </div>
-      <div class="links">
-        <p class="category" i18n="footer.learn">Learn</p>
-        <p>
-          <a
-            [routerLink]="['/docs/faq']"
-            fragment="what-is-a-mempool"
-            i18n="faq.what-is-a-mempool"
-            >What is a mempool?</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/docs/faq']"
-            fragment="what-is-a-block-explorer"
-            i18n="faq.what-is-a-block-exlorer"
-            >What is a block explorer?</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/docs/faq']"
-            fragment="what-is-a-mempool-explorer"
-            i18n="faq.what-is-a-mempool-exlorer"
-            >What is a mempool explorer?</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/docs/faq']"
-            fragment="what-are-cashtokens"
-            i18n="faq.what-are-cashtokens"
-            >What are CashTokens?</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/docs/faq']"
-            fragment="host-my-own-instance-server"
-            i18n="faq.host-my-own-instance-server"
-            >How to host my own instance?</a
-          >
-        </p>
-        <p>
-          <a [routerLink]="['/docs/faq' | relativeUrl]" i18n="faq.more-faq"
-            >More FAQs &raquo;</a
-          >
-        </p>
-        <p *ngIf="isofficialBCHExplorerBuild">
-          <a [routerLink]="['/research' | relativeUrl]" i18n="mempool-research"
-            >Research</a
-          >
-        </p>
       </div>
 
-      <div
-        class="links"
-        *ngIf="
-          env.TESTNET4_ENABLED || env.SCALENET_ENABLED || env.CHIPNET_ENABLED
-        "
-      >
-        <p class="category" i18n="footer.networks">Networks</p>
-        <p
-          *ngIf="
-            (officialBCHExplorerSite || env.BASE_MODULE === 'explorer') &&
-            currentNetwork !== '' &&
-            currentNetwork !== 'mainnet'
-          "
-        >
-          <a [href]="networkLink('mainnet')" i18n="footer.mainnet-explorer"
-            >Mainnet Explorer</a
-          >
-        </p>
-        <p
-          *ngIf="
-            (officialBCHExplorerSite || env.BASE_MODULE === 'explorer') &&
-            currentNetwork !== 'testnet4' &&
-            env.TESTNET4_ENABLED
-          "
-        >
-          <a [href]="networkLink('testnet4')" i18n="footer.testnet4-explorer"
-            >Testnet4 Explorer</a
-          >
-        </p>
-        <p
-          *ngIf="
-            (officialBCHExplorerSite || env.BASE_MODULE === 'explorer') &&
-            currentNetwork !== 'scalenet' &&
-            env.SCALENET_ENABLED
-          "
-        >
-          <a [href]="networkLink('scalenet')" i18n="footer.scalenet-explorer"
-            >Scalenet Explorer</a
-          >
-        </p>
-        <p
-          *ngIf="
-            (officialBCHExplorerSite || env.BASE_MODULE === 'explorer') &&
-            currentNetwork !== 'chipnet' &&
-            env.CHIPNET_ENABLED
-          "
-        >
-          <a [href]="networkLink('chipnet')" i18n="footer.chipnet-explorer"
-            >Chipnet Explorer</a
-          >
-        </p>
+      <!-- Ecosystem -->
+      <div class="bfx-col">
+        <h3 class="bfx-col-title">Ecosystem</h3>
+        <ul>
+          <li>
+            <a href="https://explorer.bitfinitechain.org" target="_blank" rel="noopener">Explorer</a>
+          </li>
+          <li>
+            <a href="https://ckpool.bitfinitechain.org" target="_blank" rel="noopener">Mining Pool</a>
+          </li>
+          <li><a [routerLink]="['/docs/api' | relativeUrl]">Documentation</a></li>
+          <li>
+            <a href="https://wallet.bitfinitechain.org" target="_blank" rel="noopener">Wallet</a>
+          </li>
+          <li>
+            <a href="https://github.com/bitfinitechain/bitfinite-core/blob/master/QUANTUM.md" target="_blank" rel="noopener">Whitepaper</a>
+          </li>
+          <li><a [routerLink]="['/terms-of-service' | relativeUrl]">Terms of Service</a></li>
+          <li><a [routerLink]="['/privacy-policy' | relativeUrl]">Privacy Policy</a></li>
+        </ul>
       </div>
 
-      <div class="links">
-        <p class="category" i18n="footer.tools">Tools</p>
-        <p>
-          <a [routerLink]="['/clock/mempool/0']" i18n="footer.clock-mempool"
-            >Clock (Mempool)</a
-          >
-        </p>
-        <p>
-          <a [routerLink]="['/clock/mined/0']" i18n="footer.clock-mined"
-            >Clock (Mined)</a
-          >
-        </p>
-        <p>
-          <a [routerLink]="['/tools/calculator']" i18n="shared.calculator"
-            >Calculator</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/tools/address-converter']"
-            i18n="shared.address-converter"
-            >Address Converter</a
-          >
-        </p>
-        <p>
-          <a [routerLink]="['/verify']" i18n="shared.verify-ownership"
-            >Verify Ownership (PSBT)</a
-          >
-        </p>
-      </div>
-
-      <div class="links">
-        <p class="category" i18n="footer.legal">Legal</p>
-        <p>
-          <a
-            [routerLink]="['/terms-of-service']"
-            i18n="shared.terms-of-service|Terms of Service"
-            >Terms of Service</a
-          >
-        </p>
-        <p>
-          <a
-            [routerLink]="['/privacy-policy']"
-            i18n="shared.privacy-policy|Privacy Policy"
-            >Privacy Policy</a
-          >
-        </p>
-        <p>
-          <a
-            href="/3rdpartylicenses.txt"
-            i18n="shared.third-party-licenses|Third-party Licenses"
-            >Third-party Licenses</a
-          >
-        </p>
-      </div>
-    </div>
-<div class="row social-links">
-      <div class="col-sm-12">
-        <a
-          href="https://t.me/bitfinitechain"
-          target="_blank"
-          title="BitFinite Explorer on Telegram"
-          aria-label="BitFinite Explorer on Telegram"
-          ><svg
-            style="width: 32px"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="16" cy="16" r="14" fill="url(#paint0_linear_87_7225)" />
-            <path
-              d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z"
-              fill="white"
-            />
-            <defs>
-              <linearGradient
-                id="paint0_linear_87_7225"
-                x1="16"
-                y1="2"
-                x2="16"
-                y2="30"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#37BBFE" />
-                <stop offset="1" stop-color="#007DBB" />
-              </linearGradient>
-            </defs></svg
-        ></a>
-        <a
-          href="https://x.com/bitfinitechain"
-          target="_blank"
-          title="BitFinite Explorer on X"
-          aria-label="BitFinite Explorer on X"
-          ><svg
-            width="23"
-            height="23"
-            style="width: 23px"
-            class="fill"
-            viewBox="0 0 1200 1227"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
-            /></svg
-        ></a>
-        <a
-          href="https://github.com/bitfinitechain/bitfinite-mempool"
-          title="Source Code on GitHub"
-          target="_blank"
-          aria-label="Source Code on GitHub"
-          ><svg role="img" style="width: 28px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-        </a>
-        <!--<a href="https://youtube.com/@" target="_blank"
-          ><svg
-            fill="#fff"
-            role="img"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>YouTube</title>
-            <path
-              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
-            /></svg
-        ></a>-->
+      <!-- Community -->
+      <div class="bfx-col">
+        <h3 class="bfx-col-title">Community</h3>
+        <div class="bfx-social">
+          <a href="https://x.com/bitfinitechain" target="_blank" rel="noopener" aria-label="X">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+          <a href="https://t.me/bitfinitechain" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+            </svg>
+          </a>
+          <a href="https://github.com/bitfinitechain" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
 
-    <div
-      class="row version"
-      [style]="{ 'background-color': isServicesPage ? 'var(--bg)' : '' }"
-    >
-      <div class="col-sm-12">
-        <ng-container *ngIf="officialBCHExplorerSite">
-          <p *ngIf="backendInfo$ | async as backend; else officialFallback">
-            <span
-              >{{ backend.hostname }} (v{{ backend.version }}) [<a
-                target="_blank"
-                href="https://github.com/bitfinitechain/bitfinite-mempool/commit/{{
-                  backend.gitCommit | slice: 0 : 8
-                }}"
-                >{{ backend.gitCommit | slice: 0 : 8 }}</a
-              >]</span
-            >
-            <span *ngIf="stateService.env.GIT_COMMIT_HASH_MEMPOOL_SPACE"
-              >[{{
-                (servicesBackendInfo$ | async)?.gitCommit | slice: 0 : 8
-              }}]</span
-            >
-          </p>
-          <ng-template #officialFallback>
-            <p>
-              v{{ packetJsonVersion }} [<a
-                target="_blank"
-                href="https://github.com/bitfinitechain/bitfinite-mempool/commit/{{
-                  frontendGitCommitHash
-                }}"
-                >{{ frontendGitCommitHash }}</a
-              >]
-            </p>
-          </ng-template>
-        </ng-container>
-        <p *ngIf="!officialBCHExplorerSite">
-          v{{ packetJsonVersion }} [<a
-            target="_blank"
-            href="https://github.com/bitfinitechain/bitfinite-mempool/commit/{{
-              frontendGitCommitHash
-            }}"
-            >{{ frontendGitCommitHash }}</a
-          >]
+    <hr class="bfx-divider" />
+
+    <div class="bfx-footer-bottom">
+      <p class="bfx-copy">
+        &copy;
+        <a href="https://bitfinitechain.org" target="_blank" rel="noopener">BitFinite (BFX)</a>
+        &middot; based on
+        <a href="https://github.com/bitfinitechain/bitfinite-mempool" target="_blank" rel="noopener">mempool.space</a>
+        (AGPL)
+      </p>
+      <div id="donate" class="bfx-donate">
+        <img
+          src="/resources/qr_code.png"
+          width="112"
+          height="112"
+          alt="BitFinite donation address"
+        />
+        <p>
+          Donations &mdash;
+          <code>bfx:fzfj9z07nxrug9jnx02583h2sgs28p7w3svmdgv0rx</code>
+          <app-clipboard text="bfx:fzfj9z07nxrug9jnx02583h2sgs28p7w3svmdgv0rx"></app-clipboard>
         </p>
       </div>
     </div>
