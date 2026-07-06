@@ -6,7 +6,7 @@
 }
 
 .bfx-footer-inner {
-  max-width: 1140px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 1.5rem 2rem;
 }
@@ -146,7 +146,7 @@
   align-items: center;
   gap: 1.25rem;
   text-align: center;
-  max-width: 1140px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem 2.5rem;
 }
@@ -186,9 +186,3 @@
   }
 }
 
-@media (min-width: 1400px) {
-  .bfx-footer-inner,
-  .bfx-footer-bottom {
-    max-width: 1320px;
-  }
-}

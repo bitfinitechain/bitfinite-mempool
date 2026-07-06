@@ -395,15 +395,3 @@ main {
   .accent { color: var(--primary); }
 }
 
-/* align header content to the page container width (full-width bar, contained content) */
-.navbar {
-  width: 100%;
-  max-width: 1140px;
-  margin-left: auto;
-  margin-right: auto;
-}
-@media (min-width: 1400px) {
-  .navbar {
-    max-width: 1320px;
-  }
-}
