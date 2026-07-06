@@ -282,8 +282,8 @@ export class BlockSizesGraphComponent implements OnInit {
                 },
                 areaStyle: {
                   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: 'rgba(253, 216, 53, 0.35)' },
-                    { offset: 1, color: 'rgba(253, 216, 53, 0.05)' },
+                    { offset: 0, color: 'rgba(77, 123, 245, 0.35)' },
+                    { offset: 1, color: 'rgba(77, 123, 245, 0.05)' },
                   ]),
                 },
                 markLine: {
