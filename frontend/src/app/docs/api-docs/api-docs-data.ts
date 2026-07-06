@@ -7330,14 +7330,14 @@ export const faqData = [
     category: 'self-hosting',
     showConditions: bitcoinNetworks,
     fragment: 'host-my-own-instance-server',
-    title: 'How can I host a BitFinite Explorer instance on my own server?',
+    title: 'How can I host a BitFinite Mempool instance on my own server?',
   },
   {
     type: 'endpoint',
     category: 'self-hosting',
     showConditions: bitcoinNetworks,
     fragment: 'install-mempool-with-docker',
-    title: 'Can I install BitFinite Explorer using Docker?',
+    title: 'Can I install BitFinite Mempool using Docker?',
   },
   {
     type: 'endpoint',
@@ -7345,6 +7345,6 @@ export const faqData = [
     showConditions: bitcoinNetworks,
     fragment: 'address-lookup-issues',
     title:
-      'Why do I get an error for certain address lookups on my BitFinite Explorer instance?',
+      'Why do I get an error for certain address lookups on my BitFinite Mempool instance?',
   },
 ];

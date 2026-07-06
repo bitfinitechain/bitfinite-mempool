@@ -1923,3 +1923,16 @@ footer { border-top: 1px solid var(--border); }
 .navbar-nav .nav-link { transition: color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out); }
 /* active nav pill: brand blue, rounded */
 li.nav-item.active { border-radius: var(--radius); }
+
+/* white text on brand-blue buttons/pills (was inheriting --fg = black in light) */
+.btn-primary, .btn-purple {
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-disabled-color: #ffffff;
+  color: #ffffff;
+}
+.btn-check:checked + .btn-primary,
+.btn-check:active + .btn-primary,
+.btn-check:checked + .btn,
+.btn.active { color: #ffffff; }

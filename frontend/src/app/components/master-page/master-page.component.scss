@@ -357,3 +357,19 @@ main {
   display: inline-flex;
   align-items: center;
 }
+
+/* keep header controls compact + prevent header overflow */
+.header-tools .form-select {
+  width: auto;
+  min-width: 92px;
+  max-width: 150px;
+}
+.header-tools {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+}
+@media (min-width: 992px) {
+  .search-form-container {
+    max-width: 380px;
+  }
+}

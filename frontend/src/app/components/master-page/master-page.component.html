@@ -30,7 +30,7 @@
         [ngClass]="{ 'dual-logos': enterpriseInfo?.dualLogo }"
         [routerLink]="['/' | relativeUrl]"
         (click)="brandClick($event)"
-        aria-label="BitFinite Explorer - Home"
+        aria-label="BitFinite Mempool - Home"
       >
         <ng-container
           *ngIf="{ val: connectionState$ | async } as connectionState"
@@ -68,7 +68,7 @@
         }"
         [routerLink]="['/' | relativeUrl]"
         (click)="brandClick($event)"
-        aria-label="BitFinite Explorer - Home"
+        aria-label="BitFinite Mempool - Home"
       >
         <ng-container
           *ngIf="{ val: connectionState$ | async } as connectionState"

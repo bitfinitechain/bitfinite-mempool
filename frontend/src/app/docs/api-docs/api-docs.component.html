@@ -507,7 +507,7 @@
   </p>
 
   <p>
-    You can look at the BitFinite Explorer's fee estimates on the
+    You can look at the BitFinite Mempool's fee estimates on the
     <a [routerLink]="['/' | relativeUrl]">front page</a>. If you want to have an
     idea how high you need to set your sat/B.
   </p>
@@ -533,7 +533,7 @@
     See real-time fee estimates on
     <a [routerLink]="['/' | relativeUrl]">the main dashboard</a>.
   </p>
-  <p>Here is an overview of BitFinite Explorer's feerate suggestions:</p>
+  <p>Here is an overview of BitFinite Mempool's feerate suggestions:</p>
   <ul>
     <li>
       <b>High Priority.</b> This figure is the median feerate of transactions in
@@ -577,7 +577,7 @@
   <p>
     In all cases, the suggested feerate is adjusted lower if any of the mempool
     blocks involved in the calculation are not full (example: if there is only 1
-    mempool block that's less than half-full, BitFinite Explorer will suggest a
+    mempool block that's less than half-full, BitFinite Mempool will suggest a
     feerate of 1 sat/B—not the median feerate of transactions in the block).
   </p>
   <p>
@@ -592,7 +592,7 @@
     estimation cannot be perfectly precise.
   </p>
   <p>
-    Use BitFinite Explorer's feerate suggestions as a guide, and understand that they
+    Use BitFinite Mempool's feerate suggestions as a guide, and understand that they
     do not guarantee transaction confirmation in any period of time. However, in
     BitFinite the fees are low and the block sizes are big enough that most
     transations are confirmed within the next block.
@@ -622,7 +622,7 @@
     rejecting new transactions below a certain feerate threshold—so when this is
     the case, be extra sure to set a feerate that (at a minimum) exceeds that
     threshold. The current threshold feerate (and memory usage) are displayed
-    right on BitFinite Explorer's front page.
+    right on BitFinite Mempool's front page.
   </p>
 </ng-template>
 
@@ -842,7 +842,7 @@
 
 <ng-template type="why-dont-fee-ranges-match">
   <p>
-    BitFinite Explorer aims to show you the <i>effective feerate</i> range for
+    BitFinite Mempool aims to show you the <i>effective feerate</i> range for
     blocks—how much would you actually need to pay to get a transaction included
     in a block.
   </p>
@@ -860,11 +860,11 @@
 
 <ng-template type="how-do-block-audits-work">
   <p>
-    A block audit visually compares BitFinite Explorer's expected block to the actual
+    A block audit visually compares BitFinite Mempool's expected block to the actual
     block for a particular block height.
   </p>
   <p>
-    How is the expected block determined? BitFinite Explorer monitors its view of the
+    How is the expected block determined? BitFinite Mempool monitors its view of the
     mempool and runs a re-implementation of BitFinite Node's transaction
     selection algorithm to determine the transactions it expects to see in
     upcoming blocks (<a
@@ -877,7 +877,7 @@
     near real-time.
   </p>
   <p>
-    At the moment a new block is mined, BitFinite Explorer saves a snapshot of its
+    At the moment a new block is mined, BitFinite Mempool saves a snapshot of its
     projected block template for the next block. We call this snapshot the
     <b>expected block</b> for the block height in question, and it serves as the
     basis for the block audit.
@@ -889,7 +889,7 @@
       >The purpose of block audits is to deduce when miners intentionally
       include or exclude transactions from blocks they mine.</b
     >
-    Since this information cannot be precisely known, BitFinite Explorer uses a
+    Since this information cannot be precisely known, BitFinite Mempool uses a
     handful of heuristics to accomplish this.
   </p>
   <p>
@@ -1033,7 +1033,7 @@
   </p>
   <p>
     How is it calculated? Let <span class="math">s<sub>expected</sub></span> be
-    the set of all transactions in BitFinite Explorer's expected block and let
+    the set of all transactions in BitFinite Mempool's expected block and let
     <span class="math">s<sub>actual</sub></span> be the set of all transactions
     in the actual block. Then let <span class="math">n</span> be the number of
     all transactions in both <span class="math">s<sub>expected</sub></span> and
@@ -1042,7 +1042,7 @@
   </p>
   <p>
     Furthermore, let <span class="math">r</span> be the number of transactions
-    BitFinite Explorer deduces were
+    BitFinite Mempool deduces were
     <a
       [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="how-do-block-audits-work"
@@ -1291,7 +1291,7 @@
 
 <ng-template type="host-my-own-instance-server">
   <p>
-    You can manually install BitFinite Explorer on your own server, but this requires
+    You can manually install BitFinite Mempool on your own server, but this requires
     advanced sysadmin skills since you will be manually configuring everything.
     You could also use our
     <a
@@ -1301,7 +1301,7 @@
     >.
   </p>
   <p>
-    BitFinite Explorer can also run on a Raspberry Pi or other single-board computers.
+    BitFinite Mempool can also run on a Raspberry Pi or other single-board computers.
   </p>
 </ng-template>
 
@@ -1321,14 +1321,14 @@
     of your Electrum server backend.
   </p>
   <p>
-    BitFinite Explorer uses an Electrum server to do address lookups. Fulcrum is the
-    recommended backend for BitFinite Explorer and it handles heavy queries much more
+    BitFinite Mempool uses an Electrum server to do address lookups. Fulcrum is the
+    recommended backend for BitFinite Mempool and it handles heavy queries much more
     efficiently.
   </p>
   <ol>
     <li>
       <a href="https://github.com/cculianu/Fulcrum" target="_blank">Fulcrum</a>.
-      Fulcrum is the recommended backend for BitFinite Explorer and it handles heavy
+      Fulcrum is the recommended backend for BitFinite Mempool and it handles heavy
       queries much more efficiently.
     </li>
   </ol>
