@@ -55,14 +55,14 @@ export class ThemeService {
         if (!this.style) {
           this.style = document.createElement('link');
           this.style.rel = 'stylesheet';
-          this.style.href = `${theme}.css`;
+          this.style.href = `${theme}.css?v=bfx3`;
           this.style.onerror = (): void => {
             // something went wrong (eg the css resource does not exist, revert to default)
             this.apply('default');
           };
           document.head.appendChild(this.style); // load the css now
         } else {
-          this.style.href = `${theme}.css`;
+          this.style.href = `${theme}.css?v=bfx3`;
         }
       } catch (err) {
         console.log('failed to apply theme stylesheet: ', err);
