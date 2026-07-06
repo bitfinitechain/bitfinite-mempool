@@ -136,11 +136,15 @@ export class IncomingTransactionsGraphComponent implements OnInit, OnChanges {
       name: 'data',
       data: this.data.series[0],
       type: 'line',
-      smooth: false,
+      smooth: true,
       showSymbol: false,
       symbol: 'none',
       lineStyle: {
-        width: 3,
+        width: 2.5,
+        color: '#4d7bf5',
+      },
+      areaStyle: {
+        color: 'rgba(77, 123, 245, 0.16)',
       },
       markLine: {
         silent: true,

@@ -149,7 +149,7 @@ footer .row.version p {
 }
 
 footer .row.version p a {
-  color: #09a3ba;
+  color: var(--primary);
 }
 
 .main-logo {
@@ -386,4 +386,51 @@ footer .nowrap {
     flex-shrink: unset;
     width: unset;
   }
+}
+
+/* ── BitFinite footer polish ─────────────────────────────── */
+footer a {
+  transition: color var(--dur, 0.2s) var(--ease-out, ease);
+}
+footer a:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+footer .category {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-fg);
+  margin-bottom: 0.85rem;
+}
+footer .links p {
+  margin-bottom: 0.55rem;
+  line-height: 1.35;
+}
+footer .row.social-links a {
+  color: var(--muted-fg);
+  transition: color var(--dur, 0.2s) var(--ease-out, ease), transform var(--dur-fast, 0.12s) var(--ease-out, ease);
+}
+footer .row.social-links a:hover {
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+/* donation block: brand-blue address, tidy QR frame */
+#donate {
+  margin: 1.75rem auto !important;
+}
+#donate img {
+  border-radius: var(--radius, 8px);
+  padding: 8px;
+  background: #fff;
+}
+#donate code {
+  color: var(--primary);
+  font-size: 0.82rem;
+}
+#donate p {
+  color: var(--muted-fg);
+  font-size: 0.85rem;
+  margin-top: 0.6rem;
 }
