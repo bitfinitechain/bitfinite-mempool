@@ -39,7 +39,7 @@
     padding: 0px 1px;
     opacity: 0;
     cursor: pointer;
-    color: white;
+    color: var(--fg);
     background: none;
     border: none;
     border-radius: 0.35em;
@@ -75,7 +75,7 @@
     font-size: 0.9em;
     background: var(--block-goggles-overlay);
     border: solid 1px var(--primary);
-    color: white;
+    color: var(--fg);
     border-radius: 0.2rem;
     padding: 0.2em 0.5em;
     transition: background-color 300ms;
@@ -84,6 +84,7 @@
 
     &.selected {
       background-color: var(--primary);
+      color: #fff;
     }
   }
 
@@ -115,7 +116,11 @@
     pointer-events: all;
     line-height: 1.5;
     background: var(--block-goggles-overlay);
-    color: #fff;
+    color: var(--fg);
+
+    &.active {
+      color: #fff;
+    }
 
     &:first-child {
       border-top-left-radius: 0.2rem;

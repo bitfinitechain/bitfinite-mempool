@@ -49,7 +49,7 @@
       stroke: url(#fee-hover-gradient);
     }
     &.zerovalue {
-      stroke: white;
+      stroke: var(--fg);
     }
   }
 
@@ -79,4 +79,23 @@
     fill: transparent;
     cursor: pointer;
   }
+}
+
+// Theme-aware flow highlight/hover accents.
+// The template hard-codes `stop-color="white"` (and `var(--info)` in the
+// attribute) on these stops, which is invisible on the light theme's light
+// background and unreliable as a presentation attribute. Author CSS overrides
+// the presentation attribute, and var() resolves reliably as a real CSS
+// property — so the "flash" stays visible in both light and dark themes.
+#input-hover-gradient stop:nth-child(3),
+#output-hover-gradient stop:nth-child(2),
+#input-hover-connector-gradient stop:nth-child(1),
+#output-hover-connector-gradient stop:nth-child(2),
+#fee-hover-gradient stop:nth-child(2) {
+  stop-color: var(--fg);
+}
+
+#input-highlight-gradient stop:nth-child(3),
+#output-highlight-gradient stop:nth-child(2) {
+  stop-color: var(--info);
 }
