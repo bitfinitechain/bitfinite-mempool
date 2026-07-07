@@ -1938,13 +1938,15 @@ li.nav-item.active { border-radius: var(--radius); }
 .btn.active { color: #ffffff; }
 
 /* The amount/fee unit (.symbol) is dimmed with --transparent-fg, which is dark
-   in the light theme and disappears on blue/highlighted backgrounds (e.g. the
-   "BFX" unit on a bg-primary amount pill or a focused/highlighted in/out row).
-   Follow the container's own text colour in those contexts so the unit stays
-   as legible as the number next to it. */
+   in the light theme and disappears on coloured backgrounds (e.g. the "BFX"
+   unit on a btn-success/btn-primary amount pill, any bg-* badge, or a
+   focused/highlighted in/out row). Inside a button/badge/highlight the unit
+   should always match its container's own text colour rather than being
+   independently dimmed, so it stays as legible as the number next to it.
+   (More specific rules, e.g. the tooltip's .fixed-unit-color, still win.) */
+.btn .symbol,
+.badge .symbol,
 .bg-primary .symbol,
-.badge.bg-primary .symbol,
-.btn-primary .symbol,
 .focus .symbol,
 .highlight .symbol {
   color: inherit;
