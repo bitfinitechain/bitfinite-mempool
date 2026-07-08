@@ -1587,7 +1587,7 @@ a {
 }
 
 .bg-primary {
-  color: var(--fg);
+  color: #fff; /* solid brand-blue background in both themes -> always light text (was var(--fg) = black in light) */
   background-color: var(--primary) !important;
 }
 
@@ -1950,4 +1950,13 @@ li.nav-item.active { border-radius: var(--radius); }
 .focus .symbol,
 .highlight .symbol {
   color: inherit;
+}
+
+/* Miner/pool badge: no background, sits on the page — must use the theme text
+   colour, not a hard-coded white (invisible in light mode). Shared class so the
+   three call sites (block, block-preview, transaction-details) stop repeating
+   an inline style. */
+.badge.pool-badge {
+  color: var(--fg);
+  padding: 0;
 }
