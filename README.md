@@ -1,51 +1,69 @@
-# BCH Explorer
+# BitFinite Mempool
 
-Bitcoin Cash Explorer is a Bitcoin Cash-focused explorer, developed by Melroy van den Berg. It provides a comprehensive mempool visualizer, blockchain explorer, and API service, which powers [bchexplorer.cash](https://bchexplorer.cash).
+A [mempool.space](https://mempool.space)-style explorer for the **BitFinite
+(BFX)** network — real-time blocks, a mempool visualizer, transaction-flow
+(bowtie) diagrams, fee rates, mining-pool attribution, and a full REST/WebSocket
+API.
 
-Created and maintained by Melroy van den Berg, the BCH Explorer is fully open source under the AGPL license.
+**Live:** https://mempool.bitfinitechain.org
 
-To support the continued development of this project, you can donate via Bitcoin Cash to: `bitcoincash:qzqmakefvntudp0fv7sunt5fjxdswlxv2yhezq7pdl`. Additional donation options are available on [my personal website](https://melroy.org/donate.html).
+## Lineage & license
 
-Looking ahead, I plan to introduce sponsorship opportunities to ensure the long-term sustainability of this project. This support will enable continued development and the addition of Bitcoin Cash-specific features and capabilities.
+BitFinite Mempool is a fork of Melroy van den Berg's
+[**bitcoin-cash-explorer**](https://github.com/BitcoinCash1/bitcoin-cash-explorer)
+(the Bitcoin Cash adaptation of mempool.space), re-chained and re-branded for
+BitFinite. It is licensed under the **GNU AGPL-3.0** — see [LICENSE](LICENSE) /
+[COPYING.md](COPYING.md). Because the AGPL's network clause applies, the source
+of this running instance is this repository. Full credit to Melroy van den Berg
+and the mempool.space authors.
 
-# Installation Methods
+## Architecture
 
-**Note:** Currently we are not yet listed on any of these "one-click installation" methods. For now, use the <a href="#advanced-installation-methods">Advanced Installation Methods</a>.
+| Component | Stack | Notes |
+|---|---|---|
+| Frontend | Angular + SCSS | `frontend/` — two themes (dark = `styles.scss`, light = `theme-light.scss`) |
+| Backend | Node/TypeScript (Express) + small Rust `gbt` | `backend/` |
+| Database | MariaDB 10.5+ | |
+| Chain data | `bitfinited` JSON-RPC + Electrum (electrs/Fulcrum) | |
 
----
+Key BitFinite-specific change: the **CashAddr codec uses the BFX custom charset**
+(`q`↔`f` swap, `bfx:` prefix) across the frontend address/tx utils and the
+backend address regex — stock cashaddr libraries do not work unmodified.
 
-BCH Explorer can be self-hosted on a wide variety of your own hardware, ranging from a simple one-click installation on a Raspberry Pi full-node distro all the way to a robust production instance on a powerful Linux or FreeBSD server.
+## Configuration
 
-Most people should use a <a href="#one-click-installation">one-click install method</a>.
+Backend config lives in `backend/explorer-config.json`:
 
-Other install methods are meant for developers and others with experience managing servers. If you want support for your own production instance of BCH Explorer.
+- `CORE_RPC` → `bitfinited` (host `127.0.0.1`, port `19769`)
+- `ELECTRUM` → electrs (`127.0.0.1:50001`), `BACKEND: "electrum"`
+- `DATABASE` → MariaDB
+- `POOLS_JSON_URL` → the served `pools-v2.json` (mining-pool coinbase tags)
 
-We do **not** offer any paid Enterprise versions, everything is open-source and you will need to host it yourself, if you wish to run your own instance and having fun!
+The node must run with `txindex=1`. See [`backend/`](./backend/) and
+[`frontend/`](./frontend/) for developer setup, and [`docker/`](./docker/) for a
+Docker deployment.
 
-<a id="one-click-installation"></a>
+## Build & deploy
 
-## One-Click Installation
+```bash
+# frontend production build (single locale)
+cd frontend
+pnpm install
+pnpm run generate-config
+npx ng build --configuration=production --localize=false
+pnpm run sync-assets
+```
 
-~~BCH Explorer can be conveniently installed on the following full-node distros:~~
+Production deploys to the live host use [`scripts/deploy-frontend.sh`](./scripts/deploy-frontend.sh),
+which builds and rsyncs the bundle (the nginx vhost is locale-aware and serves
+assets from the `en-US/` copy — the script handles this).
 
-<!-- - [Umbrel](https://github.com/getumbrel/umbrel)
-- [StartOS](https://github.com/Start9Labs/start-os)
-- [nix-bitcoin](https://github.com/fort-nix/nix-bitcoin/blob/a1eacce6768ca4894f365af8f79be5bbd594e1c3/examples/configuration.nix#L129)
-- [myNode](https://github.com/mynodebtc/mynode)
--->
+The backend (`bitfinite-mempool-api`) is a Node service run under pm2; build the
+Rust `gbt` first (`cd rust/gbt && npm run build-release && npm run to-backend`),
+then the TypeScript backend, then start it.
 
-No matter which option you pick, you'll be able to get your own fully-sovereign instance of BCH Explorer up quickly without needing to fiddle with any settings.
+## Attribution
 
-## Advanced Installation Methods
-
-BCH Explorer can be installed in other ways too, but we only recommend doing so if you're a developer, have experience managing servers, or otherwise know what you're doing.
-
-- See the [`docker/`](./docker/) directory for instructions on deploying BCH Explorer with Docker.
-- See the [`backend/`](./backend/) and [`frontend/`](./frontend/) directories for manual install instructions oriented for developers.
-- See the [`production/`](./production/) directory for guidance on setting up a more serious BCH Explorer instance designed for high performance at scale.
-
-## Translations
-
-The BCH Explorer frontend is translated into 30+ different languages.
-
-We use Localazy for translation management, go to: [https://localazy.com/p/bch-explorer](https://localazy.com/p/bch-explorer) and help us improve the translations!
+Built on [mempool.space](https://github.com/mempool/mempool) →
+[bitcoin-cash-explorer](https://github.com/BitcoinCash1/bitcoin-cash-explorer)
+(Melroy van den Berg). Licensed under AGPL-3.0.
