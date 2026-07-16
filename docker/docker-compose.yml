@@ -21,14 +21,14 @@ services:
       EXPLORER_INDEXING_BLOCKS_AMOUNT: "-1"
       CORE_RPC_HOST: "172.27.0.1"
       CORE_RPC_PORT: "8332"
-      CORE_RPC_USERNAME: "explorer"
-      CORE_RPC_PASSWORD: "explorer"
+      CORE_RPC_USERNAME: "${CORE_RPC_USERNAME}"
+      CORE_RPC_PASSWORD: "${CORE_RPC_PASSWORD}"
       ELECTRUM_HOST: "172.27.0.1"
       DATABASE_ENABLED: "true"
       DATABASE_HOST: "bch-explorer-db"
-      DATABASE_DATABASE: "explorer"
-      DATABASE_USERNAME: "explorer"
-      DATABASE_PASSWORD: "admin"
+      DATABASE_DATABASE: "${MEMPOOL_DB_NAME:-mempool}"
+      DATABASE_USERNAME: "${MEMPOOL_DB_USER}"
+      DATABASE_PASSWORD: "${MEMPOOL_DB_PASSWORD}"
       STATISTICS_ENABLED: "true"
     image: registry.melroy.org/bitcoincash/bitcoin-cash-explorer/bch-explorer-backend:3.11.12
     user: 1000:1000
@@ -47,10 +47,10 @@ services:
 
   bch-explorer-db:
     environment:
-      MYSQL_DATABASE: "explorer"
-      MYSQL_USER: "explorer"
-      MYSQL_PASSWORD: "explorer"
-      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_DATABASE: "${MEMPOOL_DB_NAME:-mempool}"
+      MYSQL_USER: "${MEMPOOL_DB_USER}"
+      MYSQL_PASSWORD: "${MEMPOOL_DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MEMPOOL_DB_ROOT_PASSWORD}"
       MARIADB_AUTO_UPGRADE: "1"
     image: mariadb:12.2.1
     user: 1000:1000
