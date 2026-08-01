@@ -652,12 +652,30 @@
 
 <ng-template type="what-are-cashtokens">
   <p>
-    <strong>CashTokens</strong> are efficient, native
-    <strong>layer-1</strong> tokens built directly into the BitFinite
-    network. These are digital assets that can be created, owned, and utilized
-    by individuals, organizations, or decentralized applications on the
-    decentralized BitFinite network. CashTokens are optional to use in the
-    BitFinite network.
+    <strong>CashTokens</strong> are native <strong>layer-1</strong> tokens
+    defined at the consensus layer rather than by a smart-contract platform. A
+    token rides inside a regular UTXO, so it moves through ordinary
+    transactions and is validated by ordinary consensus rules — no separate
+    chain, bridge or virtual machine. Using them is entirely optional.
+  </p>
+  <p class="alert alert-mempool">
+    <strong>Status on BitFinite: inherited capability, not a live ecosystem.</strong>
+    BitFinite is derived from Bitcoin Cash Node, so the CashTokens rules are
+    active at the protocol level from the genesis block. But the surrounding
+    tooling does not exist yet: there is <strong>no token indexer</strong> (no
+    token list, supply, or holder data), <strong>no BCMR metadata registry</strong>
+    (a token would display as a raw category hash with no name, symbol or icon),
+    and <strong>no wallet support</strong> — the BitFinite wallets do not show or
+    spend token outputs. This explorer surfaces token data on individual
+    transactions and nothing more.
+  </p>
+  <p>
+    In practice that means a token minted on BitFinite today would be valid and
+    permanent on-chain, yet effectively unusable: invisible to wallets and
+    unlisted anywhere. Treat what follows as a description of the protocol
+    capability BitFinite inherits, not of a token ecosystem you can build on
+    right now. Proper support would require building an indexer and a metadata
+    registry first.
   </p>
   <p>
     <strong>Types of CashTokens:</strong>
@@ -681,11 +699,16 @@
     <strong>Use Cases:</strong>
   </p>
   <p>
-    CashTokens enable developers to build on-chain decentralized applications
-    including crowdfunding systems, trading protocols, decentralized exchanges
-    (DEXs), cross-chain bridges, and more. They provide the building blocks for
-    complex coordination tasks like liquidity-pooling, auctions, voting, and
-    sidechain operations.
+    On chains where the tooling has been built out, CashTokens are used for
+    crowdfunding systems, trading protocols, decentralized exchanges, cross-chain
+    bridges, liquidity pooling, auctions and voting. These are the building
+    blocks the primitive provides — demonstrated on Bitcoin Cash, where the
+    indexers, registries and wallets to support them already exist.
+  </p>
+  <p>
+    None of those applications exist on BitFinite today, and the infrastructure
+    they depend on has not been built here. They are listed to describe what the
+    primitive is capable of, not to suggest anything is available on this chain.
   </p>
   <p>
     <strong>Learn More:</strong> Visit
