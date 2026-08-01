@@ -326,7 +326,7 @@ export const wsApiDocsData = [
       "status": {
         "confirmed": true,
         "block_height": 875602,
-        "block_hash": "000000000000000000016c0639b6c1a34d6659c231aa2de5849ab3377ed75020",
+        "block_hash": "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
         "block_time": 1734704791
       },
       "order": 864069877,
@@ -415,7 +415,7 @@ export const wsApiDocsData = [
       "status": {
         "confirmed": true,
         "block_height": 875602,
-        "block_hash": "000000000000000000016c0639b6c1a34d6659c231aa2de5849ab3377ed75020",
+        "block_hash": "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
         "block_time": 1734704791
       },
       "order": 864069877,
@@ -504,7 +504,7 @@ export const wsApiDocsData = [
       "status": {
         "confirmed": true,
         "block_height": 875602,
-        "block_hash": "000000000000000000016c0639b6c1a34d6659c231aa2de5849ab3377ed75020",
+        "block_hash": "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
         "block_time": 1734704791
       },
       "order": 864069877,
@@ -594,7 +594,7 @@ export const wsApiDocsData = [
           "status": {
             "confirmed": true,
             "block_height": 875626,
-            "block_hash": "0000000000000000000086de1f4815ff0f7f0411d846301c5efa1e437130dc22",
+            "block_hash": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
             "block_time": 1734720142
           },
           "order": 81067521,
@@ -664,7 +664,7 @@ export const wsApiDocsData = [
           "status": {
             "confirmed": true,
             "block_height": 875626,
-            "block_hash": "0000000000000000000086de1f4815ff0f7f0411d846301c5efa1e437130dc22",
+            "block_hash": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
             "block_time": 1734720142
           },
           "order": 81067521,
@@ -734,7 +734,7 @@ export const wsApiDocsData = [
           "status": {
             "confirmed": true,
             "block_height": 875626,
-            "block_hash": "0000000000000000000086de1f4815ff0f7f0411d846301c5efa1e437130dc22",
+            "block_hash": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
             "block_time": 1734720142
           },
           "order": 81067521,
@@ -1441,7 +1441,12 @@ export const restApiDocsData = [
     fragment: 'get-price',
     title: 'GET Price',
     description: {
-      default: 'Returns bitcoin latest price denominated in main currencies.',
+      // BFX is not listed on any exchange, so there is no market price to return.
+      // The endpoint is kept for API compatibility and reports -1 per currency,
+      // which is this codebase's "unavailable" sentinel. Documenting a real price
+      // here (as the upstream text did) would be inventing a market that does not
+      // exist — the response sample below is the actual live output.
+      default: 'Returns the latest price denominated in main currencies. BitFinite is not currently traded on any exchange, so every currency returns -1 (price unavailable) and "time" is 0.',
     },
     urlString: '/v1/prices',
     showConditions: [''],
@@ -1458,38 +1463,38 @@ export const restApiDocsData = [
           commonJS: [],
           curl: [],
           response: `{
-  "time": 1768698003,
-  "USD": 593,
-  "EUR": 511,
-  "GBP": 443,
-  "AUD": 891,
-  "JPY": 91969,
-  "BGN": 987,
-  "BRL": 3185,
-  "CNY": 4132,
-  "CZK": 12403,
-  "DKK": 3820,
-  "HKD": 4623,
-  "HRK": 3850,
-  "HUF": 196769,
-  "IDR": 10010435,
-  "ILS": 1865,
-  "INR": 53791,
-  "ISK": 74754,
-  "KRW": 873193,
-  "MXN": 10453,
-  "MYR": 2406,
-  "NOK": 5986,
-  "NZD": 1031,
-  "PHP": 35215,
-  "PLN": 2157,
-  "RON": 2600,
-  "RUB": 46254,
-  "SEK": 5469,
-  "SGD": 764,
-  "THB": 18644,
-  "TRY": 25663,
-  "ZAR": 9730
+  "time": 0,
+  "USD": -1,
+  "EUR": -1,
+  "GBP": -1,
+  "AUD": -1,
+  "JPY": -1,
+  "BGN": -1,
+  "BRL": -1,
+  "CNY": -1,
+  "CZK": -1,
+  "DKK": -1,
+  "HKD": -1,
+  "HRK": -1,
+  "HUF": -1,
+  "IDR": -1,
+  "ILS": -1,
+  "INR": -1,
+  "ISK": -1,
+  "KRW": -1,
+  "MXN": -1,
+  "MYR": -1,
+  "NOK": -1,
+  "NZD": -1,
+  "PHP": -1,
+  "PLN": -1,
+  "RON": -1,
+  "RUB": -1,
+  "SEK": -1,
+  "SGD": -1,
+  "THB": -1,
+  "TRY": -1,
+  "ZAR": -1
 }`,
         },
         codeSampleTestnet: emptyCodeSample,
@@ -1612,11 +1617,11 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `{
-  "address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+  "address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
   "chain_stats": {
     "funded_txo_count": 0,
     "funded_txo_sum": 309377169,
@@ -1657,11 +1662,11 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleSignet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `{
-  address: "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+  address: "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
   chain_stats: {
     funded_txo_count: 5,
     funded_txo_sum: 15007599040,
@@ -1715,9 +1720,9 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `[
  {
     "txid": "0f4cb812f7f32595dead73d63d7c6171d477fd6fdada78295c2113aad9509f7f",
@@ -1732,7 +1737,7 @@ export const restApiDocsData = [
         "prevout": {
           "value": 27328799,
           "scriptpubkey": "a914156fef0f8747368584de677fd08e0b10bb1893da87",
-          "scriptpubkey_address": "bitcoincash:pq2klmc0sarndpvymenhl5ywpvgtkxynmgwgn6nv9s",
+          "scriptpubkey_address": "bfx:fzx9wwuy8ydl6dtvl8xft6a3sqvsw7gc2gp7j9xluf",
           "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 156fef0f8747368584de677fd08e0b10bb1893da OP_EQUAL",
           "scriptpubkey_type": "p2sh",
           "scriptpubkey_byte_code_pattern": "a95187",
@@ -1750,7 +1755,7 @@ export const restApiDocsData = [
           "5221032f687a4508519293fdb64a851f4db3c6e76bcd47cfa890d45719c2f5bb5d277321036889f1a71f2d136f906d626ef67e8f6b6dd61d58cb8c6708f717da823b1e01ae2102b2caae7bfdd807f2f70bb41457add926937ef0ef6078248789ac9fca150a3f6d53ae"
         ],
         "scriptpubkey": "a914156fef0f8747368584de677fd08e0b10bb1893da87",
-        "scriptpubkey_address": "bitcoincash:pq2klmc0sarndpvymenhl5ywpvgtkxynmgwgn6nv9s",
+        "scriptpubkey_address": "bfx:fzx9wwuy8ydl6dtvl8xft6a3sqvsw7gc2gp7j9xluf",
         "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 156fef0f8747368584de677fd08e0b10bb1893da OP_EQUAL",
         "scriptpubkey_type": "p2sh",
         "scriptpubkey_byte_code_pattern": "a95187",
@@ -1768,7 +1773,7 @@ export const restApiDocsData = [
         "prevout": {
           "value": 309619123,
           "scriptpubkey": "a914cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d87",
-          "scriptpubkey_address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+          "scriptpubkey_address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
           "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d OP_EQUAL",
           "scriptpubkey_type": "p2sh",
           "scriptpubkey_byte_code_pattern": "a95187",
@@ -1786,7 +1791,7 @@ export const restApiDocsData = [
           "522103c4067bd29c96cff965e650e9c28d778fb1cb5408808cd6a0d878daa826a667f82102ebb5b82081e40eec247a3c0882766f2126866f1c781634a078e4607f6b34ba572102c86c6d8fd4c06cce6d50ee300eebf3d140b745ef8f5b795af77b383e97dbbbb453ae"
         ],
         "scriptpubkey": "a914cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d87",
-        "scriptpubkey_address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+        "scriptpubkey_address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
         "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d OP_EQUAL",
         "scriptpubkey_type": "p2sh",
         "scriptpubkey_byte_code_pattern": "a95187",
@@ -1803,7 +1808,7 @@ export const restApiDocsData = [
       {
         "value": 336946644,
         "scriptpubkey": "76a914e3c3c04e6feb9fd383aa8eb88211c4cf6012ffcc88ac",
-        "scriptpubkey_address": "bitcoincash:qr3u8szwdl4el5ur428t3qs3cn8kqyhlesjqfjmp7k",
+        "scriptpubkey_address": "bfx:fptwruhlz8z9z2c7225td527h6gpge9g7sd859e8xf",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 e3c3c04e6feb9fd383aa8eb88211c4cf6012ffcc OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -1815,7 +1820,7 @@ export const restApiDocsData = [
     "status": {
       "confirmed": true,
       "block_height": 934834,
-      "block_hash": "0000000000000000001491685a77031e388f6e69ae14f010a6327d5f48ebbb2f",
+      "block_hash": "0000000000000047c8b9406cafd71cecb93329b7c3cece48f3a3e8e22d84361f",
       "block_time": 1769007389
     }
   },
@@ -1847,11 +1852,11 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleSignet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `{
-  address: "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+  address: "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
   chain_stats: {
     funded_txo_count: 5,
     funded_txo_sum: 15007599040,
@@ -1905,9 +1910,9 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `[
   {
     txid: "c4e53c2e37f4fac759fdb0d8380e4d49e6c7211233ae276a44ce7074a1d6d168",
@@ -1921,7 +1926,7 @@ export const restApiDocsData = [
     status: {
       confirmed: true,
       block_height: 697782,
-      block_hash: "000000000000000000011397e53a5b1442b3dbc5df046c959c11dfe0275a4579",
+      block_hash: "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
       block_time: 1630040570
     }
   },
@@ -1953,11 +1958,11 @@ export const restApiDocsData = [
 ],`,
         },
         codeSampleSignet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `{
-  address: "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+  address: "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
   chain_stats: {
     funded_txo_count: 765,
     funded_txo_sum: 87749875807,
@@ -2011,9 +2016,9 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `[
   {
     "txid": "6cda8ef866e8d9971e8c26a20cbc37a459cffba561014f0465cb7be5fe9a3484",
@@ -2028,7 +2033,7 @@ export const restApiDocsData = [
         "prevout": {
           "value": 210000000,
           "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-          "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+          "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
           "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
           "scriptpubkey_type": "p2pkh",
           "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2044,7 +2049,7 @@ export const restApiDocsData = [
           "0393c47f7a631e960550d470dbd6f60ecf5fb90caf1b994770f95f28ae45c4df9c"
         ],
         "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-        "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+        "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2062,7 +2067,7 @@ export const restApiDocsData = [
         "prevout": {
           "value": 210000000,
           "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-          "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+          "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
           "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
           "scriptpubkey_type": "p2pkh",
           "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2078,7 +2083,7 @@ export const restApiDocsData = [
           "0393c47f7a631e960550d470dbd6f60ecf5fb90caf1b994770f95f28ae45c4df9c"
         ],
         "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-        "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+        "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2096,7 +2101,7 @@ export const restApiDocsData = [
         "prevout": {
           "value": 210000000,
           "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-          "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+          "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
           "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
           "scriptpubkey_type": "p2pkh",
           "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2112,7 +2117,7 @@ export const restApiDocsData = [
           "0393c47f7a631e960550d470dbd6f60ecf5fb90caf1b994770f95f28ae45c4df9c"
         ],
         "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-        "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+        "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2130,7 +2135,7 @@ export const restApiDocsData = [
         "prevout": {
           "value": 210000000,
           "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-          "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+          "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
           "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
           "scriptpubkey_type": "p2pkh",
           "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2146,7 +2151,7 @@ export const restApiDocsData = [
           "0393c47f7a631e960550d470dbd6f60ecf5fb90caf1b994770f95f28ae45c4df9c"
         ],
         "scriptpubkey": "76a914d2bcb723d4289fece8e71d63422c20ed41cd4a6f88ac",
-        "scriptpubkey_address": "bitcoincash:qrfteder6s5flm8guuwkxs3vyrk5rn22dum3h8j8f7",
+        "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 d2bcb723d4289fece8e71d63422c20ed41cd4a6f OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2163,7 +2168,7 @@ export const restApiDocsData = [
       {
         "value": 39332651,
         "scriptpubkey": "76a914888f0b11e9ebabdc56d043888c5d1efc754cebf888ac",
-        "scriptpubkey_address": "bitcoincash:qzyg7zc3a846hhzk6ppc3rzarm782n8tlqstnsytu3",
+        "scriptpubkey_address": "bfx:fr6w4dx82j5xq3z0xyhn3ddlpc30jt74zgty87vth5",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 888f0b11e9ebabdc56d043888c5d1efc754cebf8 OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2174,7 +2179,7 @@ export const restApiDocsData = [
       {
         "value": 800660689,
         "scriptpubkey": "76a91435f5bdbd797c5ee73618f8453010e36d268a799688ac",
-        "scriptpubkey_address": "bitcoincash:qq6lt0da0979aeekrruy2vqsudkjdznejcyvrsvpv8",
+        "scriptpubkey_address": "bfx:ff5jcqtdmadf5ac0fmn3wm6w7yp3447uavehpc048f",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 35f5bdbd797c5ee73618f8453010e36d268a7996 OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2223,9 +2228,9 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleSignet: {
-          esModule: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          commonJS: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
-          curl: [`bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d`],
+          esModule: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          commonJS: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
+          curl: [`bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa`],
           response: `[
   {
     txid: "16cd9bbc6b62313a22d16671fa559aec6bf581df8b5853d37775c84b0fddfa90",
@@ -2287,7 +2292,7 @@ export const restApiDocsData = [
     "status": {
       "confirmed": true,
       "block_height": 498792,
-      "block_hash": "00000000000000000957f9713e7fd67375a2e59c4755231ca774320df6a37baa",
+      "block_hash": "0000000000000040e3ae0040e3524e4c1cbda59b85c456ab5000494c0ddf887f",
       "block_time": 1509158725
     },
     "value": 9988
@@ -2306,7 +2311,7 @@ export const restApiDocsData = [
     status: {
       confirmed: true,
       block_height: 2086944,
-      block_hash: "000000000000039a27007892b0f3ac646afa4eb3ef3d4a4e75e8bdf636b4d006",
+      block_hash: "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
       block_time: 1630159123
     },
     value: 1973787
@@ -2366,7 +2371,7 @@ export const restApiDocsData = [
           curl: [`1KFHE7w8BhaENAswwryaoccDb6qcT6DbYY`],
           response: `{
   "isvalid": true,
-  "address": "bitcoincash:qryztg0v72ngxrzyq93qcwsk7xv4q47z4vpp4t09dz",
+  "address": "bfx:fptwruhlz8z9z2c7225td527h6gpge9g7sd859e8xf",
   "scriptPubKey": "76a914c825a1ecf2a6830c4401620c3a16f1995057c2ab88ac",
   "isscript": false,
   "istokenaware": false
@@ -2421,7 +2426,7 @@ export const restApiDocsData = [
           curl: ['1672531200'],
           response: `{
   height: 769786,
-  hash: "000000000000000000017f6405c2382de84944eb21be9cec0379a735813f137b",
+  hash: "000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818",
   timestamp: "2022-12-31T23:30:31.000Z"
 }`,
         },
@@ -2431,7 +2436,7 @@ export const restApiDocsData = [
           curl: ['1672531200'],
           response: `{
   height: 2413838,
-  hash: "00000000000000082888e2353ea4baaea04d2e0e88f2ee054ad2bbcc1d6a5469",
+  hash: "0000000000000047c8b9406cafd71cecb93329b7c3cece48f3a3e8e22d84361f",
   timestamp: "2022-12-31T23:57:26.000Z"
 }`,
         },
@@ -2482,25 +2487,25 @@ export const restApiDocsData = [
         },
         codeSampleMainnet: {
           esModule: [
-            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           commonJS: [
-            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           curl: [
-            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           response: '',
         },
         codeSampleTestnet: {
           esModule: [
-            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+            '000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           commonJS: [
-            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+            '000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           curl: [
-            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+            '000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           response: '',
         },
@@ -2554,34 +2559,34 @@ export const restApiDocsData = [
         },
         codeSampleMainnet: {
           esModule: [
-            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           commonJS: [
-            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           curl: [
-            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           response: `{
   in_best_chain: true,
   height: 690557,
-  next_best: "00000000000000000003a59a34c93e39e636c8cd23ead726fdc467fbed0b7c5a"
+  next_best: "0000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6"
 }`,
         },
         codeSampleTestnet: {
           esModule: [
-            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+            '000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           commonJS: [
-            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+            '000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           curl: [
-            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+            '000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           response: `{
   in_best_chain: true,
   height: 2091140,
-  next_best: "0000000000000064152f2dc1e13bd70811fbcfa9c1660557233668b98b7b1c2b"
+  next_best: "0000000000000059cf277f89031b78821e887e3c88acc2d0b7329b3d8a56543f"
 }`,
         },
         codeSampleSignet: {
@@ -2688,13 +2693,13 @@ export const restApiDocsData = [
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `0000000000000000000624d76f52661d0f35a0da8b93a87cb93cf08fd9140209`,
+          response: `0000000000000059cf277f89031b78821e887e3c88acc2d0b7329b3d8a56543f`,
         },
         codeSampleTestnet: {
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `00000000000000a7a5227bb493ffb90d1e63e1c7e8cab2c9a2b98e9f2599a9a9`,
+          response: `0000000000000047c8b9406cafd71cecb93329b7c3cece48f3a3e8e22d84361f`,
         },
         codeSampleSignet: {
           esModule: [''],
@@ -2740,30 +2745,30 @@ export const restApiDocsData = [
         },
         codeSampleMainnet: {
           esModule: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
             '218',
           ],
           commonJS: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
             '218',
           ],
           curl: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
             '218',
           ],
           response: `0fa6da60e484941f255cbb025c3d6440e5a7e970119e899b4065c7999360e406`,
         },
         codeSampleTestnet: {
           esModule: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
             '1',
           ],
           commonJS: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
             '1',
           ],
           curl: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
             '1',
           ],
           response: `7aede67cd9f48c2f77ca9112c27da2583ea41fbb391652777c44ef21d5b1656e`,
@@ -2820,15 +2825,15 @@ export const restApiDocsData = [
         },
         codeSampleMainnet: {
           esModule: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
             '218',
           ],
           commonJS: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
             '218',
           ],
           curl: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
             '218',
           ],
           response: `[
@@ -2839,15 +2844,15 @@ export const restApiDocsData = [
         },
         codeSampleTestnet: {
           esModule: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
             '1',
           ],
           commonJS: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
             '1',
           ],
           curl: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
             '1',
           ],
           response: `[
@@ -2923,13 +2928,13 @@ export const restApiDocsData = [
         },
         codeSampleMainnet: {
           esModule: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
           ],
           commonJS: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
           ],
           curl: [
-            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805',
           ],
           response: `[
   {
@@ -2964,7 +2969,7 @@ export const restApiDocsData = [
       {
         "value": 2505949764,
         "scriptpubkey": "76a91445160ea9d45f6edefef3977ac0b2cdcc29aa594a88ac",
-        "scriptpubkey_address": "bitcoincash:qpz3vr4f630kahh77wth4s9jehxzn2jefg4cg7juxz",
+        "scriptpubkey_address": "bfx:fzx9wwuy8ydl6dtvl8xft6a3sqvsw7gc2gp7j9xluf",
         "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 45160ea9d45f6edefef3977ac0b2cdcc29aa594a OP_EQUALVERIFY OP_CHECKSIG",
         "scriptpubkey_type": "p2pkh",
         "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -2976,7 +2981,7 @@ export const restApiDocsData = [
     "status": {
       "confirmed": true,
       "block_height": 363366,
-      "block_hash": "000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce",
+      "block_hash": "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
       "block_time": 1435766771
     }
   },
@@ -2985,13 +2990,13 @@ export const restApiDocsData = [
         },
         codeSampleTestnet: {
           esModule: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           commonJS: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           curl: [
-            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9',
           ],
           response: `[
   {
@@ -3006,7 +3011,7 @@ export const restApiDocsData = [
     status: {
       confirmed: true,
       block_height: 2091173,
-      block_hash: "000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b",
+      block_hash: "000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9",
       block_time: 1630635771
     }
   },
@@ -3084,28 +3089,28 @@ export const restApiDocsData = [
           curl: ['730000'],
           response: `[
   {
-    "id": "0000000000000000000384f28cb3b9cf4377a39cfd6c29ae9466951de38c0529",
+    "id": "000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9",
     "height": 730000,
     "version": 536870912,
     "timestamp": 1648829449,
     "tx_count": 1627,
     "size": 1210916,
     "merkle_root": "efa344bcd6c0607f93b709515dd6dc5496178112d680338ebea459e3de7b4fbc",
-    "previousblockhash": "00000000000000000008b6f6fb83f8d74512ef1e0af29e642dd20daddd7d318f",
+    "previousblockhash": "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
     "mediantime": 1648827418,
     "nonce": 3580664066,
     "bits": 386521239,
     "difficulty": 28587155782195.1
   },
   {
-    "id": "00000000000000000008b6f6fb83f8d74512ef1e0af29e642dd20daddd7d318f",
+    "id": "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
     "height": 729999,
     "version": 793796608,
     "timestamp": 1648828946,
     "tx_count": 2574,
     "size": 1481957,
     "merkle_root": "d84f9cc1823bd069c505061b1f6faabd809d67ab5354e9f6234312dc4bdb1ecf",
-    "previousblockhash": "000000000000000000071e6c86c2175aa86817cae2a77acd95372b55c1103d89",
+    "previousblockhash": "0000000000000040e3ae0040e3524e4c1cbda59b85c456ab5000494c0ddf887f",
     "mediantime": 1648827210,
     "nonce": 3477019455,
     "bits": 386521239,
@@ -3120,28 +3125,28 @@ export const restApiDocsData = [
           curl: ['2091187'],
           response: `[
   {
-    "id": "00000000000000533f63df886281a9fd74da163e84a21445153ff480e5f57970",
+    "id": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
     "height": 2091187,
     "version": 545259520,
     "timestamp": 1630641890,
     "tx_count": 26,
     "size": 8390,
     "merkle_root": "4d6df12a4af11bb928c7b2930e0a4d2c3e268c6dc6a07462943ad1c4b6b96468",
-    "previousblockhash": "0000000000000079103da7d296e1480295df795b7379e7dffd27743e214b0b32",
+    "previousblockhash": "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
     "mediantime": 1630639627,
     "nonce": 309403673,
     "bits": 436273151,
     "difficulty": 16777216
   },
   {
-    "id": "0000000000000079103da7d296e1480295df795b7379e7dffd27743e214b0b32",
+    "id": "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
     "height": 2091186,
     "version": 541065216,
     "timestamp": 1630641655,
     "tx_count": 43,
     "size": 11427,
     "merkle_root": "c70fa944f2863dc0828ee93ec0407bb8473e3b9bb94854ffd3fa1ccb9855d76a",
-    "previousblockhash": "00000000000000f015cb6ce3c007b56a053c4b3c3c86a36130e63310da787a30",
+    "previousblockhash": "0000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6",
     "mediantime": 1630639598,
     "nonce": 2671302918,
     "bits": 436273151,
@@ -3226,7 +3231,7 @@ export const restApiDocsData = [
           curl: ['730000'],
           response: `[
   {
-    "id": "0000000000000000054e29158e1dcc4f394a717e8b8d5254fd4ef16f979bef2a",
+    "id": "0000000000000059cf277f89031b78821e887e3c88acc2d0b7329b3d8a56543f",
     "height": 730000,
     "version": 862330880,
     "timestamp": 1646487541,
@@ -3236,7 +3241,7 @@ export const restApiDocsData = [
     "merkle_root": "7e1056e8dd46318e0b797d5805a566212f03697c1cb9ab2bae5e0fa8b3b41727",
     "tx_count": 37,
     "size": 16713,
-    "previousblockhash": "000000000000000000f739c6a466a4dc2b4b3d4f50daedb306b70245c5410b44",
+    "previousblockhash": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
     "mediantime": 1646484293,
     "abla_state": {
       "block_size": null,
@@ -3264,10 +3269,10 @@ export const restApiDocsData = [
       },
       "avgFee": 2140,
       "avgFeeRate": 4,
-      "coinbaseRaw": "0390230b04446c2362fabe6d6d9136987c6559141bcccd8df04eaa3ce36b521c7715761f4b105d9d3a0e4070ff040000000000000008500003a100000000142f70726f68617368696e672e636f6d75ed51012f",
-      "coinbaseAddress": "bitcoincash:qppvn6zej2tv8utj58n5vasw8uf46tstls8mjj5fqn",
+      "coinbaseRaw": "0390230b04446c2362fabe6d6d9136987c6559141bcccd8df04eaa3ce36b521c7715761f4b105d9d3a0e4070ff040000000000000032f079b3460f30bea7134ad499216e5c2c0942a41228e25c99",
+      "coinbaseAddress": "bfx:ff5jcqtdmadf5ac0fmn3wm6w7yp3447uavehpc048f",
       "coinbaseAddresses": [
-        "bitcoincash:qppvn6zej2tv8utj58n5vasw8uf46tstls8mjj5fqn"
+        "bfx:ff5jcqtdmadf5ac0fmn3wm6w7yp3447uavehpc048f"
       ],
       "coinbaseSignature": "OP_DUP OP_HAðNª<ãkR\u001cw\u0015v\u001fK\u0010],f172a1e746760e3f135d2e0bfc OP_EQUALVERIFY OP_CHECKSIG",
       "avgTxSize": 444.97,cii": "\u00036
@@ -3284,7 +3289,7 @@ export const restApiDocsData = [
         2250,
         46270
       ],
-      "header": "00206633440b41c54502b706b3edda504f3d4b2bdca466a4c639f70000000000000000002717b4b3a80f5eae2babb91c7c69032f2166a505587d790b8e3146dde856107ef5672362186e05188f4dfd43",
+      "header": "00206633440b41c54502b706b3edda504f3d4b2bdca466a4c639f70000000000000032f079b3460f30bea7134ad499216e5c2c0942a41228e25c99",
       "utxoSetChange": 15,
       "utxoSetSize": 65479981,
       "totalInputAmt": 2418007911339,
@@ -3304,7 +3309,7 @@ export const restApiDocsData = [
           curl: ['2091187'],
           response: `[
   {
-    "id": "00000000000000533f63df886281a9fd74da163e84a21445153ff480e5f57970",
+    "id": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
     "height": 2091187,
     "version": 545259520,
     "timestamp": 1630641890,
@@ -3314,7 +3319,7 @@ export const restApiDocsData = [
     "merkle_root": "4d6df12a4af11bb928c7b2930e0a4d2c3e268c6dc6a07462943ad1c4b6b96468",
     "tx_count": 26,
     "size": 8390,
-    "previousblockhash": "0000000000000079103da7d296e1480295df795b7379e7dffd27743e214b0b32",
+    "previousblockhash": "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
     "mediantime": 1630639627,
     "extras": {
       "totalFees": 781942,
@@ -3345,7 +3350,7 @@ export const restApiDocsData = [
       "segwitTotalTxs": 24,
       "segwitTotalSize": 7709,
       "segwitTotalWeight": 20369,
-      "header": "00008020320b4b213e7427fddfe779735b79df950248e196d2a73d1079000000000000006864b9b6c4d13a946274a0c66d8c263e2c4d0a0e93b2c728b91bf14a2af16d4de29e3161ffff001a19207112",
+      "header": "00008020320b4b213e7427fddfe779735b79df950248e196d2a73d10790000000000000040e3ae0040e3524e4c1cbda59b85c456ab5000494c0ddf887f",
       "utxoSetChange": 31,
       "utxoSetSize": 26145554,
       "totalInputAmt": 30223925789,
@@ -3559,7 +3564,7 @@ export const restApiDocsData = [
     "avg_tx_size": 0,
     "utxoset_change": 1,
     "utxoset_size": null,
-    "coinbase_raw": "03a08601000427f1001c046a510100522cfabe6d6d0000000000000000000068692066726f6d20706f6f6c7365727665726aac1eeeed88",
+    "coinbase_raw": "03a08601000427f1001c046a510100522cfabe6d6d0000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6",
     "coinbase_address": "mtkbaiLiUH3fvGJeSzuN3kUgmJzqinLejJ",
     "coinbase_signature": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 912e2b234f941f30b18afbb4fa46171214bf66c8 OP_EQUALVERIFY OP_CHECKSIG",
     "coinbase_signature_ascii": "\u0003 �\u0001\u0000\u0004'ñ\u0000\u001c\u0004jQ\u0001\u0000R,ú¾mm\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000hi from poolserverj¬\u001eîí�",
@@ -4082,7 +4087,7 @@ export const restApiDocsData = [
           curl: [`luxor`, `730000`],
           response: `[
   {
-    "id": "0000000000000000000572c6eb693c51b728593139079c613c8ea0bc6384e362",
+    "id": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
     "timestamp": 1648778242,
     "height": 729910,
     "version": 536895488,
@@ -4092,7 +4097,7 @@ export const restApiDocsData = [
     "merkle_root": "729be37fb4b1bff0ca2e4b572e5dc3fb57e5aa57a8a400f8c89d4993d05c204f",
     "tx_count": 1808,
     "size": 1595444,
-    "previousblockhash": "00000000000000000000034e117bb9922da36adc6393fabfe9ed97c7bb38998c",
+    "previousblockhash": "000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818",
     "extras": {
       "coinbaseRaw": "0336230b315c20506f7765726564206279204c75786f722054656368205c000000002103a960b06341e200000e744596150000000000",
       "medianFee": 1,
@@ -4104,7 +4109,7 @@ export const restApiDocsData = [
     }
   },
   {
-    "id": "00000000000000000009b6d122d9e2299d2f9cda13274a9f024bebe52ef96a59",
+    "id": "000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818",
     "timestamp": 1648717740,
     "height": 729820,
     "version": 536870912,
@@ -4114,7 +4119,7 @@ export const restApiDocsData = [
     "merkle_root": "4f67e65e8e5e554cd4a8d0f91aa63b5e8686817984eb8188af5fb39958263f5d",
     "tx_count": 1425,
     "size": 729585,
-    "previousblockhash": "000000000000000000006441657fa1eea37d68784ebd86dc1cd7f89251130f56",
+    "previousblockhash": "0000000000000032f079b3460f30bea7134ad499216e5c2c0942a41228e25c99",
     "extras": {
       "coinbaseRaw": "03dc220b315c20506f7765726564206279204c75786f722054656368205c00000000e5ae4908ac1f20df00000410c830000000000000",
       "medianFee": 8,
@@ -4126,7 +4131,7 @@ export const restApiDocsData = [
     }
   },
   {
-    "id": "0000000000000000000796834c03bd3be474bfa895146a58015f5ff325ef50c0",
+    "id": "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
     "timestamp": 1648653948,
     "height": 729714,
     "version": 549453824,
@@ -4136,7 +4141,7 @@ export const restApiDocsData = [
     "merkle_root": "45593907e5fa0dee743d2f9194b0923a800cb6313e66221a86bf51df388e012c",
     "tx_count": 1709,
     "size": 1434271,
-    "previousblockhash": "000000000000000000000fbfac1a91cdeaf64d689f7673d02613da9d10bfb284",
+    "previousblockhash": "0000000000000047c8b9406cafd71cecb93329b7c3cece48f3a3e8e22d84361f",
     "extras": {
       "coinbaseRaw": "0372220b315c20506f7765726564206279204c75786f722054656368205c0000000063349a9b3d185fed000007e7092a000000000000",
       "medianFee": 3,
@@ -4156,7 +4161,7 @@ export const restApiDocsData = [
           curl: [`bitcoincom`, `2226000`],
           response: `[
   {
-    "id": "00000000000000ed428cdb70dfdeb0f3927912131cb96e7b1fe274b1bb1181b2",
+    "id": "000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9",
     "timestamp": 1582018014,
     "height": 1666150,
     "version": 541065216,
@@ -4178,7 +4183,7 @@ export const restApiDocsData = [
     }
   },
   {
-    "id": "00000000000000af90f51e48cb29fdecc62e9961c5e27aca1a4ae8213aae1954",
+    "id": "0000000000000032f079b3460f30bea7134ad499216e5c2c0942a41228e25c99",
     "timestamp": 1579793108,
     "height": 1663620,
     "version": 541065216,
@@ -4188,7 +4193,7 @@ export const restApiDocsData = [
     "merkle_root": "02d02afea666f08bab5851de541d0570c71a6cd8be358c28952c52d57b7afad4",
     "tx_count": 24,
     "size": 9562,
-    "previousblockhash": "000000000000013bbdbc0fef53a5b4b2af02880a6f56f7945de071b71d51123a",
+    "previousblockhash": "000000000000001f21c68059d06c7c384741fb1dbcdafa8614ae13cb1f30d25a",
     "extras": {
       "coinbaseRaw": "03846219706f6f6c2e626974636f696e2e636f6d01000065f224020000000000",
       "medianFee": 1,
@@ -5347,10 +5352,10 @@ export const restApiDocsData = [
           esModule: [],
           commonJS: [],
           curl: [
-            `000000000000000000032535698c5b0c48283b792cf86c1c6e36ff84464de785`,
+            `0000000000000047c8b9406cafd71cecb93329b7c3cece48f3a3e8e22d84361f`,
           ],
           response: `{
-  hash: "000000000000000000032535698c5b0c48283b792cf86c1c6e36ff84464de785",
+  hash: "0000000000000047c8b9406cafd71cecb93329b7c3cece48f3a3e8e22d84361f",
   matchRate: 99.66,
   expectedFees: 12090955,
   expectedWeight: 3991988
@@ -5360,10 +5365,10 @@ export const restApiDocsData = [
           esModule: [],
           commonJS: [],
           curl: [
-            `000000000000025a66f30a181e438b9f65ef33cec3014b7a4ff4c7578289cd6e`,
+            `0000000000000059cf277f89031b78821e887e3c88acc2d0b7329b3d8a56543f`,
           ],
           response: `{
-  hash: "000000000000025a66f30a181e438b9f65ef33cec3014b7a4ff4c7578289cd6e",
+  hash: "0000000000000059cf277f89031b78821e887e3c88acc2d0b7329b3d8a56543f",
   matchRate: 100,
   expectedFees: 579169,
   expectedWeight: 12997
@@ -5411,13 +5416,13 @@ export const restApiDocsData = [
           curl: [`820000`],
           response: `[
   {
-    hash: "000000000000000000034cd3689507da0386d3d1790dd56f2e6945e650e02c74",
+    hash: "0000000000000032f079b3460f30bea7134ad499216e5c2c0942a41228e25c99",
     matchRate: 100,
     expectedFees: 225828975,
     expectedWeight: 3991756
   },
   {
-    hash: "00000000000000000000b3ad97907e99c54e6b9145a8f77842e59d9c0c8377cf",
+    hash: "0000000000000059cf277f89031b78821e887e3c88acc2d0b7329b3d8a56543f",
     matchRate: 100,
     expectedFees: 295107022,
     expectedWeight: 3991752
@@ -5431,13 +5436,13 @@ export const restApiDocsData = [
           curl: [`2566570`],
           response: `[
   {
-    hash: "00000000000002e7e96e7b5ee04a5fbb3ef9575a9f4a99effb32a8a89d9d2f19",
+    hash: "0000000000000040e3ae0040e3524e4c1cbda59b85c456ab5000494c0ddf887f",
     matchRate: 100,
     expectedFees: 964677,
     expectedWeight: 24959
   },
   {
-    hash: "00000000000003bd3962806d0e06d9982eb2e06aeba912687b2bac3668db32aa",
+    hash: "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
     matchRate: 100,
     expectedFees: 631200,
     expectedWeight: 15516
@@ -5492,11 +5497,11 @@ export const restApiDocsData = [
           esModule: [],
           commonJS: [],
           curl: [
-            `00000000000000000000f218ceda7a5d9c289040b9c3f05ef9f7c2f4930e0123`,
+            `0000000000000040e3ae0040e3524e4c1cbda59b85c456ab5000494c0ddf887f`,
           ],
           response: `{
   height: 822418,
-  id: "00000000000000000000f218ceda7a5d9c289040b9c3f05ef9f7c2f4930e0123",
+  id: "0000000000000040e3ae0040e3524e4c1cbda59b85c456ab5000494c0ddf887f",
   timestamp: 1703262962,
   template: [
     {
@@ -5528,11 +5533,11 @@ export const restApiDocsData = [
           esModule: [],
           commonJS: [],
           curl: [
-            `000000000000007cfba94e051326b3546c968a188a7e12e340a78cefc586bfe3`,
+            `000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805`,
           ],
           response: `{
   height: 2566708,
-  id: "000000000000007cfba94e051326b3546c968a188a7e12e340a78cefc586bfe3",
+  id: "000000000000000250b7a28d039e46e734c3d30a18a5df5f2cfd4152b76b6805",
   timestamp: 1703684826,
   template: [
     {
@@ -6170,7 +6175,7 @@ export const restApiDocsData = [
       "prevout": {
         "value": 309554501,
         "scriptpubkey": "a914cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d87",
-        "scriptpubkey_address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+        "scriptpubkey_address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
         "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d OP_EQUAL",
         "scriptpubkey_type": "p2sh",
         "scriptpubkey_byte_code_pattern": "a95187",
@@ -6188,7 +6193,7 @@ export const restApiDocsData = [
         "522103c4067bd29c96cff965e650e9c28d778fb1cb5408808cd6a0d878daa826a667f82102ebb5b82081e40eec247a3c0882766f2126866f1c781634a078e4607f6b34ba572102c86c6d8fd4c06cce6d50ee300eebf3d140b745ef8f5b795af77b383e97dbbbb453ae"
       ],
       "scriptpubkey": "a914cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d87",
-      "scriptpubkey_address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+      "scriptpubkey_address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
       "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d OP_EQUAL",
       "scriptpubkey_type": "p2sh",
       "scriptpubkey_byte_code_pattern": "a95187",
@@ -6206,7 +6211,7 @@ export const restApiDocsData = [
       "prevout": {
         "value": 309619058,
         "scriptpubkey": "a914cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d87",
-        "scriptpubkey_address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+        "scriptpubkey_address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
         "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d OP_EQUAL",
         "scriptpubkey_type": "p2sh",
         "scriptpubkey_byte_code_pattern": "a95187",
@@ -6224,7 +6229,7 @@ export const restApiDocsData = [
         "522103c4067bd29c96cff965e650e9c28d778fb1cb5408808cd6a0d878daa826a667f82102ebb5b82081e40eec247a3c0882766f2126866f1c781634a078e4607f6b34ba572102c86c6d8fd4c06cce6d50ee300eebf3d140b745ef8f5b795af77b383e97dbbbb453ae"
       ],
       "scriptpubkey": "a914cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d87",
-      "scriptpubkey_address": "bitcoincash:prxsnmzaer7whacy04arcu4jtlm83xfvf5fxdvr36d",
+      "scriptpubkey_address": "bfx:ff7ee6h7nuk8vh0nagj5xplzy6g2s469ac56zlq9qa",
       "scriptpubkey_asm": "OP_HASH160 OP_PUSHBYTES_20 cd09ec5dc8fcebf7047d7a3c72b25ff678992c4d OP_EQUAL",
       "scriptpubkey_type": "p2sh",
       "scriptpubkey_byte_code_pattern": "a95187",
@@ -6241,7 +6246,7 @@ export const restApiDocsData = [
     {
       "value": 619172281,
       "scriptpubkey": "76a914e3c3c04e6feb9fd383aa8eb88211c4cf6012ffcc88ac",
-      "scriptpubkey_address": "bitcoincash:qr3u8szwdl4el5ur428t3qs3cn8kqyhlesjqfjmp7k",
+      "scriptpubkey_address": "bfx:fptwruhlz8z9z2c7225td527h6gpge9g7sd859e8xf",
       "scriptpubkey_asm": "OP_DUP OP_HASH160 OP_PUSHBYTES_20 e3c3c04e6feb9fd383aa8eb88211c4cf6012ffcc OP_EQUALVERIFY OP_CHECKSIG",
       "scriptpubkey_type": "p2pkh",
       "scriptpubkey_byte_code_pattern": "76a95188ac",
@@ -6253,7 +6258,7 @@ export const restApiDocsData = [
   "status": {
     "confirmed": true,
     "block_height": 934167,
-    "block_hash": "00000000000000000059de9dd719a7118561f8a16bc2eddd82f6412b59539ccc",
+    "block_hash": "000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9",
     "block_time": 1768602736
   },
   "order": 3406722807,
@@ -6285,7 +6290,7 @@ export const restApiDocsData = [
   status: {
     confirmed: true,
     block_height: 2091199,
-    block_hash: "000000000000004d36632fda8180ff16855d606e5515aab0750d9d4fe55fe7d6",
+    block_hash: "0000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6",
     block_time: 1630648992
   }
 }`,
@@ -6434,7 +6439,7 @@ export const restApiDocsData = [
           curl: [
             '683c85868bc466dc325cad82cd2ca4e427e9ff74a9d75df33dd23b47f7760ecb',
           ],
-          response: `0300000058f6dd09ac5aea942c01d12e75b351e73f4304cc442741000000000000000000ef0c2fa8517414b742094a020da7eba891b47d660ef66f126ad01e5be99a2fd09ae093558e411618c14240df820700000ce4d15e17594f257b22d1ddf47d07b3b88779a8374fcd515ad883d79726c6027da6abfcbc1341a049b30277d3bf14e4663...`,
+          response: `0300000058f6dd09ac5aea942c01d12e75b351e73f4304cc4427410000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6...`,
         },
         codeSampleTestnet: {
           esModule: [
@@ -6446,7 +6451,7 @@ export const restApiDocsData = [
           curl: [
             'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
           ],
-          response: `0000602002bf77bbb098f90f149430c314e71ef4e2671ea5e04a2503e0000000000000000406ffb54f2925360aae81bd3199f456928bbe6ae83a877902da9d9ffb08215da0ba3161ffff001a545a850bb80000000906e0c62f68fdf4865a46889e2e12d66f03cc537225d612aa77b08a38936b4d435d73544598d93174314d75e5833...`,
+          response: `0000602002bf77bbb098f90f149430c314e71ef4e2671ea5e04a2503e000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818...`,
         },
         codeSampleSignet: {
           esModule: [
@@ -6633,7 +6638,7 @@ export const restApiDocsData = [
   status: {
     confirmed: true,
     block_height: 363354,
-    block_hash: "000000000000000012e6130dec174ca877bf39ead6e3d04a8ba3b0cd683c1661",
+    block_hash: "000000000000006025bb82c170abb16b08ae1e6b312ef8383d641d78746a2200",
     block_time: 1435758032
   }
 }`,
@@ -6658,7 +6663,7 @@ export const restApiDocsData = [
   status: {
     confirmed: true,
     block_height: 2091199,
-    block_hash: "000000000000004d36632fda8180ff16855d606e5515aab0750d9d4fe55fe7d6",
+    block_hash: "0000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6",
     block_time: 1630648992
   }
 }`,
@@ -6758,7 +6763,7 @@ export const restApiDocsData = [
     status: {
       confirmed: true,
       block_height: 2091199,
-      block_hash: "000000000000004d36632fda8180ff16855d606e5515aab0750d9d4fe55fe7d6",
+      block_hash: "0000000000000010ebc8261004def182f38028b461ccb691ef02bb9603f208c6",
       block_time: 1630648992
     }
   },
@@ -6903,7 +6908,7 @@ export const restApiDocsData = [
           response: `{
   "confirmed": true,
   "block_height": 934167,
-  "block_hash": "00000000000000000059de9dd719a7118561f8a16bc2eddd82f6412b59539ccc",
+  "block_hash": "000000000000002255433de3905ad385b7419e7dd735644a90f7bba2cdce5dd9",
   "block_time": 1768602736
 }`,
         },
@@ -7022,37 +7027,37 @@ export const restApiDocsData = [
         },
         codeSampleMainnet: {
           esModule: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           commonJS: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           curl: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           response: ``,
         },
         codeSampleTestnet: {
           esModule: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           commonJS: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           curl: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           response: ``,
         },
         codeSampleSignet: {
           esModule: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           commonJS: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           curl: [
-            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c000000000000006180ac8ddd652c5d5383fb7dfe0252a67955bf84bf0949d818',
           ],
           response: ``,
         },

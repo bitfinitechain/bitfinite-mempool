@@ -487,15 +487,24 @@
   </p>
 
   <p>
-    Furthermore, BitFinite has
+    BitFinite also relays unconfirmed transactions under a first-seen policy
+    with no replace-by-fee, which is what people mean by
     <a
       [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="what-is-zero-confirmation"
       >zero confirmation (0-conf)</a
-    >. This means that transactions are immediately available for spending, even
-    before they are confirmed in a block. And allow for near-instant peer to
-    peer payments by merchants or for e-commerce. Small transactions are safe to
-    spend immediately without waiting for confirmation.
+    >. An unconfirmed transaction is visible across the network within seconds,
+    which is useful for showing a payment as "seen" straight away.
+  </p>
+  <p>
+    <strong>Unconfirmed does not mean final.</strong> Until a transaction is in
+    a block it can still be displaced, and how hard that is depends entirely on
+    how much hashrate stands behind the chain. BitFinite is a young network
+    secured by a small share of the available SHA-256d hashrate, so displacing a
+    recent transaction is materially cheaper here than on a large chain. Treat
+    0-conf as a user-experience convenience, not a settlement guarantee: wait for
+    confirmations before releasing anything you cannot afford to lose, and scale
+    the number of confirmations to the value at risk.
   </p>
 </ng-template>
 
