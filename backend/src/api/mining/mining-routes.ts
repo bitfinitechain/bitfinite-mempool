@@ -9,7 +9,7 @@ import bitcoinClient from '../bitcoin/bitcoin-client';
 import mining from './mining';
 import PricesRepository from '../../repositories/PricesRepository';
 import { handleError } from '../../utils/api';
-import { getAsertAnchorHeight } from '../difficulty-adjustment';
+import { getAsertAnchorHeight, getBlocksPerDay } from '../difficulty-adjustment';
 
 class MiningRoutes {
   private static readonly VALID_INTERVALS = ['24h', '3d', '1w', '1m', '3m', '6m', '1y', '2y', '3y', '4y', 'all'];
@@ -215,7 +215,11 @@ class MiningRoutes {
     let currentHashrate = 0,
       currentDifficulty = 0;
     try {
-      currentHashrate = await bitcoinClient.getNetworkHashPs(1008);
+      // 1008 blocks is a week only at Bitcoin's 600s spacing. We target 300s,
+      // so that was a 3.5-day average labelled as the current hashrate on a
+      // one-week chart. Derive the window from the network's own spacing.
+      const blocksPerWeek = 7 * getBlocksPerDay(config.EXPLORER.NETWORK);
+      currentHashrate = await bitcoinClient.getNetworkHashPs(blocksPerWeek);
       currentDifficulty = await bitcoinClient.getDifficulty();
     } catch (e) {
       logger.debug('Bitcoin Cash Node is not available, using zeroed value for current hashrate and difficulty');

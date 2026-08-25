@@ -7,7 +7,10 @@ import {
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateService } from '@app/services/state.service';
-import { getDifficultyDriftPercentSinceAnchor } from '@app/shared/asert.utils';
+import {
+  getDifficultyDriftPercentSinceAnchor,
+  getTargetBlockSpacing,
+} from '@app/shared/asert.utils';
 
 interface AsertMiningStatus {
   difficultyDriftPercent: number;
@@ -89,8 +92,14 @@ export class ChainStatsMiningComponent implements OnInit {
         }
 
         this.blocksUntilHalving = 210000 - (maxHeight % 210000);
+        // 600000ms/block is Bitcoin's 10-minute spacing; we target 5, so this
+        // ran at double the real duration. Second copy of the same bug -
+        // difficulty.component.ts carried it too.
         this.timeUntilHalving =
-          new Date().getTime() + this.blocksUntilHalving * 600000;
+          new Date().getTime() +
+          this.blocksUntilHalving *
+            getTargetBlockSpacing(this.stateService.network) *
+            1000;
         this.now = new Date().getTime();
 
         return {

@@ -13,6 +13,7 @@ import {
   getDifficultyDriftPercentSinceAnchor,
   getAsertAnchorHeight,
   getAsertAnchor,
+  getTargetBlockSpacing,
 } from '@app/shared/asert.utils';
 import { StateService } from '@app/services/state.service';
 import { AsertPoint } from '@app/components/asert-deviation-graph/asert-deviation-graph.component';
@@ -84,9 +85,15 @@ export class DifficultyComponent implements OnInit {
         this.nextSubsidy = getNextBlockSubsidy(maxHeight);
 
         // Halving
+        // 600000ms per block was Bitcoin's 10-minute spacing. BitFinite targets
+        // 5 minutes, so this countdown ran at double the real duration - it put
+        // the next halving 3.7 years out when the chain is on pace to reach it
+        // in 1.8.
         const blocksUntilHalving = 210000 - (maxHeight % 210000);
+        const blockSpacingMs =
+          getTargetBlockSpacing(this.stateService.network) * 1000;
         const timeUntilHalving =
-          new Date().getTime() + blocksUntilHalving * 600000;
+          new Date().getTime() + blocksUntilHalving * blockSpacingMs;
 
         // ASERT difficulty drift %
         const difficultyDriftPercentSinceAnchor =

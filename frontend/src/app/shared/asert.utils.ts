@@ -1,41 +1,45 @@
 // --- ASERT (aserti3-2d) functions ---
 // Ported from: https://gist.github.com/A60AB5450353F40E/5607d5aeb9ba0e84a71ab8f55ebdd2ad
-
-const ASERT_ANCHOR_IDEAL_BLOCK_TIME = 600;
+//
+// DUPLICATE OF backend/src/api/difficulty-adjustment.ts. The two builds cannot
+// share a module, so they are kept in sync by hand - change one, change the
+// other. They diverged once already: the backend was fixed while this copy kept
+// Bitcoin Cash's anchor and rendered "-Infinity%" in the UI.
 
 interface AsertAnchor {
-  bits: string;
-  tick: number; // anchor_height * 600
-  timestamp: number; // previous block timestamp at anchor
+  bits: string; // anchor nBits, hex
+  height: number; // anchor height
+  timestamp: number; // anchor nPrevBlockTime
   tau: number; // half-life in seconds
+  targetSpacing: number; // ideal block time in seconds
 }
 
-// Per-network ASERT anchor parameters from BitFinite Node chainparams.cpp
-// scalenet has no hard-coded anchor (periodic reorgs); mainnet anchor used as proxy
+// BitFinite ASERT anchors, from bitfinite-core src/chainparams.cpp
+// (consensus.asertAnchorParams, nASERTHalfLife, nPowTargetSpacing).
+//
+// These were Bitcoin Cash's values. The old comment above them claimed they came
+// from BitFinite chainparams, which was simply untrue - BCH anchors at height
+// 661,647 with a 2-day half-life and 600s blocks; we anchor at GENESIS with a
+// 6-hour half-life and 300s blocks. Feeding our height into their anchor drove
+// the ASERT exponent past 3000, so 2**(hi-16) overflowed to Infinity and the
+// drift indicator rendered -Infinity%.
+//
+// Spacing is per-network because it differs: mainnet targets 5 minutes,
+// testnet 10. Any hardcoded 600 here is a Bitcoin Cash assumption.
 const ASERT_ANCHORS: Record<string, AsertAnchor> = {
   mainnet: {
-    bits: '1804dafe',
-    tick: 396988200,
-    timestamp: 1605447844,
-    tau: 172800,
+    bits: '1b00efab',
+    height: 0,
+    timestamp: 1782691200,
+    tau: 6 * 60 * 60,
+    targetSpacing: 5 * 60,
   },
-  testnet4: {
+  testnet: {
     bits: '1d00ffff',
-    tick: 10106400,
-    timestamp: 1605451779,
-    tau: 3600,
-  },
-  chipnet: {
-    bits: '1d00ffff',
-    tick: 10106400,
-    timestamp: 1605451779,
-    tau: 3600,
-  },
-  scalenet: {
-    bits: '1804dafe',
-    tick: 396988200,
-    timestamp: 1605447844,
-    tau: 172800,
+    height: 0,
+    timestamp: 1787400000,
+    tau: 60 * 60,
+    targetSpacing: 10 * 60,
   },
 };
 
@@ -44,8 +48,21 @@ export function getAsertAnchor(network: string): AsertAnchor {
 }
 
 export function getAsertAnchorHeight(network: string): number {
-  const anchor = getAsertAnchor(network);
-  return Math.floor(anchor.tick / ASERT_ANCHOR_IDEAL_BLOCK_TIME); // 661647 for mainnet
+  return getAsertAnchor(network).height;
+}
+
+export function getTargetBlockSpacing(network: string): number {
+  return getAsertAnchor(network).targetSpacing;
+}
+
+/** Blocks the network aims to produce per day (288 on mainnet, not Bitcoin's 144). */
+export function getBlocksPerDay(network: string): number {
+  return 86400 / getTargetBlockSpacing(network);
+}
+
+/** Blocks the network aims to produce per week (2016 on mainnet, not Bitcoin's 1008). */
+export function getBlocksPerWeek(network: string): number {
+  return 7 * getBlocksPerDay(network);
 }
 
 export function bitsToTarget(bits: string): number {
@@ -72,25 +89,27 @@ export function targetToBits(target: number): string {
 }
 
 export function calculateTarget(
-  heightTick: number,
+  height: number,
   timestamp: number,
-  anchor: AsertAnchor,
-  nextTargetBlockTime: number = 600
+  anchor: AsertAnchor
 ): number {
   const anchorTarget = bitsToTarget(anchor.bits);
+  const spacing = anchor.targetSpacing;
 
-  const tickDelta = heightTick - anchor.tick;
+  // exponent = (elapsed - spacing * (heightDelta + 1)) / halfLife
+  const heightDelta = height - anchor.height;
   const timeDelta = timestamp - anchor.timestamp;
 
   const t = Math.trunc;
-  const base = t(
-    ((timeDelta - (tickDelta + ASERT_ANCHOR_IDEAL_BLOCK_TIME)) * 65536) /
-      anchor.tau
-  );
+  const base = t(((timeDelta - spacing * (heightDelta + 1)) * 65536) / anchor.tau);
   const hi = t(base / 65536) + (base < 0 ? -1 : 0);
   const lo = base - hi * 65536;
 
-  return (
+  // 2**(hi-16) is the step that overflowed on the wrong anchor. Guard it: an
+  // Infinity target does not throw, it propagates into the drift percentage and
+  // renders as "-Infinity%", which is worse than an error because it looks like
+  // a reading.
+  const target =
     (t(
       (195766423245049 * lo +
         971821376 * lo ** 2 +
@@ -99,19 +118,10 @@ export function calculateTarget(
         2 ** 48
     ) +
       65536) *
-    t(ASERT_ANCHOR_IDEAL_BLOCK_TIME / nextTargetBlockTime) *
     anchorTarget *
-    2 ** (hi - 16)
-  );
-}
+    2 ** (hi - 16);
 
-export function calculateTargetLegacy(
-  height: number,
-  timestamp: number,
-  anchor: AsertAnchor,
-  nextTargetBlockTime: number = 600
-): number {
-  return calculateTarget(height * 600, timestamp, anchor, nextTargetBlockTime);
+  return Number.isFinite(target) ? target : 0;
 }
 
 export function getScheduleOffsetSeconds(
@@ -120,8 +130,7 @@ export function getScheduleOffsetSeconds(
   network: string = 'mainnet'
 ): number {
   const anchor = getAsertAnchor(network);
-  const anchorHeight = Math.floor(anchor.tick / ASERT_ANCHOR_IDEAL_BLOCK_TIME);
-  const idealElapsed = (height - anchorHeight) * ASERT_ANCHOR_IDEAL_BLOCK_TIME;
+  const idealElapsed = (height - anchor.height) * anchor.targetSpacing;
   const actualElapsed = timestamp - anchor.timestamp;
   return idealElapsed - actualElapsed;
 }
@@ -133,7 +142,7 @@ export function getDifficultyDriftPercentSinceAnchor(
 ): number {
   const anchor = getAsertAnchor(network);
   const anchorTarget = bitsToTarget(anchor.bits);
-  const currentTarget = calculateTargetLegacy(height, timestamp, anchor);
+  const currentTarget = calculateTarget(height, timestamp, anchor);
   if (anchorTarget === 0) return 0;
   // Higher target = easier = difficulty decrease (negative drift)
   // Lower target = harder = difficulty increase (positive drift)

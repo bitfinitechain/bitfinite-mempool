@@ -19,6 +19,7 @@ import { StateService } from '@app/services/state.service';
 import {
   getScheduleOffsetSeconds,
   getAsertAnchorHeight,
+  getBlocksPerDay,
 } from '@app/shared/asert.utils';
 import { AsertPoint } from '@app/components/asert-deviation-graph/asert-deviation-graph.component';
 import { EChartsOption } from '@app/graphs/echarts';
@@ -157,7 +158,9 @@ export class AsertDeviationGraphPageComponent implements OnInit {
   }
 
   private calculateFromHeight(timespan: string, currentHeight: number): number {
-    const blocksPerDay = 144; // Just an approximation (the actual number can varies a lot)
+    // 144 was Bitcoin's blocks-per-day at 600s spacing. We target 300s, so
+    // every timespan below looked back half as far as its label claimed.
+    const blocksPerDay = getBlocksPerDay(this.stateService.network);
     let blocksBack: number;
 
     switch (timespan) {

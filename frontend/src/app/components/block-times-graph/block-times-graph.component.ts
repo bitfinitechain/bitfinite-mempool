@@ -17,10 +17,18 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { StorageService } from '@app/services/storage.service';
 import { MiningService } from '@app/services/mining.service';
 import { ActivatedRoute } from '@angular/router';
+import {
+  getBlocksPerDay,
+  getTargetBlockSpacing,
+} from '@app/shared/asert.utils';
 import { download, formatterXAxis } from '@app/shared/graphs.utils';
 import { StateService } from '@app/services/state.service';
 
-const TARGET_BLOCK_TIME_SECONDS = 600; // BFX target block interval; update if consensus changes
+// NOTE: this used to read `= 600; // BFX target block interval`, which was not
+// true - 600 is Bitcoin's spacing. BitFinite targets 300 (nPowTargetSpacing in
+// bitfinite-core chainparams.cpp), so the chart drew its "target" line at 10
+// minutes on a chain aiming for 5. Read it from the network instead of asserting
+// a number in a comment.
 
 @Component({
   selector: 'app-block-times-graph',
@@ -168,7 +176,10 @@ export class BlockTimesGraphComponent implements OnInit {
   }
 
   prepareChartOptions(data) {
-    const smaData = this.computeSma(data.timeDiffs, 144);
+    // 144 blocks is a day at 600s spacing; ours is 288.
+    const blocksPerDay = getBlocksPerDay(this.stateService.network);
+    const targetBlockTimeSeconds = getTargetBlockSpacing(this.stateService.network);
+    const smaData = this.computeSma(data.timeDiffs, blocksPerDay);
     const medianData = this.computeMedianLine(data.timeDiffs);
 
     let title: object;
@@ -201,7 +212,7 @@ export class BlockTimesGraphComponent implements OnInit {
                   icon: 'roundRect',
                 },
                 {
-                  name: $localize`Block time (SMA 144)`,
+                  name: $localize`Block time (SMA 1d)`,
                   inactiveColor: 'rgb(110, 112, 121)',
                   textStyle: { color: 'var(--fg)' },
                   icon: 'roundRect',
@@ -326,12 +337,12 @@ export class BlockTimesGraphComponent implements OnInit {
                   },
                   data: [
                     {
-                      yAxis: TARGET_BLOCK_TIME_SECONDS / 60,
+                      yAxis: targetBlockTimeSeconds / 60,
                       label: {
                         position: 'end',
                         show: true,
                         color: 'var(--fg)',
-                        formatter: `${TARGET_BLOCK_TIME_SECONDS / 60} min`,
+                        formatter: `${targetBlockTimeSeconds / 60} min`,
                       },
                     },
                   ],
@@ -339,7 +350,7 @@ export class BlockTimesGraphComponent implements OnInit {
               },
               {
                 zlevel: 2,
-                name: $localize`Block time (SMA 144)`,
+                name: $localize`Block time (SMA 1d)`,
                 showSymbol: false,
                 symbol: 'none',
                 data: smaData,

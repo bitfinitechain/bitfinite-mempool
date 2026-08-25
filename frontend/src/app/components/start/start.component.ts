@@ -15,6 +15,7 @@ import { MarkBlockState, StateService } from '@app/services/state.service';
 import { specialBlocks } from '@app/app.constants';
 import { BlockExtended } from '@interfaces/node-api.interface';
 import { Router, ActivatedRoute } from '@angular/router';
+import { getBlocksPerWeek } from '@app/shared/asert.utils';
 import { handleDemoRedirect } from '@app/shared/common.utils';
 
 @Component({
@@ -182,7 +183,9 @@ export class StartComponent implements OnInit, AfterViewChecked, OnDestroy {
         ) {
           const height = parseInt(sb, 10);
           const diff = height - block.height;
-          if (diff > 0 && diff <= 1008) {
+          // 1008 blocks is a week only at Bitcoin's 600s spacing; on our chain
+          // a week is 2016, so this countdown appeared half as early as intended.
+          if (diff > 0 && diff <= getBlocksPerWeek(this.stateService.network)) {
             this.countdown = diff;
             this.eventName = specialBlocks[sb].labelEvent;
           }

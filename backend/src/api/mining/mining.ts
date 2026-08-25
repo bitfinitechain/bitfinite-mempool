@@ -542,7 +542,9 @@ class Mining {
       const lastMondayMidnight = this.getDateMidnight(lastMonday);
       let toTimestamp = lastMondayMidnight.getTime();
 
-      const totalWeekIndexed = (await BlocksRepository.$blockCount(null, null)) / 1008;
+      // 1008 was Bitcoin's blocks-per-week at 600s spacing; ours is 2016.
+      const totalWeekIndexed =
+        (await BlocksRepository.$blockCount(null, null)) / (7 * getBlocksPerDay(config.EXPLORER.NETWORK));
       let indexedThisRun = 0;
       let totalIndexed = 0;
       let newlyIndexed = 0;

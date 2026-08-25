@@ -24,6 +24,7 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { selectPowerOfTen } from '@app/bitcoin.utils';
 import { StorageService } from '@app/services/storage.service';
 import { MiningService } from '@app/services/mining.service';
+import { getTargetBlockSpacing } from '@app/shared/asert.utils';
 import { download } from '@app/shared/graphs.utils';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
@@ -460,8 +461,15 @@ export class HashrateChartComponent implements OnInit {
                   const newMin = Math.floor(
                     firstYAxisMin / selectedPowerOfTen.divider / 10
                   );
+                  // hashrate = difficulty * 2**32 / spacing, so the difficulty
+                  // axis scales by spacing / 2**32. 600 is Bitcoin's spacing;
+                  // ours is 300, so this axis sat a factor of two off from the
+                  // hashrate series drawn beside it.
                   return (
-                    (600 / 2 ** 32) * newMin * selectedPowerOfTen.divider * 10
+                    (getTargetBlockSpacing(this.stateService.network) / 2 ** 32) *
+                    newMin *
+                    selectedPowerOfTen.divider *
+                    10
                   );
                 },
                 max: (value) => {
@@ -469,7 +477,9 @@ export class HashrateChartComponent implements OnInit {
                     .getModel()
                     .getComponent('yAxis', 0)
                     .axis.scale.getExtent()[1];
-                  const scaledMax = (600 / 2 ** 32) * firstYAxisMax;
+                  const scaledMax =
+                    (getTargetBlockSpacing(this.stateService.network) / 2 ** 32) *
+                    firstYAxisMax;
                   return Math.max(scaledMax, value.max);
                 },
                 axisLabel: {

@@ -19,6 +19,7 @@ import {
   originalChartColors as chartColors,
   poolsColor,
 } from '@app/app.constants';
+import { getBlocksPerWeek } from '@app/shared/asert.utils';
 import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pipe';
 import { download } from '@app/shared/graphs.utils';
 import { isMobile } from '@app/shared/common.utils';
@@ -131,7 +132,11 @@ export class PoolRankingComponent implements OnInit {
       )
     ).pipe(
       map((data) => {
-        data['minersLuck'] = (100 * (data.blockCount / 1008)).toFixed(2); // luck 1w
+        // 1008 is a week of blocks only at Bitcoin's 600s spacing. We target
+        // 300s, so a week is 2016 blocks and this reported DOUBLE the real
+        // figure - 196% luck while the chain was actually running at 98%.
+        const blocksPerWeek = getBlocksPerWeek(this.stateService.network);
+        data['minersLuck'] = (100 * (data.blockCount / blocksPerWeek)).toFixed(2); // luck 1w
         return data;
       }),
       tap((data) => {
