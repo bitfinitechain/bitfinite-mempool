@@ -15,7 +15,7 @@ import { IPublicApi } from '../bitcoin/public-api.interface';
 import database from '../../database';
 import blocks from '../blocks';
 import valkeyCache from '../valkey-cache';
-import { getAsertAnchorHeight } from '../difficulty-adjustment';
+import { getAsertAnchorHeight, getBlocksPerDay } from '../difficulty-adjustment';
 
 interface DifficultyBlock {
   timestamp: number;
@@ -686,7 +686,11 @@ class Mining {
       let toTimestamp = Math.round(lastMidnight.getTime());
       const hashrates: any[] = [];
 
-      const totalDayIndexed = (await BlocksRepository.$blockCount(null, null)) / 144;
+      // 144 was Bitcoin's blocks-per-day at 600s spacing. BitFinite targets 300s,
+      // so this progress denominator was half what it should be and the indexer
+      // reported percentages up to 200%.
+      const totalDayIndexed =
+        (await BlocksRepository.$blockCount(null, null)) / getBlocksPerDay(config.EXPLORER.NETWORK);
       let indexedThisRun = 0;
       let totalIndexed = 0;
       let newlyIndexed = 0;

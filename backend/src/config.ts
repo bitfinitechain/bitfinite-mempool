@@ -6,7 +6,7 @@ interface IConfig {
   EXPLORER: {
     ENABLED: boolean;
     OFFICIAL: boolean;
-    NETWORK: 'mainnet' | 'testnet4' | 'chipnet' | 'scalenet';
+    NETWORK: 'mainnet' | 'testnet';
     BACKEND: 'electrum' | 'none';
     HTTP_PORT: number;
     UNIX_SOCKET_PATH: string;

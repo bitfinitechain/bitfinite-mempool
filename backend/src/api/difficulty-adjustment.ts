@@ -4,7 +4,7 @@ import blocks from './blocks';
 
 export interface DifficultyAdjustment {
   scheduleOffsetSeconds: number; // seconds ahead(+) or behind(-) ideal schedule
-  difficultyDriftPercent: number; // next-block % difficulty change (assuming 600s block)
+  difficultyDriftPercent: number; // next-block % difficulty change (assuming an on-schedule block)
   currentBits: string; // current block bits (hex)
   nextBits: string; // predicted next block bits (hex)
   timeAvg: number; // avg block time over recent 8 blocks (ms)
@@ -107,6 +107,30 @@ function calculateTarget(height: number, timestamp: number, anchor: AsertAnchor)
  */
 export function getAsertAnchorHeight(network: string): number {
   return anchorFor(network).height;
+}
+
+/**
+ * Returns the target block spacing in seconds for the given network.
+ *
+ * Exported so nothing else has to hardcode it. BitFinite mainnet targets 5
+ * minutes, not Bitcoin's or Bitcoin Cash's 10, and a stray 600 in a divisor is
+ * a silent factor-of-two error rather than a visible failure.
+ *
+ * @param {string} network - Network name ('mainnet' or 'testnet').
+ * @returns {number} Target seconds between blocks.
+ */
+export function getTargetBlockSpacing(network: string): number {
+  return anchorFor(network).targetSpacing;
+}
+
+/**
+ * Returns how many blocks the network aims to produce per day.
+ *
+ * @param {string} network - Network name ('mainnet' or 'testnet').
+ * @returns {number} Blocks per day at the target spacing (288 on mainnet).
+ */
+export function getBlocksPerDay(network: string): number {
+  return 86400 / getTargetBlockSpacing(network);
 }
 
 /**

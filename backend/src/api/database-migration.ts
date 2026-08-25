@@ -470,9 +470,7 @@ class DatabaseMigration {
 
     if (
       databaseSchemaVersion < 59 &&
-      (config.EXPLORER.NETWORK === 'chipnet' ||
-        config.EXPLORER.NETWORK === 'scalenet' ||
-        config.EXPLORER.NETWORK === 'testnet4')
+      config.EXPLORER.NETWORK === 'testnet'
     ) {
       // https://github.com/mempool/mempool/issues/3360
       await this.$executeQuery(`TRUNCATE prices`);

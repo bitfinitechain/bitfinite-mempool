@@ -8,9 +8,7 @@ import transactionUtils from './transaction-utils';
 
 enum NetworkDB {
   mainnet = 0,
-  testnet4,
-  chipnet,
-  scalenet,
+  testnet,
 }
 
 class ValkeyCache {

@@ -69,7 +69,7 @@ class MiningRoutes {
       res.header('Pragma', 'public');
       res.header('Cache-control', 'public');
       res.setHeader('Expires', new Date(Date.now() + 1000 * 300).toUTCString());
-      if (['testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK)) {
+      if (['testnet'].includes(config.EXPLORER.NETWORK)) {
         handleError(req, res, 400, 'Prices are not available on testnets.');
         return;
       }

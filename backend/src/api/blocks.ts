@@ -37,7 +37,6 @@ import priceUpdater from '../tasks/price-updater';
 import chainTips from './chain-tips';
 import websocketHandler from './websocket-handler';
 import valkeyCache from './valkey-cache';
-import { calcBitsDifference } from './difficulty-adjustment';
 import { parseDATUMTemplateCreator } from '../utils/bitcoin-script';
 import database from '../database';
 
@@ -46,6 +45,7 @@ class Blocks {
   private blockSummaries: BlockSummary[] = [];
   private currentBlockHeight = 0;
   private currentBits = 0;
+  private currentDifficulty = 0;
   private newBlockCallbacks: ((
     block: BlockExtended,
     txIds: string[],
@@ -343,7 +343,7 @@ class Blocks {
       extras.totalInputAmt = null;
     }
 
-    if (['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK)) {
+    if (['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK)) {
       let pool: PoolTag;
       if (coinbaseTx !== undefined) {
         pool = await this.$findBlockMiner(coinbaseTx);
@@ -963,12 +963,15 @@ class Blocks {
       const blockchainInfo = await bitcoinClient.getBlockchainInfo();
       this.updateTimerProgress(timer, 'got blockchain info for initial bits');
       if (blockchainInfo.blocks === blockchainInfo.headers) {
-        const heightDiff = blockHeightTip % 2016;
-        const blockHash = await bitcoinApi.$getBlockHash(blockHeightTip - heightDiff);
+        // ASERT retargets every block, so the meaningful reference is the tip
+        // itself. Reading the last 2016-boundary was Bitcoin's retarget model,
+        // and left currentBits up to 2016 blocks stale.
+        const blockHash = await bitcoinApi.$getBlockHash(blockHeightTip);
         this.updateTimerProgress(timer, 'got block hash for initial bits');
         const block: IPublicApi.Block = await bitcoinApi.$getBlock(blockHash);
         this.updateTimerProgress(timer, 'got block for initial bits');
         this.currentBits = block.bits;
+        this.currentDifficulty = block.difficulty;
         logger.debug(`Initial currentBits set for historical indexing.`);
       } else {
         logger.debug(
@@ -1060,14 +1063,23 @@ class Blocks {
       this.updateTimerProgress(timer, `starting async callbacks for ${this.currentBlockHeight}`);
       const callbackPromises = this.newAsyncBlockCallbacks.map((cb) => cb(blockExtended, txIds, transactions));
 
-      if (block.height % 2016 === 0) {
-        if (Common.indexingEnabled()) {
-          const adjustment =
-            Math.round(
-              // calcBitsDifference returns +- percentage, +100 returns to positive, /100 returns to ratio.
-              // Instead of actually doing /100, just reduce the multiplier.
-              (calcBitsDifference(this.currentBits, block.bits) + 100) * 10000
-            ) / 1000000; // Remove float point noise
+      // BitFinite retargets with ASERT: difficulty changes EVERY block, so there
+      // is no 2016-block boundary to key off. The inherited Bitcoin gate wrote
+      // one row per 2016 blocks comparing bits across that entire span, which
+      // saturated calcBitsDifference's +300%/-75% clamp and published fake 4.0x
+      // spikes and 0.25x crashes on the public difficulty chart at heights 4032,
+      // 6048, 10080, 12096, 14112 and 16128 - while every neighbouring block sat
+      // at ~1.00.
+      //
+      // This must stay identical to $indexDifficultyAdjustments. Both write
+      // difficulty_adjustments, PRIMARY KEY (height) means whichever runs first
+      // wins, so if the two disagree a height gets a different value depending
+      // on the race. Same trigger (bits changed), same formula (difficulty
+      // ratio, not the clamped bits difference).
+      if (block.bits !== this.currentBits) {
+        if (Common.indexingEnabled() && this.currentDifficulty > 0) {
+          let adjustment = block.difficulty / this.currentDifficulty;
+          adjustment = Math.round(adjustment * 1000000) / 1000000; // Remove float point noise
 
           await DifficultyAdjustmentsRepository.$saveAdjustments({
             time: block.timestamp,
@@ -1079,6 +1091,7 @@ class Blocks {
         }
 
         this.currentBits = block.bits;
+        this.currentDifficulty = block.difficulty;
       }
 
       // skip updating the orphan block cache if we've fallen behind the chain tip
@@ -1286,7 +1299,7 @@ class Blocks {
     }
 
     // Not Bitcoin network, return the block as it from the bitcoin backend
-    if (['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK) === false) {
+    if (['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK) === false) {
       return await bitcoinCoreApi.$getBlock(hash);
     }
 
@@ -1509,7 +1522,7 @@ class Blocks {
 
   public async $getBlockAuditSummary(hash: string): Promise<BlockAudit | null> {
     if (
-      ['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK) &&
+      ['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK) &&
       Common.auditIndexingEnabled()
     ) {
       return BlocksAuditsRepository.$getBlockAudit(hash);
@@ -1520,7 +1533,7 @@ class Blocks {
 
   public async $getBlockTxAuditSummary(hash: string, txid: string): Promise<TransactionAudit | null> {
     if (
-      ['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK) &&
+      ['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK) &&
       Common.auditIndexingEnabled()
     ) {
       return BlocksAuditsRepository.$getBlockTxAudit(hash, txid);

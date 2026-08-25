@@ -167,7 +167,7 @@ class Server {
     if (
       config.DATABASE.ENABLED === true &&
       config.EXPLORER.ENABLED &&
-      ['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK) &&
+      ['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK) &&
       !poolsUpdater.currentSha
     ) {
       logger.err(

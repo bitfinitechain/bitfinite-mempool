@@ -431,7 +431,7 @@ class BitcoinRoutes {
 
   private async getBlocks(req: Request, res: Response) {
     try {
-      if (['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK)) {
+      if (['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK)) {
         // Bitcoin
         const height = req.params.height === undefined ? undefined : parseInt(req.params.height, 10);
         res.setHeader('Expires', new Date(Date.now() + 1000 * 60).toUTCString());
@@ -486,7 +486,7 @@ class BitcoinRoutes {
 
   private async getChainTips(req: Request, res: Response) {
     try {
-      if (['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK)) {
+      if (['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK)) {
         // Bitcoin
         res.setHeader('Expires', new Date(Date.now() + 1000 * 60).toUTCString());
         const tips = await chainTips.getChainTips();
@@ -504,7 +504,7 @@ class BitcoinRoutes {
 
   private async getStaleTips(req: Request, res: Response) {
     try {
-      if (['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK)) {
+      if (['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK)) {
         // Bitcoin
         res.setHeader('Expires', new Date(Date.now() + 1000 * 60).toUTCString());
         const tips = await chainTips.getStaleTips();

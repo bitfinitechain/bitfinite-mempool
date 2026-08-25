@@ -152,7 +152,7 @@ class Indexer {
     switch (task) {
       case 'blocksPrices':
         {
-          if (!['testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK) && config.FIAT_PRICE.ENABLED) {
+          if (!['testnet'].includes(config.EXPLORER.NETWORK) && config.FIAT_PRICE.ENABLED) {
             let lastestPriceId;
             try {
               lastestPriceId = await PricesRepository.$getLatestPriceId();

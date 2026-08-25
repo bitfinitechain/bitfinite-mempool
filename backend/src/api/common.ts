@@ -187,7 +187,13 @@ export class Common {
   }
 
   // Individual versioned standardness rules
-  // TODO: Update for BCH.
+  // NOTE: these tables deliberately have no 'mainnet' key. They encode Bitcoin
+  // Core's staged relay-policy rollouts; BitFinite inherits BCH policy, where
+  // these rules either never existed or applied from genesis, so every lookup
+  // on our chain is undefined and the height gate correctly falls through.
+  // Do not populate them with BCH or Bitcoin heights - that would re-introduce
+  // another chain's activation schedule, which is exactly how the ASERT anchor
+  // bug got here.
   static V2_STANDARDNESS_ACTIVATION_HEIGHT = {
     testnet4: 209_919,
     chipnet: 209_919,
@@ -210,7 +216,6 @@ export class Common {
     return false;
   }
 
-  // TODO: Update for BCH.
   static ANCHOR_STANDARDNESS_ACTIVATION_HEIGHT = {
     testnet4: 42_000,
     chipnet: 2_900_000,
@@ -230,15 +235,18 @@ export class Common {
     return false;
   }
 
-  // OP_RETURN size & count limits were lifted in v28.3/v29.2/v30.0
-  // TODO: Update for BCH.
+  // OP_RETURN size & count limits were lifted in Bitcoin v28.3/v29.2/v30.0.
   static OP_RETURN_STANDARDNESS_ACTIVATION_HEIGHT = {
     testnet4: 108_000,
     chipnet: 4_750_000,
     scalenet: 276_500,
     '': 921_000,
   };
-  static MAX_DATACARRIER_BYTES = 83;
+  // 223, not Bitcoin's 83: MAX_OP_RETURN_RELAY in bitfinite-core
+  // src/script/standard.h (220 bytes of data, +1 OP_RETURN, +2 pushdata), which
+  // is what our nodes actually relay. At 83 the explorer badged transactions
+  // NON-STANDARD that our own network accepts and mines without complaint.
+  static MAX_DATACARRIER_BYTES = 223;
   static isStandardOpReturn(bytes: number, outputs: number, height?: number): boolean {
     if (
       height == null ||
@@ -567,7 +575,7 @@ export class Common {
 
   static indexingEnabled(): boolean {
     return (
-      ['mainnet', 'testnet4', 'chipnet', 'scalenet'].includes(config.EXPLORER.NETWORK) &&
+      ['mainnet', 'testnet'].includes(config.EXPLORER.NETWORK) &&
       config.DATABASE.ENABLED === true &&
       config.EXPLORER.INDEXING_BLOCKS_AMOUNT !== 0
     );

@@ -1,4 +1,10 @@
-import { calcBitsDifference, calcAsertDifficultyAdjustment } from '../../api/difficulty-adjustment';
+import {
+  calcBitsDifference,
+  calcAsertDifficultyAdjustment,
+  getAsertAnchorHeight,
+  getTargetBlockSpacing,
+  getBlocksPerDay,
+} from '../../api/difficulty-adjustment';
 
 describe('Mempool Difficulty Adjustment', () => {
   const recentBlocksFor = (blockTimestamp: number) => [
@@ -95,6 +101,15 @@ describe('Mempool Difficulty Adjustment', () => {
     const mainnet = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'mainnet', recentBlocks);
 
     expect(unknown).toEqual(mainnet);
+  });
+
+  test('exposes BitFinite chain parameters, not Bitcoin Cash ones', () => {
+    // Guards against a silent revert. Every one of these differs from BCH, and
+    // each was wrong at some point in this file's history.
+    expect(getTargetBlockSpacing('mainnet')).toBe(300); // BCH is 600
+    expect(getTargetBlockSpacing('testnet')).toBe(600);
+    expect(getBlocksPerDay('mainnet')).toBe(288); // BCH is 144
+    expect(getAsertAnchorHeight('mainnet')).toBe(0); // BCH is 661647
   });
 
   test('should calculate Difficulty change from bits fields of two blocks', () => {
