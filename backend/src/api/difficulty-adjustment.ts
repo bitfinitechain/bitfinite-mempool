@@ -13,23 +13,36 @@ export interface DifficultyAdjustment {
 // --- ASERT (aserti3-2d) functions ---
 // Ported from: https://gist.github.com/A60AB5450353F40E/5607d5aeb9ba0e84a71ab8f55ebdd2ad
 
-const ASERT_ANCHOR_IDEAL_BLOCK_TIME = 600;
-
 interface AsertAnchor {
-  bits: string;
-  tick: number; // anchor_height * 600
-  timestamp: number; // previous block timestamp at anchor
+  bits: string; // anchor nBits, hex
+  height: number; // anchor height
+  timestamp: number; // anchor nPrevBlockTime
   tau: number; // half-life in seconds
+  targetSpacing: number; // ideal block time in seconds
 }
 
-// Per-network ASERT anchor parameters from BCHN chainparams.cpp
-// scalenet has no hard-coded anchor (periodic reorgs); mainnet anchor used as proxy
+// BitFinite ASERT anchors, from bitfinite-core src/chainparams.cpp
+// (consensus.asertAnchorParams, nASERTHalfLife, nPowTargetSpacing).
+//
+// These were Bitcoin Cash's values, inherited at the fork, and they made this
+// endpoint return garbage rather than merely drift. BCH anchors at height
+// 661,647 with a 2-day half-life and 600s blocks; BitFinite anchors at GENESIS
+// with a 6-hour half-life and 300s blocks. Feeding our height into their anchor
+// put the ASERT exponent at ~3292, so 2**(hi-16) overflowed to Infinity and
+// targetToBits stringified it as "Infinity000NaN". The schedule offset came out
+// as -568,906,323 seconds, which is just (17090 - 661647) * 600 minus the real
+// elapsed time.
+//
+// Spacing is per-network because it is not the same on both: mainnet targets
+// 5 minutes, testnet 10. Anything that hardcodes 600 here is a BCH assumption.
 const ASERT_ANCHORS: Record<string, AsertAnchor> = {
-  mainnet: { bits: '1804dafe', tick: 396988200, timestamp: 1605447844, tau: 172800 },
-  testnet4: { bits: '1d00ffff', tick: 10106400, timestamp: 1605451779, tau: 3600 },
-  chipnet: { bits: '1d00ffff', tick: 10106400, timestamp: 1605451779, tau: 3600 },
-  scalenet: { bits: '1804dafe', tick: 396988200, timestamp: 1605447844, tau: 172800 },
+  mainnet: { bits: '1b00efab', height: 0, timestamp: 1782691200, tau: 6 * 60 * 60, targetSpacing: 5 * 60 },
+  testnet: { bits: '1d00ffff', height: 0, timestamp: 1787400000, tau: 60 * 60, targetSpacing: 10 * 60 },
 };
+
+function anchorFor(network: string): AsertAnchor {
+  return ASERT_ANCHORS[network] ?? ASERT_ANCHORS.mainnet;
+}
 
 function bitsToTarget(bits: string): number {
   const exponent = parseInt(bits.slice(0, 2), 16);
@@ -53,37 +66,29 @@ function targetToBits(target: number): string {
   return exponent.toString(16).padStart(2, '0') + mantissa.toString(16).padStart(6, '0');
 }
 
-function calculateTarget(
-  heightTick: number,
-  timestamp: number,
-  anchor: AsertAnchor,
-  nextTargetBlockTime: number = 600
-): number {
+function calculateTarget(height: number, timestamp: number, anchor: AsertAnchor): number {
   const anchorTarget = bitsToTarget(anchor.bits);
+  const spacing = anchor.targetSpacing;
 
-  const tickDelta = heightTick - anchor.tick;
+  // exponent = (elapsed - spacing * (heightDelta + 1)) / halfLife
+  const heightDelta = height - anchor.height;
   const timeDelta = timestamp - anchor.timestamp;
 
   const t = Math.trunc;
-  const base = t(((timeDelta - (tickDelta + ASERT_ANCHOR_IDEAL_BLOCK_TIME)) * 65536) / anchor.tau);
+  const base = t(((timeDelta - spacing * (heightDelta + 1)) * 65536) / anchor.tau);
   const hi = t(base / 65536) + (base < 0 ? -1 : 0);
   const lo = base - hi * 65536;
 
-  return (
+  // 2**(hi-16) is the step that overflowed on the wrong anchor. Guard it: a target
+  // of Infinity does not throw, it propagates into targetToBits and comes out of
+  // the API as a string like "Infinity000NaN", which is worse than an error
+  // because it looks like data.
+  const target =
     (t((195766423245049 * lo + 971821376 * lo ** 2 + 5127 * lo ** 3 + 140737488355328) / 2 ** 48) + 65536) *
-    t(ASERT_ANCHOR_IDEAL_BLOCK_TIME / nextTargetBlockTime) *
     anchorTarget *
-    2 ** (hi - 16)
-  );
-}
+    2 ** (hi - 16);
 
-function calculateTargetLegacy(
-  height: number,
-  timestamp: number,
-  anchor: AsertAnchor,
-  nextTargetBlockTime: number = 600
-): number {
-  return calculateTarget(height * 600, timestamp, anchor, nextTargetBlockTime);
+  return Number.isFinite(target) ? target : 0;
 }
 
 // function numericBitsToHex(bits: number): string {
@@ -95,12 +100,13 @@ function calculateTargetLegacy(
 /**
  * Returns the ASERT anchor block height for the given network.
  *
- * @param {string} network - Network name (e.g. 'mainnet', 'testnet4', 'chipnet', 'scalenet').
- * @returns {number} The anchor block height derived from the network's anchor tick.
+ * @param {string} network - Network name ('mainnet' or 'testnet').
+ * @returns {number} The anchor block height. BitFinite anchors both networks at
+ *   genesis, so this is 0 — it is not a constant to rely on, since a future
+ *   chain could anchor elsewhere, but it is never BCH's 661647.
  */
 export function getAsertAnchorHeight(network: string): number {
-  const anchor = ASERT_ANCHORS[network] ?? ASERT_ANCHORS.mainnet;
-  return Math.floor(anchor.tick / ASERT_ANCHOR_IDEAL_BLOCK_TIME); // Eg. 661647 for mainnet
+  return anchorFor(network).height;
 }
 
 /**
@@ -166,10 +172,11 @@ export function calcBitsDifference(oldBits: number, newBits: number): number {
 }
 
 /**
- * Calculate ASERT-based difficulty adjustment data for BCH.
+ * Calculate ASERT-based difficulty adjustment data.
  *
  * Uses the aserti3-2d algorithm to compute:
- * - Schedule offset: how far ahead/behind the ideal 10-minute schedule
+ * - Schedule offset: how far ahead/behind the network is against its ideal
+ *   block schedule (5 minutes on mainnet, 10 on testnet)
  * - Difficulty drift: expected % change for the next block
  * - Current and predicted next block bits
  */
@@ -179,23 +186,22 @@ export function calcAsertDifficultyAdjustment(
   network: string,
   recentBlocks: { timestamp: number }[]
 ): DifficultyAdjustment {
-  const BLOCK_SECONDS_TARGET = 600;
-  const anchor = ASERT_ANCHORS[network] ?? ASERT_ANCHORS.mainnet;
-  const anchorHeight = Math.floor(anchor.tick / ASERT_ANCHOR_IDEAL_BLOCK_TIME);
+  const anchor = anchorFor(network);
+  const BLOCK_SECONDS_TARGET = anchor.targetSpacing;
 
   // Schedule offset: how far ahead or behind the ideal schedule
-  // Positive = network is ahead (blocks mined faster than 10min avg)
-  // Negative = network is behind (blocks mined slower than 10min avg)
-  const idealElapsed = (blockHeight - anchorHeight) * BLOCK_SECONDS_TARGET;
+  // Positive = network is ahead (blocks mined faster than the target spacing)
+  // Negative = network is behind (blocks mined slower than the target spacing)
+  const idealElapsed = (blockHeight - anchor.height) * BLOCK_SECONDS_TARGET;
   const actualElapsed = latestBlockTimestamp - anchor.timestamp;
   const scheduleOffsetSeconds = idealElapsed - actualElapsed;
 
   // Current ASERT target and bits
-  const currentTarget = calculateTargetLegacy(blockHeight, latestBlockTimestamp, anchor);
+  const currentTarget = calculateTarget(blockHeight, latestBlockTimestamp, anchor);
   const currentBits = targetToBits(currentTarget);
 
-  // Predicted next block target (assuming it arrives in exactly 600s)
-  const nextTarget = calculateTargetLegacy(blockHeight + 1, latestBlockTimestamp + BLOCK_SECONDS_TARGET, anchor);
+  // Predicted next block target, assuming it arrives exactly on schedule
+  const nextTarget = calculateTarget(blockHeight + 1, latestBlockTimestamp + BLOCK_SECONDS_TARGET, anchor);
   const nextBits = targetToBits(nextTarget);
 
   // Difficulty drift %: how much harder/easier the next block will be

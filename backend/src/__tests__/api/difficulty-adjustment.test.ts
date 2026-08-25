@@ -11,63 +11,90 @@ describe('Mempool Difficulty Adjustment', () => {
     { timestamp: blockTimestamp },
   ];
 
-  test('should calculate ASERT Difficulty Adjustments properly for mainnet', () => {
-    const blockHeight = 946905;
-    const blockTimestamp = 1776280633;
-    const recentBlocks = recentBlocksFor(blockTimestamp);
+  // Real BitFinite mainnet headers, read from the chain. These are the strongest
+  // available fixture: ASERT is a consensus rule, so a correct port must
+  // reproduce the bits the network actually mined. The previous version of this
+  // file asserted values derived from Bitcoin Cash's anchor on networks
+  // (testnet4, chipnet, scalenet) that core removed in 3.2.0, so it passed while
+  // the endpoint served "Infinity000NaN" in production.
+  //
+  // ASERT computes a block's target from its PARENT's height and timestamp,
+  // so each row is (parentHeight, parentTimestamp) -> the child's real bits.
+  const MAINNET_HEADERS = [
+    { parentHeight: 17085, parentTimestamp: 1787617678, childBits: '196655c4' },
+    { parentHeight: 17086, parentTimestamp: 1787618801, childBits: '19691337' },
+    { parentHeight: 17087, parentTimestamp: 1787618932, childBits: '196881a3' },
+    { parentHeight: 17088, parentTimestamp: 1787619096, childBits: '19680cd9' },
+    { parentHeight: 17089, parentTimestamp: 1787619476, childBits: '196851a8' },
+  ];
 
-    const result = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'mainnet', recentBlocks);
+  test.each(MAINNET_HEADERS)(
+    'reproduces the real mainnet bits mined above block $parentHeight',
+    ({ parentHeight, parentTimestamp, childBits }) => {
+      const result = calcAsertDifficultyAdjustment(
+        parentHeight,
+        parentTimestamp,
+        'mainnet',
+        recentBlocksFor(parentTimestamp)
+      );
+      expect(result.currentBits).toBe(childBits);
+    }
+  );
 
-    expect(result).toHaveProperty('scheduleOffsetSeconds');
-    expect(result).toHaveProperty('difficultyDriftPercent');
-    expect(result).toHaveProperty('currentBits');
-    expect(result).toHaveProperty('nextBits');
-    expect(result).toHaveProperty('timeAvg');
-
-    expect(typeof result.scheduleOffsetSeconds).toBe('number');
-    expect(typeof result.difficultyDriftPercent).toBe('number');
-    expect(result.currentBits).toMatch(/^[0-9a-f]{8}$/);
-    expect(result.nextBits).toMatch(/^[0-9a-f]{8}$/);
-    expect(result.timeAvg).toBe(600000);
+  test('never emits non-finite bits, whatever height it is given', () => {
+    // The production bug did not throw. bitsToTarget overflowed to Infinity and
+    // targetToBits stringified it, so the API served 'Infinity000NaN' as if it
+    // were data. Assert the shape, not just the absence of an exception.
+    const heights = [0, 1, 1000, 17090, 250000, 5000000];
+    for (const height of heights) {
+      const timestamp = 1782691200 + height * 300;
+      for (const network of ['mainnet', 'testnet']) {
+        const result = calcAsertDifficultyAdjustment(height, timestamp, network, recentBlocksFor(timestamp));
+        expect(result.currentBits).toMatch(/^[0-9a-f]{8}$/);
+        expect(result.nextBits).toMatch(/^[0-9a-f]{8}$/);
+        expect(Number.isFinite(result.scheduleOffsetSeconds)).toBe(true);
+        expect(Number.isFinite(result.difficultyDriftPercent)).toBe(true);
+      }
+    }
   });
 
-  test('should use testnet4 anchor (height 16844, bits 1d00ffff, tau 3600) for testnet4', () => {
-    // testnet4 anchor is at height 16844, timestamp 1605451779 (Nov 2020).
-    // Use a block 200 blocks above anchor with ideal-pace timing to keep hi exponent small.
-    const blockHeight = 17044; // anchor + 200
-    const blockTimestamp = 1605451779 + 200 * 600; // ideal 10-min spacing
-    const recentBlocks = recentBlocksFor(blockTimestamp);
+  test('a chain mined exactly on schedule has no schedule offset', () => {
+    // Mainnet targets 300s blocks and anchors at genesis, so an on-pace chain
+    // sits at offset 0. This is the assertion that would have caught the BCH
+    // anchor: with it, the same input reported -568,906,323 seconds.
+    const blockHeight = 17090;
+    const blockTimestamp = 1782691200 + blockHeight * 300;
 
-    const result = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'testnet4', recentBlocks);
+    const result = calcAsertDifficultyAdjustment(
+      blockHeight,
+      blockTimestamp,
+      'mainnet',
+      recentBlocksFor(blockTimestamp)
+    );
 
-    expect(result.currentBits).toMatch(/^[0-9a-f]{8}$/);
-    expect(result.nextBits).toMatch(/^[0-9a-f]{8}$/);
-
-    // testnet4 anchor bits (1d00ffff) differ from mainnet (1804dafe) — results must differ
-    const mainnetResult = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'mainnet', recentBlocks);
-    expect(result.currentBits).not.toEqual(mainnetResult.currentBits);
+    expect(result.scheduleOffsetSeconds).toBe(0);
   });
 
-  test('chipnet should produce same result as testnet4 (identical anchor params)', () => {
-    // chipnet anchor is identical to testnet4: height 16844, bits 1d00ffff, tau 3600
-    const blockHeight = 17044; // anchor + 200
-    const blockTimestamp = 1605451779 + 200 * 600; // ideal 10-min spacing → scheduleOffset = 0
+  test('mainnet and testnet use different anchors', () => {
+    const blockHeight = 5000;
+    const blockTimestamp = 1787500000;
     const recentBlocks = recentBlocksFor(blockTimestamp);
 
-    const testnet4Result = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'testnet4', recentBlocks);
-    const chipnetResult = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'chipnet', recentBlocks);
+    const mainnet = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'mainnet', recentBlocks);
+    const testnet = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'testnet', recentBlocks);
 
-    // Both networks share the same anchor — results must be identical
-    expect(chipnetResult.currentBits).toEqual(testnet4Result.currentBits);
-    expect(chipnetResult.nextBits).toEqual(testnet4Result.nextBits);
-    expect(chipnetResult.scheduleOffsetSeconds).toEqual(testnet4Result.scheduleOffsetSeconds);
-    expect(chipnetResult.difficultyDriftPercent).toEqual(testnet4Result.difficultyDriftPercent);
-    expect(chipnetResult.timeAvg).toEqual(testnet4Result.timeAvg);
+    expect(testnet.currentBits).not.toEqual(mainnet.currentBits);
+  });
 
-    // At ideal pace: bits hold steady at 1d00e417, schedule is exactly on time
-    expect(chipnetResult.currentBits).toBe('1d00e417');
-    expect(chipnetResult.scheduleOffsetSeconds).toBe(0);
-    expect(chipnetResult.timeAvg).toBe(600000);
+  test('an unknown network falls back to mainnet rather than producing garbage', () => {
+    const blockHeight = 17089;
+    const blockTimestamp = 1787619476;
+    const recentBlocks = recentBlocksFor(blockTimestamp);
+
+    const unknown = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'chipnet', recentBlocks);
+    const mainnet = calcAsertDifficultyAdjustment(blockHeight, blockTimestamp, 'mainnet', recentBlocks);
+
+    expect(unknown).toEqual(mainnet);
   });
 
   test('should calculate Difficulty change from bits fields of two blocks', () => {
