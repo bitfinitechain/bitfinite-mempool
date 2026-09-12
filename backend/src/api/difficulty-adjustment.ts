@@ -260,8 +260,19 @@ class DifficultyAdjustmentApi {
     if (!latestBlock) {
       return null;
     }
-    // Use last ~8 blocks for average block time calculation (7 intervals)
-    const recentBlocks = blocksCache.slice(-8).map((b) => ({ timestamp: b.timestamp }));
+    // Average block time over roughly the last 80 minutes.
+    //
+    // Upstream slices 8 blocks, which is 80 minutes at Bitcoin's 600s spacing.
+    // Taken as a block count it is half that window here, and this figure is
+    // noisy enough that halving the sample matters: over the last 146 blocks
+    // the real mean interval was 254s, while the trailing 8 read 505s. Both
+    // were correct, one was just a much smaller sample presented with the same
+    // confidence.
+    //
+    // Derived from the target spacing so it stays 80 minutes on either
+    // network, rather than swapping one chain's block count for another's.
+    const windowBlocks = Math.max(2, Math.round(4800 / getTargetBlockSpacing(config.EXPLORER.NETWORK)));
+    const recentBlocks = blocksCache.slice(-windowBlocks).map((b) => ({ timestamp: b.timestamp }));
 
     return calcAsertDifficultyAdjustment(blockHeight, latestBlock.timestamp, config.EXPLORER.NETWORK, recentBlocks);
   }

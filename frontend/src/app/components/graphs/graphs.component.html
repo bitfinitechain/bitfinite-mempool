@@ -106,13 +106,19 @@
         i18n="mining.block-tx-counts"
         >Transactions Per Block</a
       >
-      <a
-        class="dropdown-item"
-        routerLinkActive="active"
-        [routerLink]="['/graphs/mining/utxo-size' | relativeUrl]"
-        i18n="mining.utxo-size"
-        >Unspent Transaction Outputs</a
-      >
+      <!--
+        Unspent Transaction Outputs is not listed, because it cannot ever have
+        data here. The chart reads blocks.utxoset_size, which is filled from
+        Bitcoin Core's coinstatsindex. Our node is a Bitcoin Cash Node fork and
+        exposes neither coinstatsindex nor getindexinfo, so the column stays
+        NULL and the endpoint returns {"utxos":[]} forever. Only
+        gettxoutsetinfo is available, and that is a full UTXO scan, not
+        something to run per block.
+
+        The route is deliberately left in place so an existing bookmark still
+        resolves instead of 404ing. Block Health above is the same situation
+        handled the same way, gated on env.AUDIT.
+      -->
       <a
         *ngIf="stateService.env.AUDIT"
         class="dropdown-item"
