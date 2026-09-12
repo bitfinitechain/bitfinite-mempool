@@ -14,12 +14,14 @@
     "link": "https://ckpool.bitfinitechain.org"
   },
   {
-    "id": 2,
-    "name": "Solo (FutureBit)",
+    "id": 148,
+    "name": "FutureBit Apollo Solo",
     "addresses": [],
     "tags": [
+      "Apollo",
+      "/mined by a Solo FutureBit Apollo/",
       "/FutureBit-BFX/"
     ],
-    "link": "https://futurebit.io"
+    "link": "https://www.futurebit.io"
   }
 ]
