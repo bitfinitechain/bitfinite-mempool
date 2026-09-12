@@ -22,6 +22,7 @@ interface AsertStatus {
   difficultyDriftPercent: number;
   colorDrift: string;
   timeAvg: number;
+  timeAvgBlocks: number;
   blocksUntilHalving: number;
   timeUntilHalving: number;
   diffChangePercent: number;
@@ -165,6 +166,7 @@ export class DifficultyComponent implements OnInit {
           difficultyDriftPercent: difficultyDriftPercentSinceAnchor,
           colorDrift,
           timeAvg: da.timeAvg,
+          timeAvgBlocks: da.timeAvgBlocks,
           blocksUntilHalving,
           timeUntilHalving,
           diffChangePercent,

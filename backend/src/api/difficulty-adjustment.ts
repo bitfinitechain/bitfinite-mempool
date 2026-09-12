@@ -7,7 +7,8 @@ export interface DifficultyAdjustment {
   difficultyDriftPercent: number; // next-block % difficulty change (assuming an on-schedule block)
   currentBits: string; // current block bits (hex)
   nextBits: string; // predicted next block bits (hex)
-  timeAvg: number; // avg block time over recent 8 blocks (ms)
+  timeAvg: number; // avg block time over the recent window (ms)
+  timeAvgBlocks: number; // how many blocks that average covers
 }
 
 // --- ASERT (aserti3-2d) functions ---
@@ -249,6 +250,10 @@ export function calcAsertDifficultyAdjustment(
     currentBits,
     nextBits,
     timeAvg,
+    // Reported so the label can state the window it actually measured. It used
+    // to be written into the UI as a literal "(8 blocks)", which stopped being
+    // true the moment the window was derived from the target spacing.
+    timeAvgBlocks: recentBlocks.length,
   };
 }
 
