@@ -862,12 +862,16 @@
 </div>
 
 <ng-template #emptyBlockInfo let-emptyBlock>
-  @if (
-    network === "" &&
-    emptyBlock &&
-    emptyBlock.height > 100000 &&
-    emptyBlock.tx_count <= 1
-  ) {
+  <!--
+    No height floor here. Upstream gates this on height > 100000, because on
+    Bitcoin the early chain was full of empty blocks for reasons nobody needs a
+    FAQ link about. BitFinite is barely past 22,000 and has almost no
+    transaction traffic, so every block is coinbase only and that inherited
+    floor meant this explanation never rendered once. The case it was written
+    for is the case we are always in, and without it the block visualisation
+    reads as a broken empty panel rather than an empty block.
+  -->
+  @if (network === "" && emptyBlock && emptyBlock.tx_count <= 1) {
     <a
       class="info-bubble-link badge bg-primary"
       [routerLink]="['/docs/faq/' | relativeUrl]"
