@@ -1,0 +1,23 @@
+/*
+ * Keep the control narrow when it sits in the page header.
+ *
+ * master-page.component.scss carries a ".header-tools .form-select { max-width:
+ * 150px }" rule with the comment "prevent header overflow". It has never done
+ * anything. Angular scopes a component's styles to elements carrying that
+ * component's _ngcontent attribute, and this <select> belongs to THIS
+ * component's template, so the parent's selector can never match it. Measured:
+ * computed max-width was "none" and the control rendered 366px wide, which
+ * pushed the document to 1526px in a 1440px viewport.
+ *
+ * :host-context is the reachable form. Scoped to the header so the control
+ * keeps its natural width anywhere else it is used.
+ */
+:host-context(.header-tools) {
+  select {
+    max-width: 150px;
+    width: 100%;
+    /* The longest option is "UTC+7 - Indochina Time (ICT)". A select truncates
+       its own display text, so capping the box is enough and nothing clips. */
+    text-overflow: ellipsis;
+  }
+}

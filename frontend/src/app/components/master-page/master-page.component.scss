@@ -359,13 +359,18 @@ main {
 }
 
 /* keep header controls compact + prevent header overflow */
-.header-tools .form-select {
-  width: auto;
-  min-width: 92px;
-  max-width: 150px;
-}
+/*
+ * The .form-select rule that used to live here was inert: view encapsulation
+ * stops a parent styling a child component's internals, so it matched nothing.
+ * The width cap now lives in timezone-selector.component.scss, which owns that
+ * element. Kept here as a note so it is not re-added in this form.
+ */
 .header-tools {
-  flex: 0 0 auto;
+  /* Shrinkable, with min-width: 0 so it can actually give way. flex: 0 0 auto
+     meant the row forced the document wider instead of the tools narrowing,
+     which is what overflowed the page at 1440px. */
+  flex: 0 1 auto;
+  min-width: 0;
   flex-wrap: nowrap;
 }
 @media (min-width: 992px) {
