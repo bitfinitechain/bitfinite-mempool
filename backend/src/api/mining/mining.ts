@@ -518,16 +518,15 @@ class Mining {
   public async $generatePoolHashrateHistory(): Promise<void> {
     const now = new Date();
 
-    // Run only if:
-    // * this.lastWeeklyHashrateIndexingDate is set to null (node backend restart, reorg, or re-indexing was requested after mining pools update)
-    // * we started a new week (around Monday midnight)
-    const runIndexing =
-      this.lastWeeklyHashrateIndexingDate === null ||
-      (now.getUTCDay() === 1 && this.lastWeeklyHashrateIndexingDate !== now.getUTCDate());
-    if (!runIndexing) {
-      logger.debug(`Pool hashrate history indexing is up to date, nothing to do`, logger.tags.mining);
-      return;
-    }
+    // Runs on every pass rather than once a week.
+    //
+    // Upstream only ran on a restart or on a Monday, which was right when the
+    // newest bucket was always a completed week. We also index the week that is
+    // still running (see below), and its share and hashrate change with every
+    // block mined into it, so it has to be recomputed as the week fills.
+    //
+    // The cost of a pass with nothing new to do is one week's worth of queries:
+    // every completed week is skipped by timestamp in the loop below.
 
     try {
       const oldestConsecutiveBlockTimestamp = 1000 * (await BlocksRepository.$getOldestConsecutiveBlock()).timestamp;
@@ -535,12 +534,30 @@ class Mining {
       const genesisData = await this.getGenesisData();
       const genesisTimestamp = genesisData.timestamp * 1000;
 
-      const indexedTimestamp = await HashratesRepository.$getWeeklyHashrateTimestamps();
-      const hashrates: any[] = [];
-
       const lastMonday = new Date(now.setDate(now.getDate() - ((now.getDay() + 6) % 7)));
       const lastMondayMidnight = this.getDateMidnight(lastMonday);
-      let toTimestamp = lastMondayMidnight.getTime();
+
+      // Include the week that is still running, not only completed ones.
+      //
+      // Upstream stops at the last Monday. On a chain this young that hides a
+      // lot: a pool whose first block came after that Monday has no bucket at
+      // all, so its page draws an empty chart reading "Not enough data yet" for
+      // up to seven days. That is exactly what a new solo miner looked like
+      // here, with a fifth of the hashrate and nothing to show for it.
+      //
+      // The bucket is labelled by the Monday it ends on, like every other one,
+      // so nothing downstream needs to know that it is still filling.
+      const currentWeekTimestamp = lastMondayMidnight.getTime() + 604800000;
+      let toTimestamp = currentWeekTimestamp;
+
+      // Dropped before the indexed list is read, so the running week is simply
+      // absent from it and gets recomputed, while completed weeks are still
+      // skipped. Order matters here: read the list first and the delete would
+      // not be reflected in it.
+      await HashratesRepository.$deleteWeeklyHashratesForTimestamp(currentWeekTimestamp / 1000);
+
+      const indexedTimestamp = await HashratesRepository.$getWeeklyHashrateTimestamps();
+      const hashrates: any[] = [];
 
       // 1008 was Bitcoin's blocks-per-week at 600s spacing; ours is 2016.
       const totalWeekIndexed =

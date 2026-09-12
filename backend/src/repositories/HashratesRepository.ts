@@ -245,6 +245,27 @@ class HashratesRepository {
   /**
    * Delete hashrates from the database from timestamp
    */
+  /**
+   * Removes one weekly bucket so it can be recomputed.
+   *
+   * The running week is re-indexed on every pass, because its share and
+   * hashrate change with every block mined into it. $saveHashrates is a plain
+   * INSERT with no upsert, so without deleting first the same week gains a
+   * duplicate set of rows on each run.
+   */
+  public async $deleteWeeklyHashratesForTimestamp(timestamp: number): Promise<void> {
+    try {
+      await DB.query(`DELETE FROM hashrates WHERE type = 'weekly' AND hashrate_timestamp = FROM_UNIXTIME(?)`, [
+        timestamp,
+      ]);
+    } catch (e) {
+      logger.err(
+        'Cannot delete the running week of hashrates. Reason: ' + (e instanceof Error ? e.message : e),
+        logger.tags.mining
+      );
+    }
+  }
+
   public async $deleteHashratesFromTimestamp(timestamp: number) {
     logger.info(
       `Delete newer hashrates from timestamp ${new Date(timestamp * 1000).toUTCString()} from the database`,
