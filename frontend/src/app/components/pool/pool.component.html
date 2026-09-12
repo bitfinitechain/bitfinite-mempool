@@ -46,7 +46,16 @@
               </tr>
 
               <!-- Addresses desktop -->
-              <tr *ngIf="!isMobile()" class="taller-row">
+              <!--
+                Hidden when the pool has none. A pool matched purely on its
+                coinbase tag has an empty address list on purpose, and the row
+                rendered as a lone "~", which reads as broken data rather than
+                as "we do not identify this miner by address".
+              -->
+              <tr
+                *ngIf="!isMobile() && poolStats.pool.addresses.length"
+                class="taller-row"
+              >
                 <td class="label addresses" i18n="mining.addresses">
                   Addresses
                 </td>
@@ -96,7 +105,7 @@
                 </td>
               </tr>
               <!-- Addresses mobile -->
-              <tr *ngIf="isMobile()">
+              <tr *ngIf="isMobile() && poolStats.pool.addresses.length">
                 <td colspan="2">
                   <span class="label" i18n="mining.addresses">Addresses</span>
                   <div
