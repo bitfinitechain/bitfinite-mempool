@@ -223,7 +223,7 @@
             #blockGraphActual
             [isLoading]="!stateService.isBrowser || isLoadingOverview"
             [resolution]="86"
-            [blockLimit]="stateService.blockSize"
+            [blockLimit]="stateService.blockVisualisationLimit(block?.size)"
             [orientation]="'top'"
             [flip]="false"
             [blockConversion]="blockConversion"

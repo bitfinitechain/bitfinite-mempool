@@ -4,7 +4,7 @@
       #blockGraph
       [isLoading]="false"
       [resolution]="resolution"
-      [blockLimit]="stateService.blockSize"
+      [blockLimit]="stateService.blockVisualisationLimit(block?.size)"
       [orientation]="'top'"
       [flip]="false"
       [disableSpinner]="true"

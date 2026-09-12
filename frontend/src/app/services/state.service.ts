@@ -551,6 +551,41 @@ export class StateService {
     this.blocksSubject$.next(blocks);
   }
 
+  /**
+   * How much block space the block visualisation should scale to.
+   *
+   * Upstream scales every block against the network maximum, so a half full
+   * block looks half full. That reading is worth having on a busy chain.
+   *
+   * It is not available to us at any price. BitFinite blocks are a couple of
+   * hundred bytes against a 32,000,000 byte cap, and the scene divides that cap
+   * across a resolution^2 grid: roughly 4,500 bytes per square at resolution
+   * 86. A 138 byte coinbase is three hundredths of one square, so it clamps to
+   * the smallest square the grid can draw and the whole panel renders as a
+   * single dot in the corner. Nothing about the block is legible.
+   *
+   * So a block using a negligible share of the cap is drawn to its own size,
+   * which makes its transactions visible. Fullness does not disappear from the
+   * page: the Size row states it exactly and the blocks strip still draws its
+   * fill bars against the real cap.
+   *
+   * A block using a meaningful share keeps the upstream behaviour, so this can
+   * never flatter a busy chain into looking fuller or emptier than it is.
+   */
+  blockVisualisationLimit(blockSize?: number): number {
+    const networkLimit = this.blockSize;
+    if (!blockSize || blockSize <= 0) {
+      return networkLimit;
+    }
+    // Below a hundredth of the cap a transaction stops occupying even one grid
+    // square, which is the point where the fullness reading has already told
+    // you everything it can and the contents have stopped being drawable.
+    if (blockSize >= networkLimit / 100) {
+      return networkLimit;
+    }
+    return blockSize;
+  }
+
   addBlock(block: BlockExtended): void {
     this.blocks.unshift(block);
     this.blocks = this.blocks.slice(0, this.env.KEEP_BLOCKS_AMOUNT);

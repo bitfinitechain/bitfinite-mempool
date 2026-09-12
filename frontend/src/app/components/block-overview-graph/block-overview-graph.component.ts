@@ -178,6 +178,20 @@ export class BlockOverviewGraphComponent
         this.scene.setOrientation(this.orientation, this.flip);
       }
     }
+    if (changes.blockLimit && !changes.blockLimit.firstChange) {
+      // The scene bakes its scale in at construction (bytesPerUnit is derived
+      // from blockLimit once, in init), so a limit that arrives with the block
+      // rather than with the component would otherwise never be applied. We
+      // scale small blocks to their own size, so the limit always arrives late.
+      //
+      // Only rebuilt while the scene is still empty. Once transactions are in
+      // it, dropping the scene would blank a panel somebody is looking at, and
+      // a limit changing that late is not a case this chain produces.
+      if (this.scene && !Object.keys(this.scene.txs || {}).length) {
+        this.scene = null;
+        this.resizeCanvas();
+      }
+    }
     if (changes.mirrorTxid) {
       this.setMirror(this.mirrorTxid);
     }
