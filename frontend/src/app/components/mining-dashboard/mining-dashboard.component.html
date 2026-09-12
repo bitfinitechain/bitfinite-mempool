@@ -7,8 +7,13 @@
         <span [attr.data-cy]="'reward-stats'" i18n="mining.reward-stats"
           >Reward stats</span
         >&nbsp;
-        <span style="font-size: xx-small" i18n="mining.144-blocks"
-          >(144 blocks)</span
+        <!--
+          Was a hardcoded "(144 blocks)". 144 blocks is a day only at Bitcoin's
+          600s spacing; here it is twelve hours. The panel now states the number
+          it actually covers, and the request below asks for the same one.
+        -->
+        <span style="font-size: xx-small"
+          >({{ stateService.blocksPerDay }} blocks)</span
         >
       </div>
       <div class="card-wrapper">

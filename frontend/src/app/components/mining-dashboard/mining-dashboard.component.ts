@@ -26,7 +26,7 @@ export class MiningDashboardComponent implements OnInit, AfterViewInit {
     private seoService: SeoService,
     private ogService: OpenGraphService,
     private websocketService: WebsocketService,
-    private stateService: StateService,
+    public stateService: StateService,
     private router: Router
   ) {}
 

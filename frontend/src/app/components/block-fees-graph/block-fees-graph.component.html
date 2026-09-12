@@ -20,7 +20,7 @@
       *ngIf="statsObservable$ | async as stats"
     >
       <div class="btn-group" role="group" name="radioBasic">
-        <ng-container *ngIf="stats.blockCount >= 144">
+        <ng-container *ngIf="stats.blockCount >= stateService.blocksPerDay">
           <input
             type="radio"
             class="btn-check"
@@ -44,7 +44,7 @@
           />
           <label class="btn btn-purple btn-sm" for="blockfees-3d">3D</label>
         </ng-container>
-        <ng-container *ngIf="stats.blockCount >= 1008">
+        <ng-container *ngIf="stats.blockCount >= stateService.blocksPerWeek">
           <input
             type="radio"
             class="btn-check"

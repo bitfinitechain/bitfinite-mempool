@@ -30,6 +30,7 @@ import { filter, map, scan, share, shareReplay } from 'rxjs/operators';
 import { StorageService } from '@app/services/storage.service';
 import { hasTouchScreen } from '@app/shared/pipes/bytes-pipe/utils';
 import { ActiveFilter } from '@app/shared/filters.utils';
+import { getBlocksPerDay, getBlocksPerWeek } from '../shared/asert.utils';
 
 export interface MarkBlockState {
   blockHeight?: number;
@@ -584,6 +585,27 @@ export class StateService {
       return networkLimit;
     }
     return blockSize;
+  }
+
+  /**
+   * How many blocks the network aims to produce in a day and in a week.
+   *
+   * Derived from the target spacing rather than written down, because the
+   * numbers people reach for are Bitcoin's: 144 and 1008, which are a day and
+   * a week only at 600s spacing. BitFinite targets 300s, so a day is 288
+   * blocks and a week is 2016.
+   *
+   * Exposed here because the chart templates gate their time-range buttons on
+   * "do we have a day of data yet", and every one of them had the Bitcoin
+   * number inline. That made each button appear after half the data it claims
+   * to cover.
+   */
+  get blocksPerDay(): number {
+    return getBlocksPerDay(this.network);
+  }
+
+  get blocksPerWeek(): number {
+    return getBlocksPerWeek(this.network);
   }
 
   addBlock(block: BlockExtended): void {

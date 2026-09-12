@@ -24,7 +24,7 @@ export class RewardStatsComponent implements OnInit {
     this.$rewardStats = concat(
       // We fetch the latest reward stats when the page load and
       // wait for the API response before listening to websocket blocks
-      this.apiService.getRewardStats$().pipe(
+      this.apiService.getRewardStats$(this.stateService.blocksPerDay).pipe(
         tap((stats) => {
           this.lastBlockHeight = stats.endBlock;
         })
