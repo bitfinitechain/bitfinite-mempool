@@ -73,8 +73,21 @@ class WebsocketHandler {
 
   private updateSocketDataFields(data: { [property: string]: any }): void {
     for (const property of Object.keys(data)) {
-      if (data[property]) {
-        this.socketData[property] = JSON.stringify(data[property]);
+      // Absent is not the same as zero.
+      //
+      // This used to test truthiness, which dropped any field whose value was
+      // legitimately 0. On a busy chain that never shows: bytesPerSecond is
+      // never exactly zero on Bitcoin. Here the mempool is empty almost all the
+      // time, so bytesPerSecond really is 0, the field was deleted from the
+      // init payload, and the dashboard's Minimum fee, Memory Usage and
+      // Unconfirmed stats sat on their loading skeletons forever. They are
+      // built with combineLatest over mempoolInfo and bytesPerSecond, and
+      // combineLatest cannot emit until both sources have.
+      //
+      // Only genuinely missing values are dropped now.
+      const value = data[property];
+      if (value !== undefined && value !== null) {
+        this.socketData[property] = JSON.stringify(value);
       } else {
         delete this.socketData[property];
       }
