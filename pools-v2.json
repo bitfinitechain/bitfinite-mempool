@@ -12,5 +12,14 @@
       "/mined by BitFinite pool/"
     ],
     "link": "https://ckpool.bitfinitechain.org"
+  },
+  {
+    "id": 2,
+    "name": "Solo (FutureBit)",
+    "addresses": [],
+    "tags": [
+      "/FutureBit-BFX/"
+    ],
+    "link": "https://futurebit.io"
   }
 ]
