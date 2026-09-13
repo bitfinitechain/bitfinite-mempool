@@ -209,8 +209,13 @@ class PoolsParser {
    */
   private async $reindexBlocksForPool(poolId: number): Promise<void> {
     // BitFinite is a fresh chain (re-anchored genesis 2026) — mining pools are known
-    // from block 0, unlike Bitcoin Cash where the first pool-tagged block was 130635.
-    let firstKnownBlockPool = 0;
+    // from block 1, unlike Bitcoin Cash where the first pool-tagged block was 130635.
+    //
+    // Starts at 1, not 0, because the genesis coinbase carries the fair-launch
+    // message rather than a miner tag. Naming miners from their coinbase would
+    // otherwise turn that sentence into a mining pool called
+    // "ABFX 2026-06-29 BitFinite fair l".
+    const firstKnownBlockPool = 1;
 
     const [blocks]: any[] = await DB.query(
       `
