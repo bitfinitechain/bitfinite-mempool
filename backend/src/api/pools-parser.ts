@@ -233,7 +233,18 @@ class PoolsParser {
     let changed = 0;
     for (const block of blocks) {
       const addresses = JSON.parse(block.coinbase_addresses) || [];
-      const newPool = this.matchBlockMiner(block.coinbase_raw, addresses, pools);
+      let newPool = this.matchBlockMiner(block.coinbase_raw, addresses, pools);
+      // Same fall-through as $findBlockMiner: a block matching no curated pool
+      // is named from the tag its miner wrote. Without this, reindexing leaves
+      // every historical Unknown block exactly as it was, because it only ever
+      // re-checks them against the curated list.
+      //
+      // Note $savePool wants the auto-increment `id`, not `unique_id`. Both are
+      // present on what $getOrCreateSelfReportedPool returns, and picking the
+      // wrong one is what broke block indexing on 2026-09-13.
+      if (!newPool) {
+        newPool = await this.$getOrCreateSelfReportedPool(block.coinbase_raw);
+      }
       if (newPool && newPool.id !== poolId) {
         changed++;
         await BlocksRepository.$savePool(block.hash, newPool.id);
