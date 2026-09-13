@@ -154,6 +154,20 @@ class PoolsRepository {
    *
    * @param pool
    */
+  /**
+   * How many self-reported pools exist. These carry a negative unique_id, so the
+   * sign alone separates them from the curated pools-v2.json entries.
+   */
+  public async $countSelfReportedPools(): Promise<number> {
+    try {
+      const [rows]: any[] = await DB.query(`SELECT COUNT(*) AS count FROM pools WHERE unique_id < 0`);
+      return rows[0]?.count ?? 0;
+    } catch (e: any) {
+      logger.err(`Cannot count self-reported mining pools. Reason: ` + (e instanceof Error ? e.message : e));
+      return Number.MAX_SAFE_INTEGER; // fail closed: stop creating more
+    }
+  }
+
   public async $insertNewMiningPool(pool: any, slug: string): Promise<void> {
     try {
       await DB.query(

@@ -500,6 +500,15 @@ class Blocks {
       return pool;
     }
 
+    // No curated pool matched. Rather than calling every new miner "Unknown" and
+    // waiting for someone to hand-write a pools-v2.json entry, name them after
+    // the tag they put in their own coinbase. See $getOrCreateSelfReportedPool
+    // for why that miner-controlled string is safe to use here.
+    const selfReported = await poolsParser.$getOrCreateSelfReportedPool(txMinerInfo.vin[0].scriptsig);
+    if (selfReported) {
+      return selfReported;
+    }
+
     if (config.DATABASE.ENABLED === true) {
       return await poolsRepository.$getUnknownPool();
     } else {

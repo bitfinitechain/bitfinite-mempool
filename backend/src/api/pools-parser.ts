@@ -8,6 +8,7 @@ import transactionUtils from './transaction-utils';
 import BlocksRepository from '../repositories/BlocksRepository';
 import valkeyCache from './valkey-cache';
 import blocks from './blocks';
+import { parseMinerTag } from './miner-tag';
 
 class PoolsParser {
   miningPools: any[] = [];
@@ -231,6 +232,66 @@ class PoolsParser {
     // Re-index hashrates later
     // Note: Disable for now, as it's causing incorrectly re-indexing hashrates (specifically the daily hashrate)
     // mining.reindexHashrateRequested = true;
+  }
+
+  // ── self-reported miner tags ────────────────────────────────────────────────
+  // Parsing lives in ./miner-tag, which has no imports so it can be tested on
+  // its own. Everything here is the database half: look the tag up, create the
+  // pool row if it is new, and refuse in the cases that would let a miner pick
+  // an identity that is not theirs.
+  //
+  // Self-reported pools carry a NEGATIVE unique_id. Curated pools from
+  // pools-v2.json are positive, so the two can never be confused, and a miner
+  // cannot promote itself into a curated identity by naming itself after one:
+  // a slug that already belongs to a curated pool falls back to Unknown.
+  //
+  // AUTO_POOL_LIMIT is the backstop against a miner that rotates its tag every
+  // block to fill the table.
+  private static readonly AUTO_POOL_LIMIT = 250;
+  private autoPoolCount: number | null = null;
+
+  public async $getOrCreateSelfReportedPool(scriptsig: string): Promise<PoolTag | undefined> {
+    if (!config.DATABASE.ENABLED) {
+      return undefined;
+    }
+
+    const parsed = parseMinerTag(scriptsig);
+    if (!parsed) {
+      return undefined;
+    }
+
+    try {
+      const existing = await PoolsRepository.$getPool(parsed.slug);
+      if (existing) {
+        // $getPool does SELECT *, so the row carries the DATABASE column name
+        // unique_id, not the interface's uniqueId. Reading the wrong one made
+        // every lookup miss and re-attempt the insert on each block.
+        const row = existing as any;
+        const id = row.unique_id ?? row.uniqueId;
+        // Curated pools win. A miner writing an existing pool's name into its
+        // coinbase gets Unknown, not that pool's identity.
+        return typeof id === 'number' && id < 0 ? existing : undefined;
+      }
+
+      if (this.autoPoolCount === null) {
+        this.autoPoolCount = await PoolsRepository.$countSelfReportedPools();
+      }
+      if (this.autoPoolCount >= PoolsParser.AUTO_POOL_LIMIT) {
+        return undefined;
+      }
+
+      await PoolsRepository.$insertNewMiningPool(
+        { name: parsed.name, link: '', addresses: [], regexes: [], id: parsed.uniqueId },
+        parsed.slug
+      );
+      this.autoPoolCount++;
+      logger.info(`Self-reported mining pool "${parsed.name}" added from its coinbase tag`, logger.tags.mining);
+
+      return (await PoolsRepository.$getPool(parsed.slug)) || undefined;
+    } catch (e) {
+      logger.err(`Cannot resolve self-reported mining pool. Reason: ${e instanceof Error ? e.message : e}`);
+      return undefined;
+    }
   }
 }
 
