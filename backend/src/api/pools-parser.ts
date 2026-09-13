@@ -10,6 +10,19 @@ import valkeyCache from './valkey-cache';
 import blocks from './blocks';
 import { parseMinerTag } from './miner-tag';
 
+/**
+ * $getPools and $getUnknownPool both SELECT `unique_id as uniqueId`, but
+ * $getPool does SELECT *, so its rows carry the raw database column instead.
+ * Callers read pool.uniqueId - blocks.ts puts it straight into
+ * block.extras.pool.id - so a row from $getPool has to be normalised before it
+ * is handed on. Returning one unnormalised made every block fail to save with
+ * "Could not find a mining pool with the unique_id = undefined".
+ */
+function normalisePoolRow(row: PoolTag): PoolTag {
+  const raw = row as any;
+  return { ...raw, uniqueId: raw.uniqueId ?? raw.unique_id };
+}
+
 class PoolsParser {
   miningPools: any[] = [];
   unknownPool: any = {
@@ -263,14 +276,10 @@ class PoolsParser {
     try {
       const existing = await PoolsRepository.$getPool(parsed.slug);
       if (existing) {
-        // $getPool does SELECT *, so the row carries the DATABASE column name
-        // unique_id, not the interface's uniqueId. Reading the wrong one made
-        // every lookup miss and re-attempt the insert on each block.
-        const row = existing as any;
-        const id = row.unique_id ?? row.uniqueId;
+        const row = normalisePoolRow(existing);
         // Curated pools win. A miner writing an existing pool's name into its
         // coinbase gets Unknown, not that pool's identity.
-        return typeof id === 'number' && id < 0 ? existing : undefined;
+        return typeof row.uniqueId === 'number' && row.uniqueId < 0 ? row : undefined;
       }
 
       if (this.autoPoolCount === null) {
@@ -287,7 +296,8 @@ class PoolsParser {
       this.autoPoolCount++;
       logger.info(`Self-reported mining pool "${parsed.name}" added from its coinbase tag`, logger.tags.mining);
 
-      return (await PoolsRepository.$getPool(parsed.slug)) || undefined;
+      const created = await PoolsRepository.$getPool(parsed.slug);
+      return created ? normalisePoolRow(created) : undefined;
     } catch (e) {
       logger.err(`Cannot resolve self-reported mining pool. Reason: ${e instanceof Error ? e.message : e}`);
       return undefined;
